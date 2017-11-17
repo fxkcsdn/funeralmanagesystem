@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <meta name="content-type" content="text/html; charset=GBK">
+    <title>printCarryBill.html</title>
+	
+    
+	
+  </head> 
+  <body>
+    <div id="printCarryBill">
+	<h2 align="center">派车单</h2>
+	<p>
+	<input type="text" id="whiteSpace" style="border:0px;width:30px;">
+	兹派车牌号<input type="text" id="printCarNum" style="BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: solid;height:25px;width:120px;font-weight:bold;font-size:23px;text-align:center"/>
+	驾驶员<input type="text" id="printDriver" style="BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: solid;height:25px;width:120px;font-weight:bold;font-size:23px;text-align:center"/>
+	于<input type="text" id="printTime" style="BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: solid;height:25px;width:200px;font-weight:bold;font-size:23px;text-align:center"/>
+	到<input type="text" id="printAddress" style="BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: solid;height:25px;width:280px;font-weight:bold;font-size:23px;text-align:center"/>接运遗体，
+	联系人<input type="text" id="printAgent" style="BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: solid;height:25px;width:120px;font-weight:bold;font-size:23px;text-align:center"/>
+	电话<input type="text" id="printNum" style="BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: solid;height:25px;width:180px;font-weight:bold;font-size:23px;text-align:center"/>。
+	</p>
+	<p align="right">
+		经办人：<input type="text" id="whiteSpace" style="border:0px;width:80px;">
+	</p>
+	<p align="right">
+		<input type="text" id="printYear" style="border:0px;width:40px;"/>年
+		<input type="text" id="printMonth" style="border:0px;width:40px;"/>月
+		<input type="text" id="printDay" style="border:0px;width:40px;"/>日
+	</p>
+</div> 
+	<script>
+		onload=a();
+		function a()
+		{
+			var url=decodeURI(location.href);
+			var tmp1=url.split("?")[1]; //取出参数部分
+			var tmp2=tmp1.split("&")[0]; 
+			var tmp3=tmp2.split("=")[1];//取出车牌号
+			var tmp4=tmp1.split("&")[1];
+			var tmp5=tmp4.split("=")[1];//取出司机姓名
+			var tmp6=tmp1.split("&")[2];
+			var tmp7=tmp6.split("=")[1];//取出时间
+			var tmp8=tmp1.split("&")[3];
+			var tmp9=tmp8.split("=")[1];//取出地址
+			var tmp10=tmp1.split("&")[4];
+			var tmp11=tmp10.split("=")[1];//取出联系人
+			var tmp12=tmp1.split("&")[5];
+			var tmp13=tmp12.split("=")[1];//取出联系电话
+		    var carNumber = tmp3;
+			var driverName = tmp5;
+			var estimatedTime = tmp7;
+			var address = tmp9;
+			var contactName = tmp11;
+			var contactNum = tmp13;
+			document.getElementById("printCarNum").value= tmp3;
+			document.getElementById("printDriver").value= tmp5;
+			document.getElementById("printTime").value= tmp7;
+			document.getElementById("printAddress").value= tmp9;
+			document.getElementById("printAgent").value= tmp11;
+			document.getElementById("printNum").value= tmp13;
+			var myDate = new Date();     //获取当前日期，填入右下角
+			document.getElementById("printYear").value= myDate.getFullYear();
+			document.getElementById("printMonth").value= myDate.getMonth()+1;  //js中一年的月份是0-11，此处+1做矫正
+			document.getElementById("printDay").value= myDate.getDate();
+			if(tata=document.execCommand("print"))
+			{
+				window.close();
+			}
+			else
+			{
+				setTimeout("CloseAfterPrint();",1000);
+			}
+		}
+		
+		
+	</script> 
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<html>
+ 
+<body>
+<object id="LODOP" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>
+<embed id="LODOP_EM" type="application/x-print-lodop" witdh=0 heigth=0></embed>
+</object>
+
+<script>
+	function CreatePrintPage(){
+		LODOP.PRINT_INIT("套打EMS的模版");
+		LODOP.PRINT_INIT("套打EMS的模版");
+		LODOP.ADD_PRINT_SETUP_BKIMG("tax.jpg");
+		LODOP.ADD_PRINT_TEXT(292,514,100,20,"张三");
+		LODOP.ADD_PRINT_TEXT(321,514,100,20,"我的位置在这");
+};
+
+</script>
+
+
+<a href="javascript:;" onclick="javascript:CreatePrintPage();LODOP.PRINT_DESIGN();">模板设计</a><br><br>
+<a href="javascript:;" onclick="javascript:CreatePrintPage();LODOP.PREVIEW();">模板预览</a>
+<input type="button" onclick="CreatePrintPage()">
+</body>
+</html>

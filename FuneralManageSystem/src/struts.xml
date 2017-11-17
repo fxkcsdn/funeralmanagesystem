@@ -1,0 +1,471 @@
+﻿<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+	"http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+	<package name="default" extends="json-default" namespace="/">
+		<!-- ********************************************** Made By JYF ********************************************************** -->
+		<action name="getSystemTime" class="com.FuneralManage.Action.getSystemTimeAction"
+			method="getSystemTime">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="getCarNumber" class="com.FuneralManage.Action.getCarNumberAction"
+			method="getCarNumber">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="getCoffin" class="com.FuneralManage.Action.getCoffinAction"
+			method="getCoffin">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="getRentNumber" class="com.FuneralManage.Action.getRentNumberAction"
+			method="getRentNumber">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="saveRentCoffin" class="com.FuneralManage.Action.saveRentCoffinAction"
+			method="saveRentCoffin">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="getOutCoffinNo" class="com.FuneralManage.Action.getOutCoffinNoAction"
+			method="getOutCoffinNo">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="getRemainsCarry" class="com.FuneralManage.Action.getRemainsCarryAction"
+			method="getRemainsCarry">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="getCarryNumber" class="com.FuneralManage.Action.getCarryNumberAction"
+			method="getCarryNumber">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="addRemainsCarry" class="com.FuneralManage.Action.addRemainsCarryAction"
+			method="addRemainsCarry">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="updateRentCoffin" class="com.FuneralManage.Action.updateRentCoffinAction"
+			method="updateRentCoffin">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="updateRemainsCarry"
+			class="com.FuneralManage.Action.updateRemainsCarryAction" method="updateRemainsCarry">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="getDeadType" class="com.FuneralManage.Action.getDeadTypeAction"
+			method="getDeadType">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="getDeadReason" class="com.FuneralManage.Action.getDeadReasonAction"
+			method="getDeadReason">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="getVillaNumber" class="com.FuneralManage.Action.getVillaNumberAction"
+			method="getVillaNumber">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="getWatchNumber" class="com.FuneralManage.Action.getWatchNumberAction"
+			method="getWatchNumber">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="saveWatchSpirit" class="com.FuneralManage.Action.saveWatchSpiritAction"
+			method="saveWatchSpirit">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="getWatchSpirit" class="com.FuneralManage.Action.getWatchSpiritAction"
+			method="getWatchSpirit">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="updateWatchSpirit" class="com.FuneralManage.Action.updateWatchSpiritAction"
+			method="updateWatchSpirit">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="getReefer" class="com.FuneralManage.Action.getReeferAction"
+			method="getReefer">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="getReeferNumber" class="com.FuneralManage.Action.getReeferNumberAction"
+			method="getReeferNumber">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="saveRemainsReefer" class="com.FuneralManage.Action.saveRemainsReeferAction"
+			method="saveRemainsReefer">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="getRemainsReefer" class="com.FuneralManage.Action.getRemainsReeferAction"
+			method="getRemainsReefer">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="updateRemainsReefer"
+			class="com.FuneralManage.Action.updateRemainsReeferAction" method="updateRemainsReefer">
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+
+		<!-- *********************************************************************************************************************** -->
+
+		<!--____________________________________________________Action By JiangShuai__________________________________________________________________ -->
+		<action name="GetCarBeCostAction" class="com.FuneralManage.Action.GetCarBeCostAction">
+			<result type="json" name="getCarBeCost">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+
+		<action name="getAgentAction" class="com.FuneralManage.Action.GetAgentAction">
+			<result type="json" name="getAgent">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+
+		<action name="uploadTableAction" class="com.FuneralManage.Action.UploadTableAction">
+			<result type="json" name="uploadTab">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+
+		<action name="linkCoffinInfoAction" class="com.FuneralManage.Action.LinkCoffinAction">
+			<result type="json" name="linkRentCoffinInfo">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+
+		<action name="getCarryOrderAction" class="com.FuneralManage.Action.GetCarryOrderAction">
+			<result type="json" name="searchCarryOrder">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+
+		<action name="linkCarryInfoAction" class="com.FuneralManage.Action.LinkCarryInfoAction">
+			<result type="json" name="connectDeadId">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="AddOrderAction" class="com.FuneralManage.Action.AddOrderAction">
+			<result type="json" name="registOrderInfo">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+
+		<action name="AddOrderServiceAction" class="com.FuneralManage.Action.AddOrderServiceAction">
+			<result type="json" name="addOrderService">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+
+		<action name="GenerateRemainNumberAction"
+			class="com.FuneralManage.Action.GenerateRemainNumberAction">
+			<result type="json" name="generateNo">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+
+		<action name="AssociateOrderAction" class="com.FuneralManage.Action.AssociateOrderAction">
+			<result type="json" name="associateOrderedInfo">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+
+		<action name="AddOrderDeadInfoRegisterAction"
+			class="com.FuneralManage.Action.AddOrderDeadInfoRegisterAction">
+			<result type="json" name="addOrderRegistDeadInfo">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+
+		<action name="ReadLeaveRoomAction" class="com.FuneralManage.Action.ReadLeaveRoomAction">
+			<result type="json" name="readLeaveRoomInfo">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+
+		<action name="GetDefaultServiceAction" class="com.FuneralManage.Action.GetDefaultServiceAction">
+			<result type="json" name="defaultServiceInfo">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<!--____________________________________________________Action By JiangShuai__________________________________________________________________ -->
+		<action name="DeadInfoRegisterAction" class="com.FuneralManage.Action.DeadInfoRegisterAction">
+			<result type="json" name="registDeadInfo">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="registOrderDeadInfo">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="decideInvoiceAndSubsidy">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="updateDeadId">
+				<param name="root">returnString</param>
+			</result>
+			
+		</action>
+
+		<action name="getAuditAction" class="com.FuneralManage.Action.GetAuditAction">
+			<result type="json" name="getAudit">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="PrintQRCodeAction" class="com.FuneralManage.Action.PrintQRCodeAction">
+			<result type="json" name="getQRCodeInfo">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getQRCodeOrderInfo">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="RegisterServiceAction" class="com.FuneralManage.Action.RegisterServiceAction">
+			<result type="json" name="showDeadInfo">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="showOrderDeadInfo">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="showAllFuneralGoods">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="showUrn">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getLeaveRoom">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getSetService">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="showSetServiceDetail">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="showSetGoodsDetail">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="AddFuneralGoodsAction" class="com.FuneralManage.Action.AddFuneralGoodsAction">
+			<result type="json" name="addFuneralGoods">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="GetUrnBeCostAction" class="com.FuneralManage.Action.GetUrnBeCostAction">
+			<result type="json" name="getUrnBeCost">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="AddUrnAction" class="com.FuneralManage.Action.AddUrnAction">
+			<result type="json" name="addUrn">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="GetServiceBeCostAction" class="com.FuneralManage.Action.GetServiceBeCostAction">
+			<result type="json" name="getServiceBeCost">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="AddServiceAction" class="com.FuneralManage.Action.AddServiceAction">
+			<result type="json" name="addService">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="GetTaxInfoAction" class="com.FuneralManage.Action.GetTaxInfoAction">
+			<result type="json" name="getTaxInfo">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="GetAllServiceCostAction" class="com.FuneralManage.Action.GetAllServiceCostAction">
+			<result type="json" name="getRemainsCarryCost">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getRentCoffinCost">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getWatchSpiritCost">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getDeadChosenUrnCost">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="delChosenUrn">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getDeadServiceItemCost">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="delServiceItem">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getFuneralGoodsCost">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="delGoods">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="calculateAllService">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+
+		<action name="DecideMixedCostAction" class="com.FuneralManage.Action.DecideMixedCostAction">
+			<result type="json" name="decideMixedCost">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<!-- ********************************************** Made By ZY ********************************************************** -->
+		<action name="GetCremationInfoAction" class="com.FuneralManage.Action.GetCremationInfoAction">
+			<result type="json" name="getCremationInfo">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="GetSubsidyInfoAction" class="com.FuneralManage.Action.GetSubsidyInfoAction">
+			<result type="json" name="getSubsidyInfo">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="QueryCremationInfoAction"
+			class="com.FuneralManage.Action.QueryCremationInfoAction">
+			<result type="json" name="queryCremationInfo">
+			<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="CremationToExcelAction" class="com.FuneralManage.Action.CremationToExcelAction">
+			<result type="json" name="CremationToExcel">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="excelById">
+				<param name="root">returnString</param>
+			</result>
+			
+		</action>
+		<action name="ToExcelAction" class="com.FuneralManage.Action.ToExcelAction">
+			<result type="json" name="ToExcelInfo">
+			<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="QueryBenefitInfoAction" class="com.FuneralManage.Action.QueryBenefitInfoAction">
+			<result type="json" name="queryBenefitInfo">
+				<param name="root">returnString</param>
+				</result>
+		</action>
+        <action name="QueryCremationAction" class="com.FuneralManage.Action.QueryCremationAction">
+			<result type="json" name="queryCremation">
+				<param name="root">returnString</param>
+				</result>
+		</action>
+		<action name="getCremationServiceAction" class="com.FuneralManage.Action.getCremationServiceAction">
+			<result type="json" name="getCremationService">
+				<param name="root">returnString</param>
+				</result>
+		</action>
+		<action name="QueryChosenGoodsAction" class="com.FuneralManage.Action.QueryChosenGoodsAction">
+			<result type="json" name="queryChosenGoods">
+				<param name="root">returnString</param>
+				</result>
+		</action>
+		<action name="ChangeServiceAction" class="com.FuneralManage.Action.ChangeServiceAction">
+			<result type="json" name="changeService">
+				<param name="root">returnString</param>
+				</result>
+		</action>
+		<action name="GetFeeAction" class="com.FuneralManage.Action.GetFeeAction">
+			<result type="json" name="getFee1">
+				<param name="root">returnString</param>
+				</result>
+		</action>
+
+		
+		<!--—____________________________________12月份 蒋帅新增 ______开始____________________________________ -->
+		
+		<action name="editbingding" class="com.FuneralManage.Action.EditBindingAction">
+			<result type="json" name="searchBill">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		
+		<action name="handleChange" class="com.FuneralManage.Action.HandleChangeAction">
+			<result type="json" name="doTheChange">
+				<param name="root">returnString</param>
+			</result>
+		</action>	
+			
+		<action name="changeCarryOrder" class="com.FuneralManage.Action.ChangeCarryOrderAction">
+			<result type="json" name="linkedit">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		
+<action name="queryCarryBills" class="com.FuneralManage.Action.QueryBillsAction">
+			<result type="json" name="queryBills">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<!--—____________________________________12月份 蒋帅新增_______结束____________________________________ -->
+<!--2017.1 蒋帅-->	
+	<action name="ExchangeDataAction" class="com.FuneralManage.Action.ExchangeDataAction">
+			<result type="json" name="dataExchange">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+	<action name="ExchangeSingleDataAction" class="com.FuneralManage.Action.ExchangeSingleDataAction">
+			<result type="json" name="uploadSingleRecord">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+	<action name="QueryDateAction" class="com.FuneralManage.Action.QueryDateAction">
+			<result type="json" name="queryDate">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		<action name="QuerySuccessAction" class="com.FuneralManage.Action.QueryDateAction">
+			<result type="json" name="querySuccessData">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+	<!--2017.1 蒋帅-->	
+	</package>
+	<package name="upload" namespace="/" extends="struts-default">
+		<action name="PrintQRCodeAction2" class="com.FuneralManage.Action.PrintQRCodeAction"
+			method="drawQRCode">
+			<!--<result name="success">/show.jsp</result> <result name="fail">/index.jsp</result> -->
+		</action>
+		
+	</package>
+</struts>
