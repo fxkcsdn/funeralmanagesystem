@@ -67,6 +67,51 @@
 				<a href="dataExchange.jsp" target="right" style="font-size:20px">数据上报</a>
 			</td>
 		</tr>
+		
+		<!-- by jixiang start -->
+		<tr height="8%">
+			<td width="100%" align="center">
+				<a href="" target="right" style="font-size:20px">期初入库</a>
+			</td>
+		</tr>
+		
+		<tr height="8%">
+			<td width="100%" align="center">
+				<a href="purchaseManage.jsp" target="right" style="font-size:20px">采购管理</a>
+			</td>
+		</tr>
+		
+		<tr height="8%">
+			<td width="100%" align="center">
+				<a href="receiptManage.jsp" target="right" style="font-size:20px">收货管理</a>
+			</td>
+		</tr>
+		
+		<tr height="8%">
+			<td width="100%" align="center">
+				<a href="sellManage.jsp" target="right" style="font-size:20px">销售管理</a>
+			</td>
+		</tr>
+		
+		<tr height="8%">
+			<td width="100%" align="center">
+				<a href="breakageManage.jsp" target="right" style="font-size:20px">报损管理</a>
+			</td>
+		</tr>
+		
+		<tr height="8%">
+			<td width="100%" align="center">
+				<a href="" target="right" style="font-size:20px">仓库调拨</a>
+			</td>
+		</tr>
+		
+		<tr height="8%">
+			<td width="100%" align="center">
+				<a href="" target="right" style="font-size:20px">仓库盘点</a>
+			</td>
+		</tr>
+		<!-- by jixiang end -->
+		
 		<tr height="8%">
 			<td width="100%" align="center">
 				<a href="statistics.jsp" target="right" style="font-size:20px">业务查询</a>

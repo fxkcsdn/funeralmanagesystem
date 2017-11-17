@@ -1,6 +1,9 @@
 package com.FuneralManage.Utility;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 public class DateUtil {
 	/**
@@ -69,4 +72,79 @@ public class DateUtil {
 		return ""+year;
 	}
 
+	/**
+	 * 获取日期的年和月
+	 * @param date 日期
+	 * @return 年月字符串
+	 */
+	public static String getYearAndMonth(String date)
+	{
+		String yearAndMonth = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		// 将字符串转换为日期
+		Date dt;
+		try {
+			dt = sdf.parse(date);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(dt);
+			int year = calendar.get(Calendar.YEAR);// 年
+			int month = calendar.get(Calendar.MONTH) + 1;// 月
+			yearAndMonth = month < 10 ? "" + year + "0" + month : "" + year + "" + month;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return yearAndMonth;
+	}
+
+	/**
+	 * 获取日期的年月日
+	 * @param date 日期
+	 * @return 年月日字符串
+	 */
+	public static String getYearAndMonthAndDay(String date)
+	{
+		String yearAndMonthAndDay = "";
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		// 将字符串转换为日期
+		Date dt = null;
+		try
+		{
+			dt = sdf.parse(date);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(dt);
+			int year = calendar.get(Calendar.YEAR);// 年
+			int month = calendar.get(Calendar.MONTH) + 1;// 月
+			int day = calendar.get(Calendar.DAY_OF_MONTH);// 日
+			// 如果月份小于10
+			if (month < 10)
+			{
+				if (day < 10)
+				{
+					yearAndMonthAndDay = "" + year + "0" + month + "0" + day;
+				}
+				else
+				{
+					yearAndMonthAndDay = "" + year + "0" + month + day;
+				}
+			}
+			// 月份大于10
+			else
+			{
+				if (day < 10)
+				{
+					yearAndMonthAndDay = "" + year + month + "0" + day;
+				}
+				else
+				{
+					yearAndMonthAndDay = "" + year + month + day;
+				}
+			}
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
+		return yearAndMonthAndDay;
+	}
 }

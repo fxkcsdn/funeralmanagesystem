@@ -411,6 +411,291 @@
 				</result>
 		</action>
 
+		<!-- ********************************************** Made By JiXiang ********************************************************** -->
+		<!-- 登记冷藏遗体接运信息action -->
+		<action name="addReeferRemainsCarry" class="com.FuneralManage.Action.AddReeferRemainsCarryAction">
+		  <result type="json" name="getCarNumbers">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getCarryNumber">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSaveResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 登记遗体冷藏信息action -->
+		<action name="addRemainsReefer" class="com.FuneralManage.Action.AddRemainsReeferAction">
+		  <result type="json" name="getReefer">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSaveResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+        <!-- 新增采购单action -->
+		<action name="addPurchase" class="com.FuneralManage.Action.AddPurchaseAction">
+			<result type="json" name="getSuppliers">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getGoodsTypes">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getGoodsNames">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getUnit">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getSaveResult">
+				<param name="root">returnString</param>
+			</result>
+		</action>
+		
+		<!-- 查询采购单action -->
+		<action name="queryPurchase" class="com.FuneralManage.Action.QueryPurchaseAction">
+		    <result type="json" name="getSuppliers">
+		      	<param name="root">returnString</param>
+		    </result>
+		    <result type="json" name="getPurchases">
+		      	<param name="root">returnString</param>
+		    </result>
+		    <result type="json" name="getPageCount">
+		      	<param name="root">returnString</param>
+		    </result>
+		</action>
+		
+		<!-- 修改采购单action -->
+		<action name="updatePurchase" class="com.FuneralManage.Action.UpdatePurchaseAction">
+		    <result type="json" name="getSuppliers">
+			  	<param name="root">returnString</param>
+		    </result>
+		    <result type="json" name="getGoodsTypes">
+			  	<param name="root">returnString</param>
+		    </result>
+		    <result type="json" name="getGoodsNames">
+			  	<param name="root">returnString</param>
+		    </result>
+		    <result type="json" name="getUnit">
+			  	<param name="root">returnString</param>
+		    </result>
+		    <result type="json" name="getPurchaseMaster">
+		      	<param name="root">returnString</param>
+		    </result>
+		    <result type="json" name="getPurchaseDetails">
+		      	<param name="root">returnString</param>
+		    </result>
+		    <result type="json" name="getSaveResult">
+				<param name="root">returnString</param>
+		    </result>
+		</action>
+		
+		<!-- 删除采购单action -->
+		<action name="deletePurchase" class="com.FuneralManage.Action.DeletePurchaseAction">
+		    <result type="json" name="getPurchaseMaster">
+		      	<param name="root">returnString</param>
+		  	</result>
+		  	<result type="json" name="getPurchaseDetails">
+		     	<param name="root">returnString</param>
+		  	</result>
+		  	<result type="json" name="getSaveResult">
+		    	<param name="root">returnString</param>
+		  	</result>
+		</action>
+		
+		<!-- 审核采购单action -->
+		<action name="auditPurchase" class="com.FuneralManage.Action.AuditPurchaseAction">
+		  <result type="json" name="getPurchaseMaster">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getPurchaseDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSaveResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 取消审核采购单action -->
+		<action name="cancelAuditPurchase" class="com.FuneralManage.Action.CancelAuditPurchaseAction">
+		  <result type="json" name="getPurchaseMaster">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getPurchaseDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSaveResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 结案采购单action -->
+		<action name="closePurchase" class="com.FuneralManage.Action.ClosePurchaseAction">
+		  <result type="json" name="getPurchaseMaster">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getPurchaseDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSaveResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 新增收货单action -->
+		<action name="addReceipt" class="com.FuneralManage.Action.AddReceiptAction">
+		  <result type="json" name="getSuppliers">
+			<param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getPurchases">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getPageCount">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getPurchaseDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSaveResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 查询收货单action -->
+		<action name="queryReceipt" class="com.FuneralManage.Action.QueryReceiptAction">
+		  <result type="json" name="getReceipts">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getPageCount">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 审核收货单action -->
+		<action name="auditReceipt" class="com.FuneralManage.Action.AuditReceiptAction">
+		  <result type="json" name="getReceipt">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getReceiptDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSaveResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 取消收货单审核action -->
+		<action name="cancelAuditReceipt" class="com.FuneralManage.Action.CancelAuditReceiptAction">
+		  <result type="json" name="getReceipt">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getReceiptDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSaveResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 修改收货单action -->
+		<action name="updateReceipt" class="com.FuneralManage.Action.UpdateReceiptAction">
+		  <result type="json" name="getReceipt">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getPurchaseDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getReceiptDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSaveResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 删除收货单action -->
+		<action name="deleteReceipt" class="com.FuneralManage.Action.DeleteReceiptAction">
+		  <result type="json" name="getReceipt">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getReceiptDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSaveResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 新增销售单action -->
+		<action name="addSell" class="com.FuneralManage.Action.AddSellAction">
+		    <result type="json" name="getGoodsTypes">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getGoodsNames">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getUnitAndNum">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getSaveResult">
+		        <param name="root">returnString</param>
+		    </result>
+		</action>
+		
+		<!-- 查询销售单action -->
+		<action name="querySell" class="com.FuneralManage.Action.QuerySellAction">
+		  <result type="json" name="getSells">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getPageCount">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 修改销售单action -->
+		<action name="updateSell" class="com.FuneralManage.Action.UpdateSellAction">
+		  <result type="json" name="getSell">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSellDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSaveResult">
+		        <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 删除销售单action -->
+		<action name="deleteSell" class="com.FuneralManage.Action.DeleteSellAction">
+		  <result type="json" name="getSell">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSellDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSaveResult">
+		        <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 新增报损单action -->
+		<action name="addBreakage" class="com.FuneralManage.Action.AddBreakageAction">
+		    <result type="json" name="getGoodsTypes">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getGoodsNames">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getUnitAndNum">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getSaveResult">
+		        <param name="root">returnString</param>
+		    </result>
+		</action>
+
 		
 		<!--—____________________________________12月份 蒋帅新增 ______开始____________________________________ -->
 		

@@ -302,4 +302,59 @@ public class RemainsReeferService extends BaseService{
 		}		
 		return returnString;
 	}
+	
+	/**
+	 * 保存遗体冷藏信息
+	 * @param reeferNumber 冷藏编号
+	 * @param carryNumber 接运编号
+	 * @param deadId 逝者身份证号
+	 * @param contactMobile 经办人手机
+	 * @param contactName 经办人姓名
+	 * @param sendRemainsUnit 送尸单位
+	 * @param arrivalTime 到馆时间
+	 * @param familyName 家属姓名
+	 * @param reeferNo 冰柜号
+	 * @param accidentAddress 事故地址
+	 * @param deposit 押金 
+	 * @param staffName 业务员姓名
+	 * @param familyMobile 家属电话
+	 * @param memo 备注
+	 * @return 布尔值，true为保存成功，false为保存失败
+	 */
+	public boolean addRemainsReefer(Connection conn, String reeferNumber, String carryNumber,
+			String deadId, String contactMobile, String contactName,
+			String sendRemainsUnit, String arrivalTime, String familyName,
+			String reeferNo, String accidentAddress, int deposit,
+			String staffName, String familyMobile, String memo) 
+	{
+		// TODO Auto-generated method stub
+		if (conn != null)
+		{
+			String sql = "insert into remainsReefer values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			try (PreparedStatement ps = conn.prepareStatement(sql)) {
+				ps.setString(1, reeferNumber);
+				ps.setString(2, carryNumber);
+				ps.setString(3, deadId);
+				ps.setString(4, contactMobile);
+				ps.setString(5, contactName);
+				ps.setString(6, sendRemainsUnit);
+				ps.setString(7, arrivalTime);
+				ps.setString(8, familyName);
+				ps.setString(9, reeferNo);
+				ps.setString(10, accidentAddress);
+				ps.setInt(11, deposit);
+				ps.setString(12, staffName);
+				ps.setString(13, familyMobile);
+				ps.setString(14, memo);
+				// 执行sql语句
+				int result = ps.executeUpdate();
+				if (result > 0) return true;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+		return false;
+	}
 }

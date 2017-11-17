@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="gbk">
+    <meta name="keywords" content="keyword1,keyword2,keyword3">
+    <meta name="description" content="this is my page">
+    <title>派车单</title>
+    <script type="text/javascript">
+      /**
+       * 页面加载时，触发该时间
+       */
+      window.onload = function()
+      {
+        var printCarryNumber = document.getElementById("printCarryNumber");// 接运编号
+        var printCarNumber = document.getElementById("printCarNumber");// 车牌号
+        var printDriver = document.getElementById("printDriver");// 驾驶员
+        var printTime = document.getElementById("printTime");// 时间
+        var printAddress = document.getElementById("printAddress");// 接运地点
+        var printAgent = document.getElementById("printAgent");// 联系人
+        var printMobile = document.getElementById("printMobile");// 联系电话
+        var printYear = document.getElementById("printYear");// 年
+        var printMonth = document.getElementById("printMonth");// 月
+        var printDay = document.getElementById("printDay");// 日
+        var driverInfo = window.opener.document.getElementById("carNumber").value;// 司机信息，包括车牌号、司机姓名和司机电话
+        var date = new Date();// 当前日期
+        var carNumber = "";// 父窗口车牌号
+        var driverName = "";// 父窗口司机姓名
+        if (driverInfo != "")
+        {
+          driverInfo = JSON.stringify(driverInfo);          
+          driverInfo = eval("("+ eval("("+ driverInfo +")") +")");  
+          // 获取车牌号              
+          carNumber = driverInfo.carNumber;
+          // 获取司机姓名
+          driverName = driverInfo.driverName;                          
+        }
+        printCarryNumber.innerHTML = "(接运编号" + window.opener.document.getElementById("carryNumber").value + ")";
+        printCarNumber.value =  carNumber;
+        printDriver.value = driverName;
+        printTime.value = window.opener.document.getElementById("carryTime").value;
+        printAddress.value = window.opener.document.getElementById("address").value;
+        printAgent.value = window.opener.document.getElementById("contactName").value;
+        printMobile.value = window.opener.document.getElementById("contactMobile").value;
+	    printYear.value= date.getFullYear();
+	    printMonth.value= date.getMonth() + 1; 
+		printDay.value= date.getDate();
+        // 打印派车单
+        window.print();
+      }
+    </script>
+  </head> 
+  <body>
+    <div id="printCarryBill">
+	<h2 align="center">派车单</h2>
+	<h3 align="center">
+	  <div id="printCarryNumber">
+	  
+	  </div>
+	</h3><br>
+	<p>
+	<input type="text" id="whiteSpace" style="border:0px;width:30px;">
+	兹派车牌号<input type="text" id="printCarNumber" style="BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: solid;height:25px;width:120px;font-weight:bold;font-size:23px;text-align:center"/>
+	驾驶员<input type="text" id="printDriver" style="BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: solid;height:25px;width:120px;font-weight:bold;font-size:23px;text-align:center"/>
+	于<input type="text" id="printTime" style="BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: solid;height:25px;width:200px;font-weight:bold;font-size:23px;text-align:center"/>
+	到<input type="text" id="printAddress" style="BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: solid;height:25px;width:280px;font-weight:bold;font-size:23px;text-align:center"/>接运遗体，
+	联系人<input type="text" id="printAgent" style="BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: solid;height:25px;width:120px;font-weight:bold;font-size:23px;text-align:center"/>
+	电话<input type="text" id="printMobile" style="BORDER-TOP-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-LEFT-STYLE: none; BORDER-BOTTOM-STYLE: solid;height:25px;width:180px;font-weight:bold;font-size:23px;text-align:center"/>。
+	</p>
+	<p align="right">
+		经办人：<input type="text" id="whiteSpace" style="border:0px;width:80px;">
+	</p>
+	<p align="right">
+		<input type="text" id="printYear" style="border:0px;width:40px;"/>年
+		<input type="text" id="printMonth" style="border:0px;width:40px;"/>月
+		<input type="text" id="printDay" style="border:0px;width:40px;"/>日
+	</p>
+	</div> 
+  </body>
+</html>

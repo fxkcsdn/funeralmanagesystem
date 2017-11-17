@@ -14,7 +14,7 @@ public class ReeferService extends BaseService
 		Connection conn=DBDao.openDateBase("dongtai");
 		if (conn != null)
 		{
-			String sql = "select * from reefer";
+			String sql = "select * from reefer where bAvailable=1";
 			ResultSet rs=null;
 			try
 			{
@@ -23,7 +23,7 @@ public class ReeferService extends BaseService
 				rs=ps.executeQuery();				
 				while(rs.next())
 				{					 
-					 result = result + "{reeferNumber:\""+rs.getString("reeferNumber")+"\",bAvailable:\""+rs.getString("bAvailable")+"\"},";					 
+					 result = result + "{reeferNo:\""+rs.getString("reeferNo")+"\",bAvailable:\""+rs.getString("bAvailable")+"\"},";					 
 				}							
 				result = result.substring(0, result.length()-1);							
 				returnString = "[" + result + "]";				
@@ -39,4 +39,27 @@ public class ReeferService extends BaseService
 		return returnString;
 	}
 
+	/**
+	 * 修改冰柜状态
+	 * @param reeferNo 冰柜号
+	 * @return 布尔值，true代表修改成功，false代表修改失败
+	 */
+	public boolean updateReeferAvailable(Connection conn, String reeferNo) {
+		// TODO Auto-generated method stub
+		if (conn != null)
+		{
+			String sql = "update reefer set bAvailable=0 where reeferNo=?";
+			try (PreparedStatement ps = conn.prepareStatement(sql)) {
+				ps.setString(1, reeferNo);
+				int result = ps.executeUpdate();
+				ps.close();
+				if (result > 0) return true;
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new RuntimeException(e.getMessage());
+			}
+		}
+		return false;
+	}
 }
