@@ -8,5 +8,9 @@ public class CarDAO extends BaseDAO{
 		super(dataSource);
 		// TODO Auto-generated constructor stub
 	}
+	public boolean test() {
+		return true;
+		
+	}
 
 }
