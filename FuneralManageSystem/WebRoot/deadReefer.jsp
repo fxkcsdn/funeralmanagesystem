@@ -45,22 +45,16 @@ body,td,th {
 
   <div class="TabbedPanelsContentGroup">
   
-    <div class="TabbedPanelsContent">
-      <form name="form1" method="post" action="">
-           <iframe name="registerReeferRemainsCarry" src="registerReeferRemainsCarry.jsp" width="100%" height="90%"></iframe>
-      </form>    
+    <div class="TabbedPanelsContent"> 
+      <iframe name="registerReeferRemainsCarry" src="registerReeferRemainsCarry.jsp" width="100%" height="90%"></iframe>    
     </div>
     
-    <div class="TabbedPanelsContent">
-      <form action="" method="post" enctype="multipart/form-data" name="form2">            
-          <iframe name="registerReeferInfo" src="registerReeferInfo.jsp" width="100%" height="90%"></iframe> 
-      </form>      
+    <div class="TabbedPanelsContent">            
+      <iframe name="registerReeferInfo" src="registerReeferInfo.jsp" width="100%" height="90%"></iframe>    
     </div>
     
-    <div class="TabbedPanelsContent">
-      <form name="form3" method="post" action="">  
-          <iframe name="reeferBill" src="reeferBill.jsp" width="100%" height="90%"></iframe> 
-      </form>     
+    <div class="TabbedPanelsContent"> 
+      <iframe name="reeferBill" src="reeferBill.jsp" width="100%" height="90%"></iframe>  
     </div>
     
   </div>

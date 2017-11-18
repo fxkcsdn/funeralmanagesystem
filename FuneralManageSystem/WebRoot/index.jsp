@@ -14,7 +14,7 @@ session.setAttribute("form",session.getAttribute("form"));
 	<frame src="top.jsp" name="top" scrolling="NO">
 	<frameset rows="*" cols="15%,*" framespacing="0" frameborder="yes" border="1">
 		<frame src="left.jsp" name="left" scrolling="NO">
-		<frame src="rentCoffin.jsp" name="right" scrolling="NO">
+		<frame src="rentCoffin.jsp" name="right">
 	</frameset>
 </frameset>
 <noframes>
