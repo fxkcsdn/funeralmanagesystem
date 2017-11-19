@@ -1699,34 +1699,106 @@ function showDataCallback(){
 				form3.directorName.value=json.directorName;
 				form3.dealerAddress.value=json.dealerAddress;
 				
-				var deadResidenceSelect = document.form3.deadResidence;
-				var deadResidenceIndex = deadResidenceSelect.selectedIndex;				
-				deadResidenceSelect.options[deadResidenceIndex].text=json.deadResidence;
-				
-				var operatorRelationSelect = document.form3.operatorRelation;
-				var operatorRelationIndex = operatorRelationSelect.selectedIndex;				
-				operatorRelationSelect.options[operatorRelationIndex].text=json.operatorRelation;
-				
-				
-				var ashesDispositionSelect = document.form3.ashesDisposition;
-				var ashesDispositionIndex = ashesDispositionSelect.selectedIndex;				
-				ashesDispositionSelect.options[ashesDispositionIndex].text=json.ashesDisposition;
-				
-				var deadReasonSelect = document.form3.deadReason;
-				var deadReasonIndex = deadReasonSelect.selectedIndex;
-				if(json.deadReason!=""){
-					deadReasonSelect.options[deadReasonIndex].text=json.deadReason;
-					form3.deadReason.onchange();
+				if(json.deadResidence!=""){
+					for(var i=0;i<document.getElementById("deadResidence").options.length;i++)
+				    {
+				        if(document.getElementById("deadResidence").options[i].value == json.deadResidence)
+				        {
+				            document.getElementById("deadResidence").options[i].selected=true;
+				            break;
+				        }
+				    }
+					
+					
+				}
+				if(json.operatorRelation!=""){
+					for(var i=0;i<document.getElementById("operatorRelation").options.length;i++)
+				    {
+				        if(document.getElementById("operatorRelation").options[i].value == json.operatorRelation)
+				        {
+				            document.getElementById("operatorRelation").options[i].selected=true;
+				            break;
+				        }
+				    }
+					
+					
+				}
+				if(json.ashesDisposition!=""){
+					for(var i=0;i<document.getElementById("ashesDisposition").options.length;i++)
+				    {
+				        if(document.getElementById("ashesDisposition").options[i].value == json.ashesDisposition)
+				        {
+				            document.getElementById("ashesDisposition").options[i].selected=true;
+				            break;
+				        }
+				    }
+					
 				}
 				
-				var pathogenySelect = document.form3.pathogeny;
-				var pathogenyIndex = pathogenySelect.selectedIndex;
-				pathogenySelect.options[pathogenyIndex].text=json.pathogeny;
+//				var deadResidenceSelect = document.form3.deadResidence;
+//				var deadResidenceIndex = deadResidenceSelect.selectedIndex;				
+//				deadResidenceSelect.options[deadResidenceIndex].text=json.deadResidence;
+//				
+//				var operatorRelationSelect = document.form3.operatorRelation;
+//				var operatorRelationIndex = operatorRelationSelect.selectedIndex;				
+//				operatorRelationSelect.options[operatorRelationIndex].text=json.operatorRelation;
+//				
+//				
+//				var ashesDispositionSelect = document.form3.ashesDisposition;
+//				var ashesDispositionIndex = ashesDispositionSelect.selectedIndex;				
+//				ashesDispositionSelect.options[ashesDispositionIndex].text=json.ashesDisposition;
 				
+				if(json.deadReason!=""){
+					for(var i=0;i<document.getElementById("deadReason").options.length;i++)
+				    {
+				        if(document.getElementById("deadReason").options[i].value == json.deadReason)
+				        {
+				            document.getElementById("deadReason").options[i].selected=true;
+				            break;
+				        }
+				    }
+					
+					form3.deadReason.onchange();
+				}
+				if(json.deadType!=""){
+					for(var i=0;i<document.getElementById("deadKind").options.length;i++)
+				    {
+				        if(document.getElementById("deadKind").options[i].value == json.deadType)
+				        {
+				            document.getElementById("deadKind").options[i].selected=true;
+				            break;
+				        }
+				    }
+				}
+				if(json.pathogeny!=""){
+					
+					for(var i=0;i<document.getElementById("pathogeny").options.length;i++)
+				    {
+				        if(document.getElementById("pathogeny").options[i].value == json.pathogeny)
+				        {
+				            document.getElementById("pathogeny").options[i].selected=true;
+				            break;
+				        }
+				    }
+									
+				}else{
+					document.form3.pathogeny.style.display="none";
+				}
+				if(json.area!=""){
+					for(var i=0;i<document.getElementById("area").options.length;i++)
+				    {
+				        if(document.getElementById("area").options[i].value == json.area)
+				        {
+				            document.getElementById("area").options[i].selected=true;
+				            break;
+				        }
+				    }
+					
+				}
 				
-				var areaSelect = document.form3.area;
-				var areaIndex = areaSelect.selectedIndex;				
-				areaSelect.options[areaIndex].text=json.area;
+//				var areaSelect = document.form3.area;
+//				var areaIndex = areaSelect.selectedIndex;				
+//				areaSelect.options[areaIndex].text=json.area;
 //				var deadTime=json.deadTime;
 //				deadTime=deadTime.substring(0,11);				
 //				form3.deadTime.value=deadTime;

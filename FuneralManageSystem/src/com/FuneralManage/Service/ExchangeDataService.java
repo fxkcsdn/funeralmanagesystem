@@ -11,12 +11,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
 import net.sf.json.JSONObject;
-
 import java.util.UUID;
 
-public class ExchangeDataService extends BaseService
+import org.apache.struts2.views.jsp.ElseTag;
+
+public class ExchangeDataService 
 {
 	public String getUUID()    															//生成32位随机字符ID，即UUID，用于火化内码、出车内码
 	{
@@ -126,14 +126,13 @@ public class ExchangeDataService extends BaseService
 					ashestime = addDateMinut(cremation_end_time, 20);                                             //领灰时间取火化完成时间，向后推20min                 
 					relationship = getRelation(resultSet.getString("operatorRelation"));
 					operator = getOperator(deadid);
-					if(resultSet.getString("pathogeny")==null)
+					if(resultSet.getString("pathogeny").length()<1)
 					{
-						deathDisease = "X";
+						deathDisease = "";
 					}
 					else{
 						deathDisease = getDeathDisease(resultSet.getString("pathogeny"));
 					}
-					
 					standardCode = getDeptCode(resultSet.getString("deadResidence"));
 					if(resultSet.getString("deadSex").equals("男"))
 					{
@@ -216,6 +215,7 @@ public class ExchangeDataService extends BaseService
 					connection=null;
 			}
 		}
+		System.out.println(jsonObject.toString());
 		return jsonObject;
 	}
 	public String getDeptCode(String deadResidence)    //获取12位标准码
@@ -351,7 +351,7 @@ public class ExchangeDataService extends BaseService
 	}
 	public String getDeathDisease(String pathogeny)    //获取病因
 	{
-		String deathCause = "";
+		String deathCause = null;
 		Connection connection = DBDao.openDateBase("dongtai");
 		if(connection!=null)
 		{
@@ -363,10 +363,6 @@ public class ExchangeDataService extends BaseService
 				resultSet = pStatement.executeQuery();
 				while(resultSet.next()){
 					deathCause = resultSet.getString("diseaseCode");
-				}
-				if(deathCause.length()<1)
-				{
-					deathCause = "X";
 				}
 			}
 			catch(SQLException e){
@@ -487,7 +483,7 @@ public class ExchangeDataService extends BaseService
 		return code;
 	}
 	public String getSysDeadID(){                                     //获取DEAD_ID编号
-		String countID = "";
+		String countID = null;
 		SimpleDateFormat df = new SimpleDateFormat("yyyy");
 		String queryYear = df.format(new Date());
 		String queryParam = "SZ320981-"+queryYear+"-%";
@@ -498,30 +494,16 @@ public class ExchangeDataService extends BaseService
 			if(conn!=null)
 			{
 				//String sqlString="select * from dic_city where p_id=?";
-				String sqlString="select DEAD_ID  from FIS_DEAD_INFO where DEAD_ID like? order by DEAD_ID ASC";
+				String sqlString="select count(DEAD_ID) as result  from FIS_DEAD_INFO where DEAD_ID like?";
 				ResultSet resultSet = null;
 				try {
-					PreparedStatement pStatement = conn.prepareStatement(sqlString,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);  //加参数为了能够使用resultset.last()去除最大的已有编号
+					PreparedStatement pStatement = conn.prepareStatement(sqlString);
 					//pStatement.setString(1, "SZ3209032016%"); //盐都
 					pStatement.setString(1, queryParam); //东台 
 					resultSet=pStatement.executeQuery();
-					while(resultSet.next())
-					{
-						resultSet.last();
-						if(resultSet.getString("DEAD_ID")!=null)
-						{
-							countID = resultSet.getString("DEAD_ID").substring(14, 20);
-							countID = "SZ320981-"+queryYear+"-"+format.format((Integer.parseInt(countID)+1));
-						}
-						else{
-							countID = "SZ320981-"+queryYear+"-"+"000001";
-						}
-//						System.out.println(resultSet.getString("DEAD_ID"));
-					}
-					if(countID.length()<1)
-					{
-						countID = "SZ320981-"+queryYear+"-"+"000001";
-					}
+					resultSet.next();
+					String countResult = resultSet.getString("result");
+					countID = "SZ320981-"+queryYear+"-"+format.format((Integer.parseInt(countResult)+1));
 				}
 				catch(SQLException e){
 					e.printStackTrace();
@@ -545,7 +527,7 @@ public class ExchangeDataService extends BaseService
  }
 	public String getApplyID()								//获取业务编号
 	{
-		String countID = "";
+		String countID = null;
 		SimpleDateFormat df = new SimpleDateFormat("yyyy");
 		String queryYear = df.format(new Date());
 		String queryParam = "FZ320981-"+queryYear+"-%";
@@ -556,29 +538,16 @@ public class ExchangeDataService extends BaseService
 			if(conn!=null)
 			{
 				//String sqlString="select * from dic_city where p_id=?";
-				String sqlString="select APPLY_ID  from FIS_APPLY_INFO where APPLY_ID like? order by APPLY_ID ASC";
+				String sqlString="select count(APPLY_ID) as result  from FIS_APPLY_INFO where APPLY_ID like? ";
 				ResultSet resultSet = null;
 				try {
-					PreparedStatement pStatement = conn.prepareStatement(sqlString,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);  //加参数为了能够使用resultset.last()去除最大的已有编号
+					PreparedStatement pStatement = conn.prepareStatement(sqlString);  //加参数为了能够使用resultset.last()去除最大的已有编号
 					//pStatement.setString(1, "SZ3209032016%"); //盐都
 					pStatement.setString(1, queryParam); //东台 
 					resultSet=pStatement.executeQuery();
-					while(resultSet.next())
-					{
-						resultSet.last();
-						if(resultSet.getString("APPLY_ID")!=null)
-						{
-							countID = resultSet.getString("APPLY_ID").substring(14, 20);
-							countID = "FZ320981-"+queryYear+"-"+format.format((Integer.parseInt(countID)+1));
-						}
-						else{
-							countID = "FZ320981-"+queryYear+"-"+"000001";
-						}
-					}
-					if(countID.length()<1)
-					{
-						countID = "FZ320981-"+queryYear+"-"+"000001";
-					}
+					resultSet.next();
+					String countResult = resultSet.getString("result");
+					countID = "FZ320981-"+queryYear+"-"+format.format((Integer.parseInt(countResult)+1));
 				}
 				catch(SQLException e){
 					e.printStackTrace();
@@ -596,7 +565,7 @@ public class ExchangeDataService extends BaseService
 	}
 	public String getCremationTime(String deadid,String timeType)      //火化开始时间、结束时间
 	{
-		String result = "";
+		String result = null;
 		Connection connection = DBDao.openDateBase("dongtai");
 		if(connection!=null){
 			String sql = "SELECT * FROM deadserviceitem WHERE CremationTypeNo = ? AND  deadID = ?";
@@ -631,7 +600,7 @@ public class ExchangeDataService extends BaseService
 	}
 	public String getCarryTime(String deadid,String timeType)          			//接运开始时间、结束时间
 	{
-		String result = "";
+		String result = null;
 		Connection connection = DBDao.openDateBase("dongtai");
 		if(connection!=null){
 			String sql = "SELECT * FROM remainscarry WHERE deadID = ?";
@@ -711,7 +680,11 @@ public class ExchangeDataService extends BaseService
 					ps.setString(10, jsonObject.getString("DEATH_DATE"));
 					ps.setString(11, jsonObject.getString("DEAD_PLACE"));                                     	 //去世地点
 					ps.setString(12, jsonObject.getString("DEATH_CAUSE"));
-					ps.setString(13, jsonObject.getString("DEATH_DISEASE"));
+					if(jsonObject.getString("DEATH_DISEASE").length()<1){
+						ps.setString(13, " ");
+					}else {
+						ps.setString(13, jsonObject.getString("DEATH_DISEASE"));
+					}
 					ps.setString(14, "156");  //国籍
 					ps.setString(15, "01");										 //民族
 					ps.setString(16, "BZ320981-01");                             //办理单位
@@ -824,5 +797,68 @@ public class ExchangeDataService extends BaseService
 			}
 		}
 		return result;
+	}
+	
+	
+	/**
+	 *清空、处理远程服务器数据 ，测试用
+	 */
+	
+	
+	public void deleteData(){
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@10.40.0.210:1521:orcl","orcl_yc","1qaz-pl,");
+			if(conn!=null){
+				String sql_1 = "delete from FIS_DEAD_INFO where DEAD_ID like 'SZ320981-%'";
+				PreparedStatement pStatement1 = conn.prepareStatement(sql_1);
+				int resultSet1 = pStatement1.executeUpdate();
+				String sql_2 = "delete from FIS_PERSONAL_CUSTOM where DEAD_ID like 'SZ320981-%'";
+				PreparedStatement pStatement2 = conn.prepareStatement(sql_2);
+				int resultSet2 = pStatement2.executeUpdate();
+				String sql_3 = "delete from FIS_APPLY_INFO where DEAD_ID like 'SZ320981-%'";
+				PreparedStatement pStatement3 = conn.prepareStatement(sql_3);
+				int resultSet3 = pStatement3.executeUpdate();
+				String sql_4 = "delete from FIS_SERVICE_DRIVE where DEAD_ID like 'SZ320981-%'";
+				PreparedStatement pStatement4 = conn.prepareStatement(sql_4);
+				int resultSet4 = pStatement4.executeUpdate();
+				String sql_5= "delete from FIS_SERVICE_CREMATION where DEAD_ID like 'SZ320981-%'";
+				PreparedStatement pStatement5 = conn.prepareStatement(sql_5);
+				int resultSet5 = pStatement5.executeUpdate();
+				System.out.println(resultSet1);
+				System.out.println(resultSet2);
+				System.out.println(resultSet3);
+				System.out.println(resultSet4);
+				System.out.println(resultSet5);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * 获取数据上传的结果，测试用
+	 */
+	
+	public void testData(){
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@10.40.0.210:1521:orcl","orcl_yc","1qaz-pl,");
+			if(conn!=null){
+				String sql_1 = "select * from FIS_DEAD_INFO where DEAD_ID like 'SZ320981-%'";
+				PreparedStatement pStatement1 = conn.prepareStatement(sql_1);
+				ResultSet resultSet1 = pStatement1.executeQuery();
+				while(resultSet1.next()){
+					System.out.println(resultSet1.getString("DEAD_ID"));
+					System.out.println(resultSet1.getString("BIRTHDAY"));
+					System.out.println(resultSet1.getString("AGE"));
+					System.out.println(resultSet1.getString("DEATH_CAUSE"));
+					System.out.println(resultSet1.getString("DEATH_DISEASE"));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -392,32 +392,88 @@ function showDataCallback(){
 				form4.invoiceNo.value = json.invoiceNo;
 				form4.subsidyNo.value = json.subsidyNo;
 				form4.subsidyMoney.value = json.subsidyMoney;
+				if(json.deadResidence!=""){
+					for(var i=0;i<document.getElementById("deadResidence").options.length;i++)
+				    {
+				        if(document.getElementById("deadResidence").options[i].value == json.deadResidence)
+				        {
+				            document.getElementById("deadResidence").options[i].selected=true;
+				            break;
+				        }
+				    }
+					
+					
+				}
+				if(json.operatorRelation!=""){
+					for(var i=0;i<document.getElementById("operatorRelation").options.length;i++)
+				    {
+				        if(document.getElementById("operatorRelation").options[i].value == json.operatorRelation)
+				        {
+				            document.getElementById("operatorRelation").options[i].selected=true;
+				            break;
+				        }
+				    }
+					
+					
+				}
 				
-				var deadResidenceSelect = document.form4.deadResidence;
-				var deadResidenceIndex = deadResidenceSelect.selectedIndex;				
-				deadResidenceSelect.options[deadResidenceIndex].text=json.deadResidence;
+//				var deadResidenceSelect = document.form4.deadResidence;
+//				var deadResidenceIndex = deadResidenceSelect.selectedIndex;				
+//				deadResidenceSelect.options[deadResidenceIndex].text=json.deadResidence;
+//				
+//				var operatorRelationSelect = document.form4.operatorRelation;
+//				var operatorRelationIndex = operatorRelationSelect.selectedIndex;				
+//				operatorRelationSelect.options[operatorRelationIndex].text=json.operatorRelation;
 				
-				var operatorRelationSelect = document.form4.operatorRelation;
-				var operatorRelationIndex = operatorRelationSelect.selectedIndex;				
-				operatorRelationSelect.options[operatorRelationIndex].text=json.operatorRelation;
+				if(json.pathogeny!=""){
+					for(var i=0;i<document.getElementById("pathogeny").options.length;i++)
+				    {
+				        if(document.getElementById("pathogeny").options[i].value == json.pathogeny)
+				        {
+				            document.getElementById("pathogeny").options[i].selected=true;
+				            break;
+				        }
+				    }
+				}else{
+					document.form4.pathogeny.style.display="none";
+
+				}
 				
-				var pathogenySelect = document.form4.pathogeny;
-				var pathogenyIndex = pathogenySelect.selectedIndex;
-				pathogenySelect.options[pathogenyIndex].text=json.pathogeny;
-				
-				var deadReasonSelect = document.form4.deadReason;
-				var deadReasonIndex = deadReasonSelect.selectedIndex;
 				if(json.deadReason!=""){
-					deadReasonSelect.options[deadReasonIndex].text=json.deadReason;
+					for(var i=0;i<document.getElementById("deadReason").options.length;i++)
+				    {
+				        if(document.getElementById("deadReason").options[i].value == json.deadReason)
+				        {
+				            document.getElementById("deadReason").options[i].selected=true;
+				            break;
+				        }
+				    }
+					
 					form4.deadReason.onchange();
 				}
-				var areaSelect = document.form4.area;
-				var areaIndex = areaSelect.selectedIndex;				
-				areaSelect.options[areaIndex].text=json.area;
+				if(json.area!=""){
+					for(var i=0;i<document.getElementById("area").options.length;i++)
+				    {
+				        if(document.getElementById("area").options[i].value == json.area)
+				        {
+				            document.getElementById("area").options[i].selected=true;
+				            break;
+				        }
+				    }
+					
+				}
 				
-				var ashesDispositionSelect = document.form4.ashesDisposition;
-				var ashesDispositionIndex = ashesDispositionSelect.selectedIndex;				
-				ashesDispositionSelect.options[ashesDispositionIndex].text=json.ashesDisposition;
+				if(json.ashesDisposition!=""){
+					for(var i=0;i<document.getElementById("ashesDisposition").options.length;i++)
+				    {
+				        if(document.getElementById("ashesDisposition").options[i].value == json.ashesDisposition)
+				        {
+				            document.getElementById("ashesDisposition").options[i].selected=true;
+				            break;
+				        }
+				    }
+					
+				}
 				
 				if(json.benefitTime=="0001-01-01 00:00:00"){
 					form4.benefitTime.value="";
@@ -426,11 +482,18 @@ function showDataCallback(){
 					
 					form4.benefitTime.value = json.benefitTime.substring(0,11);
 				}
-				var deadReasonSelect = document.form4.deadReason;
-				var deadReasonIndex = deadReasonSelect.selectedIndex;				
-			 deadReasonSelect.options[deadReasonIndex].text=json.deadReason;
-				
-				form4.deadReason.onchange();
+				if(json.deadReason!=""){
+					for(var i=0;i<document.getElementById("deadReason").options.length;i++)
+				    {
+				        if(document.getElementById("deadReason").options[i].value == json.deadReason)
+				        {
+				            document.getElementById("deadReason").options[i].selected=true;
+				            break;
+				        }
+				    }
+					
+					form4.deadReason.onchange();
+				}
 				
 				form4.remainsCarryBeCost.value=json.remainsCarryBeCost;
 				form4.remainsCarryRealCost.value=json.remainsCarryRealCost;
