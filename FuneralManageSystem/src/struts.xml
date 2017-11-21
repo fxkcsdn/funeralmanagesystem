@@ -695,6 +695,29 @@
 		        <param name="root">returnString</param>
 		    </result>
 		</action>
+		
+		<!-- 查询报损单action -->
+		<action name="queryBreakage" class="com.FuneralManage.Action.QueryBreakageAction">
+		  <result type="json" name="getBreakages">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getPageCount">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 修改报损单action -->
+		<action name="updateBreakage" class="com.FuneralManage.Action.UpdateBreakageAction">
+		  <result type="json" name="getBreakage">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getBreakageDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSaveResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
 
 		
 		<!--—____________________________________12月份 蒋帅新增 ______开始____________________________________ -->
