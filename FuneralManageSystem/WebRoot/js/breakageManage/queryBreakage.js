@@ -133,7 +133,7 @@ function getBreakagesBack(result)
 			td4.innerHTML = data[i].warehouseName;
 			td5.innerHTML = "<input type='button' value='修改' onclick='updateBreakage(this);'/>";
 			td5.align = "center";
-			td6.innerHTML = "<input type='button' value='删除' onclick=''/>";
+			td6.innerHTML = "<input type='button' value='删除' onclick='deleteBreakage(this);'/>";
 			td6.align = "center";
 		}
 	}
@@ -181,4 +181,14 @@ function updateBreakage(obj)
 {
 	var breakageNumber = obj.parentNode.parentNode.cells[0].innerHTML;// 报损单号
 	window.parent.location.reload("breakageManage.jsp?type=update&breakageNumber=" + breakageNumber);
+}
+
+/**
+ * 删除报损单
+ * @param obj
+ */
+function deleteBreakage(obj)
+{
+	var breakageNumber = obj.parentNode.parentNode.cells[0].innerHTML;// 报损单号
+	window.parent.location.reload("breakageManage.jsp?type=delete&breakageNumber=" + breakageNumber);
 }

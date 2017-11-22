@@ -718,6 +718,19 @@
 		    <param name="root">returnString</param>
 		  </result>
 		</action>
+		
+		<!-- 删除报损单action -->
+		<action name="deleteBreakage" class="com.FuneralManage.Action.DeleteBreakageAction">
+		  <result type="json" name="getBreakage">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getBreakageDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getSaveResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
 
 		
 		<!--—____________________________________12月份 蒋帅新增 ______开始____________________________________ -->

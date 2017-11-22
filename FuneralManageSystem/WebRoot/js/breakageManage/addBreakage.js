@@ -381,7 +381,7 @@ function saveBreakageInfo()
 			sendRequest("post", url, data, getSaveBreakageInfoBack);
 		}
 	}
-	else alert("请完善销售单信息！");
+	else alert("请完善报损单信息！");
 	return false;
 }
 

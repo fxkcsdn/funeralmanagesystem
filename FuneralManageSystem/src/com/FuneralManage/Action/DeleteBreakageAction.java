@@ -13,7 +13,7 @@ import com.FuneralManage.Service.TransactionManager;
 import com.FuneralManage.Service.WarehouseBalanceService;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class UpdateBreakageAction extends ActionSupport {
+public class DeleteBreakageAction extends ActionSupport {
 	private static final long serialVersionUID = 1L;
 	private String returnString;// 返回的字符串
 	private String breakageNumber;// 报损单号
@@ -34,11 +34,11 @@ public class UpdateBreakageAction extends ActionSupport {
 	public void setBreakageNumber(String breakageNumber) {
 		this.breakageNumber = breakageNumber;
 	}
-
+	
 	public String getBreakages() {
 		return breakages;
 	}
-
+	
 	public void setBreakages(String breakages) {
 		this.breakages = breakages;
 	}
@@ -70,10 +70,10 @@ public class UpdateBreakageAction extends ActionSupport {
 	}
 	
 	/**
-	 * 保存报损信息
-	 * @return
+	 * 删除报损单信息
+	 * @return 报损单明细信息
 	 */
-	public String saveBreakageInfo()
+	public String saveDeleteInfo()
 	{
 		BreakageService breakageService = new BreakageService();
 		WarehouseBalanceService warehouseBalanceService = new WarehouseBalanceService();
@@ -88,29 +88,15 @@ public class UpdateBreakageAction extends ActionSupport {
 			{
 				// 品名
 				String goodsName = map.get("goodsName");
-				// 库存数量
-				int balanceNumber = Integer.parseInt(map.get("balanceNumber"));
-				// 报损仓库
-				String warehouseName = map.get("warehouseName");
-				// 还原商品库存量
-				warehouseBalanceService.resetBalanceNumber(conn, warehouseName, goodsName, balanceNumber);
-			}
-			// 删除报损单
-			breakageService.deleteBreakage(conn, breakageNumber);
-			// 遍历明细信息
-			for (Map<String, String> map : breakagesList)
-			{
-				// 品名
-				String goodsName = map.get("goodsName");
 				// 报损数量
 				int amount = Integer.parseInt(map.get("amount"));
 				// 报损仓库
 				String warehouseName = map.get("warehouseName");
-				// 新增报损信息
-				breakageService.addBreakage(conn, map, breakageNumber);
-				// 减少库存量
-				warehouseBalanceService.reduceBalanceNumber(conn, warehouseName, goodsName, amount);
+				// 增加商品库存量
+				warehouseBalanceService.increaseBalanceNumber(conn, warehouseName, "", goodsName, "", amount);
 			}
+			// 删除报损单
+			breakageService.deleteBreakage(conn, breakageNumber);
 			// 提交事务
 			transactionManager.commit();
 			returnString = "true";
@@ -122,7 +108,7 @@ public class UpdateBreakageAction extends ActionSupport {
 			returnString = "false";
 		} finally {
 			// 关闭事务
-			transactionManager.close();	
+			transactionManager.close();
 		}
 		return "getSaveResult";
 	}
