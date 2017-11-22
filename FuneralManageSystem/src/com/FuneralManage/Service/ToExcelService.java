@@ -28,7 +28,7 @@ public class ToExcelService extends BaseService{
 			String startTime1=startTime+" 00:00:00";
 			String endTime1=endTime+" 23:59:59";
 						
-			String sql="select deadName,deadId,address,deadSex,deadAge,deadTime,deadReason,inTime,invoiceNo,memberMobile,remainsNumber,subsidyMoney from remainsin where subsidyMoney>0 and inTime between ? and ? order by inTime asc";
+			String sql="select deadName,deadId,address,deadSex,deadAge,deadTime,deadReason,inTime,invoiceNo,memberMobile,remainsNumber,subsidyMoney from remainsin where subsidyMoney>0 and inTime between ? and ? order by DATE_FORMAT (inTime,'%Y-%m-%d') ASC,remainsNumber ASC,remainsOrderNumber ASC";
 			ResultSet rs=null;
 			PreparedStatement ps=null;
 			try{

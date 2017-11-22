@@ -274,7 +274,13 @@ function writePageCallBack() { // 接收查询得到的火化信息
 			for (var i = 0; i < length - 1; i++) {
 
 				var deadId =jsonValue2[i].deadId;
-				var remainsNumber = jsonValue2[i].remainsNumber;
+				if(jsonValue2[i].remainsNumber=="0"){
+					var remainsNumber = "Vip"+jsonValue2[i].remainsOrderNumber;
+				}else{
+					var remainsNumber = jsonValue2[i].remainsNumber;
+					
+				}
+				
 				var deadName = jsonValue2[i].deadName;
 				var deadSex = jsonValue2[i].deadSex;
 				var deadAge = jsonValue2[i].deadAge;
@@ -438,8 +444,14 @@ function writePage2CallBack() { // 接收查询得到的火化信息
 
 				var deadId = jsonValue2[i].deadId;
 				
+				if(jsonValue2[i].remainsNumber!="0"){
+					
+					var remainsNumber = jsonValue2[i].remainsNumber;
 
-				var remainsNumber = jsonValue2[i].remainsNumber;
+				}else{
+					var remainsNumber = "Vip"+jsonValue2[i].remainsOrderNumber;
+
+				}
 
 				var deadName = jsonValue2[i].deadName;
 

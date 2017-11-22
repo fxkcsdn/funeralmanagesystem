@@ -28,7 +28,7 @@ public class QueryBenefitInfoService extends BaseService{
 			String startTime1=startTime+" 00:00:00";
 			String endTime1=endTime+" 23:59:59";
 						
-			String sql="select deadName,deadId,address,deadSex,deadAge,deadTime,deadReason,inTime,invoiceNo,memberMobile,remainsNumber,subsidyMoney,benefitTime,subsidyNo from remainsin where inTime between ? and ? and subsidyMoney>0 order by inTime asc limit ?,10";
+			String sql="select deadName,deadId,address,deadSex,deadAge,deadTime,deadReason,inTime,invoiceNo,memberMobile,remainsNumber,subsidyMoney,benefitTime,subsidyNo from remainsin where inTime between ? and ? and subsidyMoney>0 ORDER BY DATE_FORMAT (inTime,'%Y-%m-%d') ASC,remainsNumber ASC,remainsOrderNumber ASC LIMIT ?,10";
 			ResultSet rs=null;
 			PreparedStatement ps=null;
 			try{

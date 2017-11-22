@@ -27,7 +27,7 @@ public class QueryCremationService extends BaseService{
 			String startTime1=startTime+" 00:00:00";
 			String endTime1=endTime+" 23:59:59";
 						
-			String sql="select deadName,deadId,address,deadSex,deadAge,deadTime,deadReason,inTime,invoiceNo,memberMobile,remainsNumber,subsidyMoney from remainsin where inTime between ? and ? order by inTime asc limit ?,10";
+			String sql="select deadName,deadId,address,deadSex,deadAge,deadTime,deadReason,inTime,invoiceNo,memberMobile,remainsNumber,remainsOrderNumber,subsidyMoney from remainsin where inTime between ? and ? order by DATE_FORMAT (inTime,'%Y-%m-%d') ASC,remainsNumber ASC,remainsOrderNumber ASC limit ?,10";
 			ResultSet rs=null;
 			PreparedStatement ps=null;
 			try{
