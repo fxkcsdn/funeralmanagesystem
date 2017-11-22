@@ -2191,3 +2191,187 @@ function deleteGoodsTable(){
 		goodsInput1[0].checked=false;
 	}
 }
+function personalInfoQuery() { // 查询火化信息
+
+	var pageNumTemp = 1; // 默认当前页为1
+
+	writePage3(pageNumTemp);
+	return false;
+
+}
+function writePage3(pageNumTemp) { // 发送查询惠民补助信息的请求
+
+	deleteTable3(); // 清空表格
+	PageNum = pageNumTemp;
+
+	var startTime = document.form3.startTime2.value; // 开始时间
+	var endTime = document.form3.endTime2.value; // 结束时间
+
+	url = "&startTime=" + startTime + "&endTime=" + endTime;
+
+	url = "pageNum=" + PageNum + url;
+
+	http_request = createHttpRequest();
+
+	http_request.onreadystatechange = writePage3CallBack;
+
+	http_request.open('POST', "QueryCremationAction!queryCremation", false);
+
+	http_request.setRequestHeader("Content-Type",
+			"application/x-www-form-urlencoded");
+
+	http_request.send(url);
+
+	return false;
+}
+function writePage3CallBack() { // 接收查询得到的火化信息
+
+	if (http_request.readyState == 4) {
+		if (http_request.status == 200) {
+
+			var result1 = http_request.responseText;
+			document.getElementById("personalInfo").style.display="";
+			
+			var json = eval("(" + result1 + ")");
+
+	//		var jsonValue = json.returnString;
+
+			var jsonValue2 = eval("(" + json + ")");
+
+			var length = jsonValue2.length;
+
+			// document.getElementById("number").innerText=jsonValue2[length-1].result;
+			document.getElementById("personalExcel").style.display = "";
+			for (var i = 0; i < length - 1; i++) {
+
+				var deadId = jsonValue2[i].deadId;
+
+				var remainsNumber = jsonValue2[i].remainsNumber;
+
+				var deadName = jsonValue2[i].deadName;
+
+				var deadSex = jsonValue2[i].deadSex;
+				
+				var deadAge = jsonValue2[i].deadAge;
+				var address = jsonValue2[i].address;
+				var inTime = jsonValue2[i].inTime;
+				inTime = inTime.substring(0, 10);
+				var remainsNo = jsonValue2[i].remainsNo;
+				var deadTime = jsonValue2[i].deadTime + "";
+				deadTime = deadTime.substring(0, 10);
+				var deadReason = jsonValue2[i].deadReason;
+				var memberMobile = jsonValue2[i].memberMobile;
+				var invoiceNo = jsonValue2[i].invoiceNo;
+				var personalInfo = document.getElementById("personalInfo");
+				var row = personalInfo.insertRow();
+				var cell = row.insertCell();
+				var cell0 = row.insertCell();
+				var cell1 = row.insertCell();
+				var cell2 = row.insertCell();
+				var cell3 = row.insertCell();
+				
+				var cell5 = row.insertCell();
+				var cell6 = row.insertCell();
+				var cell7 = row.insertCell();
+				var cell8 = row.insertCell();
+				var cell9 = row.insertCell();
+				var cell10 = row.insertCell();
+				var checkbox = row.insertCell()
+
+				cell.innerText = inTime;
+				cell0.innerText = remainsNumber;
+				cell1.innerText = deadName;
+				cell2.innerText = deadSex;
+				cell3.innerText = deadAge;
+				
+				cell5.innerText = address;
+				cell6.innerHTML = deadId;
+				cell7.innerHTML = deadTime;
+				cell8.innerText = deadReason;
+				cell9.innerText = memberMobile;
+				cell10.innerText = invoiceNo;
+				checkbox.innerHTML = "<input align='center' type='checkbox' />";
+
+			}
+
+			var count = jsonValue2[length - 1].result;
+
+			if (count != 0 && count % pageSize == 0) {
+				TotalPage = count / pageSize;
+			} else if (count != 0 && count % pageSize != 0) {
+				TotalPage = parseInt(count / pageSize) + 1;
+			}
+			var pageList = GetPaging(PageNum, TotalPage, "writePage3");
+
+			document.getElementById("divNumber2").innerHTML = pageList;
+
+		}
+
+	}
+}
+function deleteTable3() {
+	// 删除惠民补助信息
+	var personalInfo = document.getElementById("personalInfo");
+
+	for (var i = personalInfo.rows.length - 1; i >= 2; i--) {
+
+		personalInfo.deleteRow(i);
+	}
+}
+function ExcelById()
+{
+	var personalInfo = document.getElementById("personalInfo");
+	var deadIdArr = new Array();
+	var num=0;
+	var url="";
+	for (var i=2; i <= personalInfo.rows.length - 1; i++) {
+		
+		var checkbox = personalInfo.rows[i].cells[11].getElementsByTagName("input");
+		if(checkbox[0].checked){
+		var deadId= document.getElementById("personalInfo").rows[i].cells[6].innerHTML; 
+			
+			deadIdArr[num]="{deadId:'"+deadId+"'}";
+			num++;
+		}
+		
+	}
+	var allDeadId=deadIdArr+"";
+	url = url+"allDeadId=" + allDeadId;
+	
+	http_request = createHttpRequest();
+	http_request.onreadystatechange = ExcelByIdCallBack;
+	http_request.open('POST', "CremationToExcelAction!ExcelById", false);
+	http_request.setRequestHeader("Content-Type",
+		"application/x-www-form-urlencoded");	
+	http_request.send(url);
+	return false;// 结束时间
+	
+}
+
+function ExcelByIdCallBack()
+{
+	if (http_request.readyState == 4) {
+		if (http_request.status == 200) {
+
+		
+		}
+	}
+}
+function selectAll(){
+	
+	var personalInfo = document.getElementById("personalInfo");
+	for (var i=2; i <= personalInfo.rows.length - 1; i++) {
+		var checkbox = personalInfo.rows[i].cells[11].getElementsByTagName("input");
+		checkbox[0].checked=true;
+	}
+	
+}
+function cancelAll(){
+	
+	var personalInfo = document.getElementById("personalInfo");
+	for (var i=2; i <= personalInfo.rows.length - 1; i++) {
+		var checkbox = personalInfo.rows[i].cells[11].getElementsByTagName("input");
+		checkbox[0].checked=false;
+	}
+	
+}

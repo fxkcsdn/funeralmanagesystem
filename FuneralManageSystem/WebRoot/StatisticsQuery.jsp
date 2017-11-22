@@ -116,7 +116,7 @@ td,th{
    <thead>   
           
             <tr>
-            <th colspan="11" align="center"><b><font style="font-size:24px">东台市殡仪馆惠民补助信息统计表</font></b>(东台分馆)</th> 
+            <th colspan="14" align="center"><b><font style="font-size:24px">东台市殡仪馆惠民补助信息统计表</font></b>(东台分馆)</th> 
             </tr>
             <tr>
             <th>火化时间</th> 
@@ -132,6 +132,8 @@ td,th{
             <th>死亡原因</th>
             <th>家属电话</th>
             <th>发票号码</th>
+            <th>凭证号</th>
+            <th>办理时间</th>
             
             
             </tr>            

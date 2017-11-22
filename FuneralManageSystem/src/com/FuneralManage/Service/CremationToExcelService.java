@@ -242,9 +242,11 @@ public class CremationToExcelService extends BaseService{
 					sheet.mergeCells(5, 3, 6, 3);
 					label = new Label(5,3, rs1.getString("dealerAddress"));
 					sheet.addCell(label);
-
-					label = new Label(7,3, rs1.getString("dealerId").substring(6, 14));
-					sheet.addCell(label);
+					if(rs1.getString("dealerId")!=""){
+						label = new Label(7,3, rs1.getString("dealerId").substring(6, 14));
+						sheet.addCell(label);
+					}
+					
 					
 					label = new Label(8,3, dealerage);
 					sheet.addCell(label);
