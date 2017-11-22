@@ -99,7 +99,7 @@ public class DeadInfoRegisterService extends BaseService{    										//遗体�
 		int row=0;
 		if(conn!=null){
 			System.out.print("deadInfoRegister中数据库连接成功");
-			String sql = "insert into remainsIn(deadID,deadName,deadSex,memberMobile,remainsNumber,deadType,deadAge,inTime,address,proofUnit,memo,deadReason,deadTime,area,dealerId,dealerName,dealerAddress,directorName,pathogeny,operatorRelation,deadResidence,ashesDisposition,benefitTime)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into remainsIn(deadID,deadName,deadSex,memberMobile,remainsNumber,deadType,deadAge,inTime,address,proofUnit,memo,deadReason,deadTime,area,dealerId,dealerName,dealerAddress,directorName,pathogeny,operatorRelation,deadResidence,ashesDisposition,benefitTime,remainsOrderNumber)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			try
 			{
 				PreparedStatement ps = conn.prepareStatement(sql);
@@ -127,6 +127,7 @@ public class DeadInfoRegisterService extends BaseService{    										//遗体�
 				ps.setString(21, "");
 				ps.setString(22, "");
 				ps.setString(23, "0001-01-01 00:00:00");
+				ps.setInt(24, 0);
 				row = ps.executeUpdate();
 				if (row > 0) 
 				{
@@ -161,7 +162,7 @@ public class DeadInfoRegisterService extends BaseService{    										//遗体�
 		int row=0;
 		if(conn!=null){
 			System.out.print("deadInfoRegister中数据库连接成功");
-			String sql = "insert into remainsIn(deadID,deadName,deadSex,memberMobile,remainsOrderNumber,deadType,deadAge,inTime,address,proofUnit,memo,deadReason,deadTime,area,dealerId,dealerName,dealerAddress,directorName,pathogeny,operatorRelation,deadResidence,ashesDisposition,benefitTime)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into remainsIn(deadID,deadName,deadSex,memberMobile,remainsOrderNumber,deadType,deadAge,inTime,address,proofUnit,memo,deadReason,deadTime,area,dealerId,dealerName,dealerAddress,directorName,pathogeny,operatorRelation,deadResidence,ashesDisposition,benefitTime,remainsNumber)values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			try
 			{
 				PreparedStatement ps = conn.prepareStatement(sql);
@@ -188,6 +189,7 @@ public class DeadInfoRegisterService extends BaseService{    										//遗体�
 				ps.setString(21, "");
 				ps.setString(22, "");
 				ps.setString(23, "0001-01-01 00:00:00");
+				ps.setInt(24, 0);
 				row = ps.executeUpdate();
 				if (row > 0) 
 				{

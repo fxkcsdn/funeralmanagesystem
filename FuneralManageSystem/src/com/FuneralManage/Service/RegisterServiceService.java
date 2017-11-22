@@ -228,6 +228,7 @@ public class RegisterServiceService extends BaseService{//登记服务页面显�
 					this.memberMobile=rs.getString("memberMobile");
 					this.deadNumber=rs.getInt("remainsOrderNumber");
 					
+					
 					Date date=new Date();
 					Timestamp timestamp = rs.getTimestamp("inTime");
 					date=new java.util.Date(timestamp.getTime());

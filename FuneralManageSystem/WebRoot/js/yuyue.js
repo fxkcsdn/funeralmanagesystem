@@ -369,6 +369,7 @@ function showDataCallback(){
 				form4.deadSex.value=json.deadSex;
 				form4.deadAge.value=json.deadAge;
 				form4.deadNumber.value=json.deadNumber;
+				
 				form4.inTime.value=json.inTime;
 				form4.dealerId.value=json.dealerId;
 				form4.dealerName.value=json.dealerName;
