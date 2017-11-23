@@ -93,13 +93,13 @@ public class AddSellAction extends ActionSupport {
 	 * 获取单位和库存数量
 	 * @return 单位和库存数量
 	 */
-	public String getUnitAndNum()
+	public String getUnitAndNumAndPrice()
 	{
 		WarehouseBalanceService warehouseBalanceService = new WarehouseBalanceService();
-		// 根据品名、商品种类获取相应的单位和库存数量
-		List<Map<String, String>> unitAndNum = warehouseBalanceService.getUnitAndNum(warehouseName, goodsType, goodsName);
-		returnString = JSONArray.fromObject(unitAndNum).toString();
-		return "getUnitAndNum";
+		// 根据品名、商品种类获取相应的单位和库存数量、销售价
+		List<Map<String, String>> unitAndNumAndPrice = warehouseBalanceService.getUnitAndNumAndPrice(warehouseName, goodsType, goodsName);
+		returnString = JSONArray.fromObject(unitAndNumAndPrice).toString();
+		return "getUnitAndNumAndPrice";
 	}
 	
 	/**

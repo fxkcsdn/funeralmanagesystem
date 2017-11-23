@@ -146,6 +146,8 @@ public class AuditReceiptAction extends ActionSupport {
 				purchaseDetailService.updateBuyPrice(conn, purchaseNumber, goodsName, new BigDecimal(buyPrice));
 				// 增加库存量
 				warehouseBalanceService.increaseBalanceNumber(conn, warehouseName, goodsType, goodsName, unit, Integer.parseInt(amountIn));
+				// 更新销售价
+				warehouseBalanceService.updateSellPrice(conn, goodsName);
 			}
 			// 遍历已到货商品信息
 			for (int j = 0; j < receiptGoods.size(); j++)

@@ -636,7 +636,7 @@
 			<result type="json" name="getGoodsNames">
 				<param name="root">returnString</param>
 			</result>
-			<result type="json" name="getUnitAndNum">
+			<result type="json" name="getUnitAndNumAndPrice">
 				<param name="root">returnString</param>
 			</result>
 			<result type="json" name="getSaveResult">

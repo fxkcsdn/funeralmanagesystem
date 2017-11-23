@@ -382,15 +382,14 @@ var checkDetail = function()
 	// 遍历表格
 	for (var i = 1; i < detail.rows.length; i++)
 	{
-		// 如果本次收货数量不为空且大于0且入库价不为空
-		if (detail.rows[i].cells[6].getElementsByTagName("input")[0].value != "" 
-				&& parseInt(detail.rows[i].cells[6].getElementsByTagName("input")[0].value) > 0
-				&& detail.rows[i].cells[4].getElementsByTagName("input")[0].value != "")
+		// 如果入库价为空且本次收货数量不为空
+		if (detail.rows[i].cells[4].getElementsByTagName("INPUT")[0].value == "" 
+				&& detail.rows[i].cells[6].getElementsByTagName("INPUT")[0].value != "")
 		{
-			return true;
+			return false;
 		}
 	}
-	return false;
+	return true;
 };
 
 /**

@@ -96,7 +96,7 @@ public class AddBreakageAction extends ActionSupport {
 	{
 		WarehouseBalanceService warehouseBalanceService = new WarehouseBalanceService();
 		// 根据品名、商品种类获取相应的单位和库存数量
-		List<Map<String, String>> unitAndNum = warehouseBalanceService.getUnitAndNum(warehouseName, goodsType, goodsName);
+		List<Map<String, String>> unitAndNum = warehouseBalanceService.getUnitAndNumAndPrice(warehouseName, goodsType, goodsName);
 		returnString = JSONArray.fromObject(unitAndNum).toString();
 		return "getUnitAndNum";
 	}

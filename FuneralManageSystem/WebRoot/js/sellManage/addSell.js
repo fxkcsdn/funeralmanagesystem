@@ -109,7 +109,7 @@ function addRow()
 	var str = "<select id='goodsType" + (parseInt(index) - 1) + "' style='width:120px;' onchange='getGoodsNames(this);'><option value='请选择'>请选择</option></select>";
 	td1.align = "center";
 	td1.innerHTML = str;
-	var str1 = "<select id='goodsName" + (parseInt(index) - 1) + "' style='width:120px;' onchange='getUnitAndNum(this);'><option value='请选择'>请选择</option></select>";
+	var str1 = "<select id='goodsName" + (parseInt(index) - 1) + "' style='width:120px;' onchange='getUnitAndNumAndPrice(this);'><option value='请选择'>请选择</option></select>";
 	td2.align = "center";
 	td2.innerHTML = str1;
 	var str2 = "<input id='unit" + (parseInt(index) - 1) + "' type='text' style='width:60px;' disabled='disabled'/>";
@@ -231,14 +231,15 @@ function getGoodsNamesResult(result)
 }
 
 /**
- * 获取单位和库存数量
+ * 获取单位和库存数量、销售价
  */
-function getUnitAndNum(obj)
+function getUnitAndNumAndPrice(obj)
 {
 	var goodsName = obj;// 品名
 	var goodsType = obj.parentNode.previousElementSibling.getElementsByTagName("select")[0];// 商品种类
 	var unit = obj.parentNode.nextElementSibling.getElementsByTagName("input")[0];// 单位
 	var balanceNumber = obj.parentNode.nextElementSibling.nextElementSibling.getElementsByTagName("input")[0];// 库存数量
+	var sellPrice = obj.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.getElementsByTagName("input")[0];// 销售价
 	// 保存品名
 	goodsNameCopy = goodsName;
 	// 如果商品种类和品名有一个没有选择，则清空单位文本框
@@ -246,26 +247,29 @@ function getUnitAndNum(obj)
 	{
 		unit.value = "";
 		balanceNumber.value = "";
+		sellPrice.value = "";
 	}
 	else
 	{
 		var data = "goodsType=" + goodsType.value + "&goodsName=" + obj.value + "&warehouseName=" + document.getElementById("warehouseName").value;
-		var url = "/FuneralManageSystem/addSell!getUnitAndNum";
-		sendRequest("post", url, data, getUnitAndNumResult);
+		var url = "/FuneralManageSystem/addSell!getUnitAndNumAndPrice";
+		sendRequest("post", url, data, getUnitAndNumAndPriceResult);
 	}
 }
 
 /**
  * 获取单位和库存数据
  */
-function getUnitAndNumResult(result)
+function getUnitAndNumAndPriceResult(result)
 {
 	var unit = goodsNameCopy.parentNode.nextElementSibling.getElementsByTagName("input")[0];// 单位
 	var balanceNumber = goodsNameCopy.parentNode.nextElementSibling.nextElementSibling.getElementsByTagName("input")[0];// 库存数量
+	var sellPrice = goodsNameCopy.parentNode.nextElementSibling.nextElementSibling.nextElementSibling.getElementsByTagName("input")[0];// 销售价
 	var data = eval("(" + eval("(" + result + ")") + ")");
-	// 获取单位和库存数量
+	// 获取单位和库存数量、销售价
 	unit.value = data[0].unit;
 	balanceNumber.value = data[0].balanceNumber;
+	sellPrice.value = data[0].sellPrice;
 }
 
 /**

@@ -31,7 +31,7 @@ public class WarehouseBalanceService {
 			PreparedStatement ps = null;
 			ResultSet rs = null;
 			String sql = "select count(*) from warehouseBalance where warehouseName=? and goodsName=?";
-			String sql1 = "insert into warehouseBalance values(?,?,?,?,?)";
+			String sql1 = "insert into warehouseBalance values(?,?,?,?,?,?)";
 			String sql2 = "update warehouseBalance set balanceNumber=balanceNumber+? where warehouseName=? and goodsName=?";
 			try {
 				long count = 0L;
@@ -63,6 +63,7 @@ public class WarehouseBalanceService {
 					ps.setString(3, goodsName);
 					ps.setString(4, unit);
 					ps.setInt(5, amountIn);
+					ps.setBigDecimal(6, null);
 					int result = ps.executeUpdate();
 					if (result > 0) return true;
 				}
@@ -234,13 +235,13 @@ public class WarehouseBalanceService {
 	}
 
 	/**
-	 * 获取商品单位和库存数量
+	 * 获取商品单位和库存数量、销售价
 	 * @param warehouseName 仓库名
 	 * @param goodsType 商品种类
 	 * @param goodsName 品名
-	 * @return 单位和库存数量
+	 * @return 单位和库存数量、销售价
 	 */
-	public List<Map<String, String>> getUnitAndNum(String warehouseName,
+	public List<Map<String, String>> getUnitAndNumAndPrice(String warehouseName,
 			String goodsType, String goodsName) {
 		// TODO Auto-generated method stub
 		Connection conn = DBDao.openDateBase("dongtai");
@@ -248,7 +249,7 @@ public class WarehouseBalanceService {
 		{
 			PreparedStatement ps = null;
 			ResultSet rs = null;
-			String sql = "select unit,balanceNumber from warehouseBalance where warehouseName=? and goodsType=? and goodsName=?";
+			String sql = "select unit,balanceNumber,sellPrice from warehouseBalance where warehouseName=? and goodsType=? and goodsName=?";
 			try {
 				List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 				ps = conn.prepareStatement(sql);
@@ -308,6 +309,28 @@ public class WarehouseBalanceService {
 				ps.setInt(1, balanceNumber);
 				ps.setString(2, warehouseName);
 				ps.setString(3, goodsName);
+				int result = ps.executeUpdate();
+				if (result > 0) return true;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				throw new RuntimeException(e.getMessage());
+			} 
+		}
+		return false;
+	}
+
+	/**
+	 * 更新销售价
+	 * @param conn 数据库连接对象
+	 * @param goodsName 品名
+	 * @return true代表更新成功，false代表失败
+	 */
+	public boolean updateSellPrice(Connection conn, String goodsName) {
+		// TODO Auto-generated method stub
+		if (conn != null)
+		{
+			String sql = "update warehouseBalance wb,goods g set wb.sellPrice=g.sellPrice where wb.goodsName=g.goodsName ";
+			try (PreparedStatement ps = conn.prepareStatement(sql)) {
 				int result = ps.executeUpdate();
 				if (result > 0) return true;
 			} catch (SQLException e) {
