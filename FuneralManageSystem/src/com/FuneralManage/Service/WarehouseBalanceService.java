@@ -10,8 +10,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WarehouseBalanceService {
+import javax.sql.DataSource;
+
+import com.FuneralManage.Dao.WarehouseBalanceDao;
+import com.FuneralManage.Utility.TransactionManager;
+
+public class WarehouseBalanceService extends BaseService {
 	private String returnString;// 返回的字符串数据
+	private WarehouseBalanceDao warehouseBalanceDao = new WarehouseBalanceDao(dataSource);
+	private TransactionManager transactionManager=new TransactionManager(dataSource);
 
 	/**
 	 * 增加库存量
@@ -339,6 +346,35 @@ public class WarehouseBalanceService {
 			} 
 		}
 		return false;
+	}
+
+	/**
+	 * 添加商品信息
+	 * @param warehouseName 仓库名称
+	 * @param goodsList 商品信息
+	 * @return true代表添加成功，false代表失败
+	 */
+	public boolean addGoods(String warehouseName,
+			List<Map<String, String>> goodsList) {
+		// TODO Auto-generated method stub
+		try {
+			transactionManager.start();
+			// 遍历商品信息
+			for (Map<String, String> map : goodsList)
+			{
+				// 添加商品信息
+				warehouseBalanceDao.addGoodTran(warehouseName, map);
+			}
+			transactionManager.commit();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			transactionManager.rollback();
+			return false;
+		} finally {
+			transactionManager.close();
+		}
+		return true;
 	}
 
 }

@@ -731,6 +731,22 @@
 		    <param name="root">returnString</param>
 		  </result>
 		</action>
+		
+		<!-- 期初入库action -->
+		<action name="warehouseBegin" class="com.FuneralManage.Action.WarehouseBeginAction">
+		    <result type="json" name="getGoodsTypes">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getGoodsNames">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getUnitAndPrice">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getSaveResult">
+		        <param name="root">returnString</param>
+		    </result>
+		</action>
 
 		
 		<!--—____________________________________12月份 蒋帅新增 ______开始____________________________________ -->

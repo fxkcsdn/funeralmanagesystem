@@ -157,4 +157,53 @@ public class GoodsService {
 		return returnString;
 	}
 
+	/**
+	 * 获取单位和销售价
+	 * @param goodsType 商品种类
+	 * @param goodsName 品名
+	 * @return 单位和销售价
+	 */
+	public String getUnitAndPrice(String goodsType, String goodsName) {
+		// TODO Auto-generated method stub
+		// 连接数据库
+		Connection conn = DBDao.openDateBase("dongtai");
+		if (conn != null) {
+			String sql = "select distinct unit,sellPrice from goods where goodsType=? and goodsName=?";
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			try {
+				String result = "";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, goodsType);
+				ps.setString(2, goodsName);
+				// 执行sql语句
+				rs = ps.executeQuery();
+				// 遍历每条记录
+				while (rs.next()) {
+					result = result + "{unit:\"" + rs.getString("unit")
+							+ "\",sellPrice:\"" + rs.getString("sellPrice") + "\"},";
+				}
+				// 去掉最后一个逗号
+				result = result.substring(0, result.length() - 1);
+				returnString = "[" + result + "]";
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					// 关闭资源
+					if (rs != null)
+						rs.close();
+					if (ps != null)
+						ps.close();
+					if (conn != null)
+						conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return returnString;
+	}
+
 }

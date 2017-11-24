@@ -71,7 +71,7 @@
 		<!-- by jixiang start -->
 		<tr height="8%">
 			<td width="100%" align="center">
-				<a href="" target="right" style="font-size:20px">期初入库</a>
+				<a href="warehouseBeginManage.jsp" target="right" style="font-size:20px">期初入库</a>
 			</td>
 		</tr>
 		
