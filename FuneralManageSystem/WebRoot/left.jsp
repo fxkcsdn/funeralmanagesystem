@@ -107,7 +107,7 @@
 		
 		<tr height="8%">
 			<td width="100%" align="center">
-				<a href="" target="right" style="font-size:20px">╡ж©Бел╣Ц</a>
+				<a href="warehouseCheckManage.jsp" target="right" style="font-size:20px">╡ж©Бел╣Ц</a>
 			</td>
 		</tr>
 		<!-- by jixiang end -->

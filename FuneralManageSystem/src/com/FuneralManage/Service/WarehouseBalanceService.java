@@ -12,12 +12,12 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import com.FuneralManage.Dao.WarehouseBalanceDao;
+import com.FuneralManage.Dao.WarehouseBalanceDAO;
 import com.FuneralManage.Utility.TransactionManager;
 
 public class WarehouseBalanceService extends BaseService {
 	private String returnString;// 返回的字符串数据
-	private WarehouseBalanceDao warehouseBalanceDao = new WarehouseBalanceDao(dataSource);
+	private WarehouseBalanceDAO warehouseBalanceDao = new WarehouseBalanceDAO(dataSource);
 	private TransactionManager transactionManager=new TransactionManager(dataSource);
 
 	/**
@@ -375,6 +375,17 @@ public class WarehouseBalanceService extends BaseService {
 			transactionManager.close();
 		}
 		return true;
+	}
+
+	/**
+	 * 获取该仓库里的商品信息
+	 * @param warehouseName 仓库名称
+	 * @return 商品信息
+	 */
+	public String getGoodsInWarehouse(String warehouseName) {
+		// TODO Auto-generated method stub
+		// 获取该仓库里的商品信息
+		return warehouseBalanceDao.getGoodsInWarehouse(warehouseName);
 	}
 
 }
