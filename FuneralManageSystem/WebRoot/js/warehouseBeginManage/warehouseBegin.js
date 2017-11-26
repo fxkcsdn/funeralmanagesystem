@@ -290,6 +290,7 @@ function getGoods()
 function saveWarehouseBeginInfo()
 {
 	var warehouseName = document.getElementById("warehouseName");// 仓库
+	var table = document.getElementById("goodsInfo");// 表格
 	// 如果期初入库信息正确
 	if (checkWarehouseBeginInfo())
 	{
