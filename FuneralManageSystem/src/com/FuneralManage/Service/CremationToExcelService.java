@@ -9,7 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import jxl.Cell;
 import jxl.Workbook;
@@ -22,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.FuneralManage.Utility.CopyFile;
+import com.FuneralManage.Utility.change;
 
 
 
@@ -31,6 +35,9 @@ public class CremationToExcelService extends BaseService{
 	private  String itemName;
 	private String message;
 	private String memo;
+	private int totalBeCost;
+	private int totalRealCost;
+	private int totalCost;
 	 Cell cell = null;
 
 	public String getMemo() {
@@ -118,7 +125,10 @@ public class CremationToExcelService extends BaseService{
 	public String ExcelById(String deadId )throws SQLException, Exception {
 		Connection conn = DBDao.openDateBase("dongtai");
 		if (conn != null) {
-					
+			
+			totalBeCost=0;
+			totalRealCost=0;
+			totalCost=0;		
 			PreparedStatement ps1 =null;
 			PreparedStatement ps2 =null;
 			PreparedStatement ps3 =null;
@@ -135,7 +145,7 @@ public class CremationToExcelService extends BaseService{
 //		        }
 //		        CopyFile.copyFile("C:/Users/zy/Desktop/模版.xls","D:/逝者详单信息Excel表/"+fileName);
 				// 表格要导出的目录
-					String outPath = "D:\\逝者详单信息Excel表\\test.xls";
+					String outPath = "D:\\逝者详单信息Excel表\\"+fileName;
 					FileOutputStream is = new FileOutputStream(outPath);
 					// 模板文件路径
 					File sourceXlsFile = new File("D:\\逝者详单信息Excel表\\模版.xls");
@@ -147,29 +157,32 @@ public class CremationToExcelService extends BaseService{
 		            WritableSheet sheet = wwb.getSheet(0);//工作表  
 
 					Label label = null;
-					label = new Label(1,1, "%%");
-					sheet.addCell(label);
+					
 					String sql1="select * from remainsin where deadID=?";
-//					String sql2="select urnName,urnBeCost,urnRealCost from deadchosenurn where deadID=?";
-//					String sql3="select goodsName,goodsBeCost,goodsRealCost from deadfuneralgoods where deadID=?";
-//					String sql4="select cremationTypeNo,cremationItemNo,itemBeCost,itemRealCost from deadserviceitem where deadID=?";
+					String sql2="select urnName,urnBeCost,urnRealCost from deadchosenurn where deadID=?";
+					String sql3="select goodsName,goodsBeCost,goodsRealCost from deadfuneralgoods where deadID=?";
+					String sql4="select cremationTypeNo,cremationItemNo,itemBeCost,itemRealCost from deadserviceitem where deadID=?";
 					try {
 //				
 					ps1 = conn.prepareStatement(sql1);
 					ps1.setString(1, deadId);
-//					ps2 = conn.prepareStatement(sql2);
-//					ps2.setString(1, deadId);
-//					ps3 = conn.prepareStatement(sql3);
-//					ps3.setString(1, deadId);
-//					ps4 = conn.prepareStatement(sql4);
-//					ps4.setString(1, deadId);
+					ps2 = conn.prepareStatement(sql2);
+					ps2.setString(1, deadId);
+					ps3 = conn.prepareStatement(sql3);
+					ps3.setString(1, deadId);
+					ps4 = conn.prepareStatement(sql4);
+					ps4.setString(1, deadId);
 					rs1 = ps1.executeQuery();
-//					rs2 = ps2.executeQuery();
-//					rs3 = ps3.executeQuery();
-//					rs4 = ps4.executeQuery();
-//				    
+					rs2 = ps2.executeQuery();
+					rs3 = ps3.executeQuery();
+					rs4 = ps4.executeQuery();
+				    
 					Calendar a=Calendar.getInstance();
+					
 					int year = a.get(Calendar.YEAR);
+					Date date=new Date();
+					DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String time=format.format(date);
 					
 				while (rs1.next()) {
 					String deadYear1=rs1.getString("deadID").substring(6, 10);
@@ -180,7 +193,9 @@ public class CremationToExcelService extends BaseService{
 					String age = year-deadYear+"";
 					String dealerage = year-dealerYear+"";
 					String deadName = rs1.getString("deadName");
-										
+					
+					label = new Label(3,0, rs1.getString("inTime"));
+					sheet.addCell(label);
 					label = new Label(1,2, deadName);
 					sheet.addCell(label);
 					
@@ -259,81 +274,126 @@ public class CremationToExcelService extends BaseService{
 					}else {
 						no=rs1.getInt("remainsNumber");
 					}
-					label = new Label(1, 15, no+"");
+					label = new Label(1, 0, no+"");
+					sheet.addCell(label);
+					label = new Label(3, 14, no+"");
+					sheet.addCell(label);
+					label = new Label(9, 15, time);
 					sheet.addCell(label);
 					
 				}
-//								
-//				while (rs2.next()) {
-//					
-//					String urnName = rs2.getString("urnName");
-//					String urnBeCost = rs2.getString("urnBeCost");	
-//					String urnRealCost = rs2.getString("urnRealCost");	
-//					label = new Label(9, 23, urnName);
-//					sheet.addCell(label);
-//					label = new Label(10, 23, urnBeCost);
-//					sheet.addCell(label);
-//					label = new Label(11, 23, urnRealCost);
-//					sheet.addCell(label);
-//				}
-//				
-//				label = new Label(10, 15, a.toString());
-//				sheet.addCell(label);
-//				
-//				
-////				if (rs3.next()){
-////        			String value = rs3.getString("goodsName");
-////        			for (int j = 18; j < 27; j++) {   
-////        				        Cell[] cells = sheet.getRow(j);   
-////        				         for(int k=0;k<12;k++)
-////        				        	 if (value==cells[k].getContents()) {
-////        				        		 label = new Label(k+1, j, rs3.getString("itemBeCost"));
-////        				        		 sheet.addCell(label);
-////        				        		 label = new Label(k+2, j, rs3.getString("itemRealCost"));
-////        				        		 sheet.addCell(label);
-////        				        	 }
-////        				                 
-////        				                 }   
-////        				             }
-//                                                   		            								
-//
-//				while (rs4.next()) {
-//					String cremationTypeNo = rs4.getString("cremationTypeNo");		               
-//					String cremationItemNo = rs4.getString("cremationItemNo");
-//					String itemBeCost = rs4.getString("itemBeCost");		               
-//					String itemRealCost = rs4.getString("itemRealCost");
-//		            String itemName =   getTypeNumber(cremationTypeNo,cremationItemNo);
-//		            
-//		            if (cremationTypeNo.equals("01")) {
-//		            	   label = new Label(1, 20, itemName);
-//			               sheet.addCell(label);
-//			               label = new Label(2, 20, itemBeCost);
-//			               sheet.addCell(label);
-//			               label = new Label(3, 20, itemRealCost);
-//			               sheet.addCell(label);
-//					   }
-//		            if (cremationTypeNo.equals("02")){
-//						label = new Label(1, 21, itemName);
-//			            sheet.addCell(label);
-//			            label = new Label(2, 21, itemBeCost);
-//			            sheet.addCell(label);
-//			            label = new Label(3, 21, itemRealCost);
-//			            sheet.addCell(label);
-//						
-//					 }
-//		            if (cremationTypeNo.equals("03")) {
-//						label = new Label(1, 18, itemName);
-//			            sheet.addCell(label);
-//			            label = new Label(2, 18, itemBeCost);
-//			            sheet.addCell(label);
-//			            label = new Label(3, 18, itemRealCost);
-//			            sheet.addCell(label);
-//					}
-//			
-//				}
+								
+				while (rs2.next()) {
+					
+					String urnName = rs2.getString("urnName");
+					int urnBeCost = rs2.getInt("urnBeCost");	
+					int urnRealCost = rs2.getInt("urnRealCost");
+					int temp2 = urnBeCost-urnRealCost;
+					label = new Label(9, 23, urnName);
+					sheet.addCell(label);
+					label = new Label(10, 23, urnBeCost+"");
+					sheet.addCell(label);
+					if (temp2>0) {
+						label = new Label(11, 23, "-"+temp2);
+						sheet.addCell(label);
+					}
+					
+					totalBeCost=totalBeCost+urnBeCost;
+					totalRealCost=totalRealCost+temp2;
+				}
+				
+			
+				while (rs3.next()){
+       			String value = rs3.getString("goodsName");
+       			int  goodsBeCost=rs3.getInt("goodsBeCost");
+       			int  goodsRealCost=rs3.getInt("goodsBeCost");
+       			int  temp3 = goodsBeCost-goodsRealCost;
+       				totalBeCost=totalBeCost+goodsBeCost;
+       				totalRealCost=totalRealCost+temp3;
+        			for (int j = 18; j < 27; j++) {   
+        				        
+        				         for(int k=0;k<12;k++){
+        				        	 Cell cell = sheet.getCell(k, j);
+        				             if (cell.getContents()!="") {
+        				            	 if (value.equals(cell.getContents().toString())) {
+            				        		 label = new Label(k+2, j, rs3.getString("goodsBeCost"));
+            				        		 sheet.addCell(label);
+            				        		 if (temp3>0) {
+            				        			 label = new Label(k+3, j, temp3+"");
+                				        		 sheet.addCell(label);
+               				        		 
+											}
+            				        		 break;
+            				        	 }
+									}
+        				        	 
+        				         }
+        				                 
+        				                 }   
+        				             }
+                                                   		            								
+
+				while (rs4.next()) {
+					String cremationTypeNo = rs4.getString("cremationTypeNo");		               
+					String cremationItemNo = rs4.getString("cremationItemNo");
+					int itemBeCost = rs4.getInt("itemBeCost");		               
+					int itemRealCost = rs4.getInt("itemRealCost");
+					int temp1=itemBeCost-itemRealCost;
+						totalBeCost=totalBeCost+itemBeCost;
+						totalRealCost=totalRealCost+temp1;
+					
+		            String itemName = getTypeNumber(cremationTypeNo,cremationItemNo);
+		            
+		            if (cremationTypeNo.equals("01")) {
+		            	   label = new Label(1, 20, itemName);
+			               sheet.addCell(label);
+			               label = new Label(2, 20, itemBeCost+"");
+			               sheet.addCell(label);
+			               if (temp1>0) {
+			            	   label = new Label(3, 20, "-"+temp1);
+				               sheet.addCell(label);
+						}
+			               
+					   }
+		            if (cremationTypeNo.equals("02")){
+						label = new Label(1, 21, itemName);
+			            sheet.addCell(label);
+			            label = new Label(2, 21, itemBeCost+"");
+			            sheet.addCell(label);
+			            if (temp1>0) {
+			            	label = new Label(3, 21, "-"+temp1);
+				            sheet.addCell(label);
+						}
+			            
+						
+					 }
+		            if (cremationTypeNo.equals("03")) {
+						label = new Label(1, 18, itemName);
+			            sheet.addCell(label);
+			            label = new Label(2, 18, itemBeCost+"");
+			            sheet.addCell(label);
+			            if (temp1>0) {
+			            	label = new Label(3, 18, "-"+temp1);
+				            sheet.addCell(label);
+						}
+			            
+					}
+			
+				}
+				totalCost=totalBeCost-totalRealCost;
+				String costChinese = change.NumberToChn(totalCost);
+				label = new Label(1, 27, totalBeCost+"");
+	            sheet.addCell(label);
+	            label = new Label(5, 27, totalRealCost+"");
+	            sheet.addCell(label);
+	            label = new Label(1, 28, totalCost+"");
+	            sheet.addCell(label);
+	            label = new Label(5, 28, costChinese+"");
+	            sheet.addCell(label);
 				wwb.write();
 				wwb.close();
-//				memo="成功生成逝者excel";
+				memo="成功生成逝者excel";
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 				memo="生成逝者excel失败！";
@@ -341,15 +401,15 @@ public class CremationToExcelService extends BaseService{
 			} finally {
 				rwb.close();
 				rs1.close();
-//				rs2.close();
-//				rs3.close();
-//				rs4.close();
-//				ps1.close();
-//				ps2.close();
-//				ps3.close();
-//				ps4.close();
+				rs2.close();
+				rs3.close();
+				rs4.close();
+				ps1.close();
+				ps2.close();
+				ps3.close();
+				ps4.close();
 				conn.close();
-//			}
+			
 					
 					
 			}			

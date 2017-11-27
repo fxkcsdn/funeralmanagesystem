@@ -94,8 +94,8 @@ public class CremationToExcelAction extends ActionSupport{
 				for(int i=0;i<jsonArrayIdArray.size();i++){
 					JSONObject personalId = jsonArrayIdArray.getJSONObject(i);  // 遍历 jsonarray 数组，把每一个对象转成 json 对象
 					deadId = personalId.getString("deadId");
-					String returnString1 = CremationToExcelDao.ExcelById(deadId);		
-					returnString = returnString1.toString();
+					 CremationToExcelDao.ExcelById(deadId);		
+					returnString = "生成逝者excel成功";
 				}
 			}
 		}

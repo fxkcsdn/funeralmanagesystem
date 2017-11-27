@@ -2352,7 +2352,10 @@ function ExcelByIdCallBack()
 {
 	if (http_request.readyState == 4) {
 		if (http_request.status == 200) {
-
+			var result = http_request.responseText;
+			
+			var json = eval("(" + result + ")");
+			alert(json);
 		
 		}
 	}
