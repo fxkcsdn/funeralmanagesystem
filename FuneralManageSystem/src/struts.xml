@@ -757,6 +757,29 @@
 		    <param name="root">returnString</param>
 		  </result>
 		</action>
+		
+		<!-- 查询盘点单action -->
+		<action name="queryWarehouseCheck" class="com.FuneralManage.Action.QueryWarehouseCheckAction">
+		  <result type="json" name="getWarehouseChecks">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getPageCount">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
+		
+		<!-- 修改盘点单action -->
+		<action name="updateWarehouseCheck" class="com.FuneralManage.Action.UpdateWarehouseCheckAction">
+		  <result type="json" name="getWarehouseCheck">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getWarehouseCheckDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getUpdateResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
 
 		
 		<!--—____________________________________12月份 蒋帅新增 ______开始____________________________________ -->

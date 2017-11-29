@@ -21,7 +21,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script src="js/My97DatePicker/WdatePicker.js">
 	//这是一个时间控件
     </script>
-    <script type="text/javascript" src="js/sellManage/updateSell.js"></script>
+    <script type="text/javascript" src="js/warehouseCheckManage/updateWarehouseCheck.js"></script>
     <script type="text/javascript" src="js/paging.js"></script>
     <link href="css/SpryTabbedPanels.css" rel="stylesheet" type="text/css">
     <style type="text/css">
@@ -33,35 +33,34 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    <form id="form1" name="form1" method="post" action="" onsubmit="return saveSellInfo();">
+    <form id="form1" name="form1" method="post" action="" onsubmit="return saveWarehouseCheckInfo();">
       <table>
         <tr>
-          <td>当前销售单号：</td>
-          <td><input type="text" id="sellNumber" name="sellNumber" disabled="disabled"/></td>
+          <td>当前盘点单号：</td>
+          <td><input type="text" id="warehouseCheckNumber" name="warehouseCheckNumber" disabled="disabled"/></td>
           <td>业务人员：</td>
           <td><input type="text" id="staffName" name="staffName" required="required"/></td>
-          <td>销售日期：</td>
-          <td><input type="text" id="sellDate" name="sellDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',readOnly:true,minDate:''})" onchange="checkDate();"></td>
+          <td>盘点日期：</td>
+          <td><input type="text" id="checkDate" name="checkDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',readOnly:true,minDate:''})" onchange="checkCheckDate();"></td>
         </tr>
         <tr>
-          <td>销售仓库：</td>
+          <td>盘点仓库：</td>
           <td><input type="text" id="warehouseName" name="warehouseName" disabled="disabled"/></td>
         </tr>
         <tr>
-          <td colspan="6" align="right"><input id="saveButton" type="submit" value="提交" style="width:50px; margin-right:10px;"/><input id="printButton" type="button" value="打印" disabled="disabled" onclick=""/></td>
+          <td colspan="6" align="right"><input id="saveButton" type="submit" value="提交"/></td>
         </tr>
       </table>
-      <p><b>销售详细信息：</b></p>
+      <p><b>盘点详细信息：</b></p>
       <table id="goodsInfo" border="1">
         <thead>
           <tr>
             <th width="150px">商品种类</th>
             <th width="150px">品名</th>
-            <th width="80px">单位</th>
-            <th width="120px">库存数量</th>
-            <th width="120px">销售价</th>
-            <th width="120px">销售数量</th>
-            <th width="120px">销售金额</th>
+            <th width="100px">单位</th>
+            <th width="120px">理论数量</th>
+            <th width="120px">实际数量</th>
+            <th width="120px">盈亏数量</th>
           </tr>
         </thead>
         <tbody>

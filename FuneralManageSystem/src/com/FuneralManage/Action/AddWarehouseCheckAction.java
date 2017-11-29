@@ -62,6 +62,12 @@ public class AddWarehouseCheckAction extends ActionSupport {
 		JSONObject jsonObject=JSONObject.fromObject(goods);
 		// 获取商品信息
 		List<Map<String, String>> goodsList = jsonObject.getJSONArray("data");
+		// 如果没有盘点信息
+		if (goodsList.size() == 0) 
+		{
+			returnString = "true";
+			return "getAddResult";
+		}
 		String warehouseCheckNumber = NumberUtil.createWarehouseCheckNumber(goodsList.get(0).get("checkDate"));
 		// 添加盘点信息
 		boolean result = warehouseCheckService.addWarehouseCheck(warehouseCheckNumber, goodsList);

@@ -41,7 +41,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <td>业务人员：</td>
           <td><input type="text" id="staffName" name="staffName" required="required"/></td>
           <td>报损日期：</td>
-          <td><input type="text" id="breakageDate" name="breakageDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',readOnly:true,minDate:'%y-%M-{%d}'})" onchange="checkDate();"></td>
+          <td><input type="text" id="breakageDate" name="breakageDate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',readOnly:true,minDate:''})" onchange="checkDate();"></td>
         </tr>
         <tr>
           <td>报损仓库：</td>
