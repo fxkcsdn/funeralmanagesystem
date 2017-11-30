@@ -1,5 +1,5 @@
 /**
- * 修改盘点单界面对应的脚本
+ * 删除盘点单界面对应的脚本
  */
 
 /**
@@ -62,7 +62,7 @@ var sendRequest = function(method, url, data, getResult)
 /**
  * 页面加载时触发该事件
  */
-window.parent.document.getElementById("TabbedPanels1").children[0].children[2].onclick = function()
+window.parent.document.getElementById("TabbedPanels1").children[0].children[3].onclick = function()
 {
   var type = window.parent.document.getElementById("typeStorage").value;// 获取父页面type
   var warehouseCheckNumber = window.parent.document.getElementById("warehouseCheckNumberStorage").value;// 盘点单号
@@ -92,7 +92,7 @@ window.parent.document.getElementById("TabbedPanels1").children[0].children[2].o
 function getWarehouseCheck(warehouseCheckNumber)
 {
 	var data = "warehouseCheckNumber=" + warehouseCheckNumber;
-	var url = "/FuneralManageSystem/updateWarehouseCheck!getWarehouseCheck";
+	var url = "/FuneralManageSystem/deleteWarehouseCheck!getWarehouseCheck";
 	sendRequest("post", url, data, getWarehouseCheckBack);
 }
 
@@ -119,7 +119,7 @@ function getWarehouseCheckBack(result)
 function getWarehouseCheckDetails(warehouseCheckNumber)
 {
 	var data = "warehouseCheckNumber=" + warehouseCheckNumber;
-	var url = "/FuneralManageSystem/updateWarehouseCheck!getWarehouseCheckDetails";
+	var url = "/FuneralManageSystem/deleteWarehouseCheck!getWarehouseCheckDetails";
 	sendRequest("post", url, data, getWarehouseCheckDetailsBack);
 }
 
@@ -149,71 +149,10 @@ function getWarehouseCheckDetailsBack(result)
 		td3.align = "center";
 		td4.innerHTML = "<input type='text' style='width:100px;' value='" + (parseInt(data[i].balanceNumber) - parseInt(data[i].amountDifference)) + "' disabled='disabled'/>";
 		td4.align = "center";
-		td5.innerHTML = "<input type='text' style='width:100px;' value='" + data[i].realAmount + "' required='required' onchange='checkAmount(this);'/>";
+		td5.innerHTML = "<input type='text' style='width:100px;' value='" + data[i].realAmount + "' disabled='disabled'/>";
 		td5.align = "center";
 		td6.innerHTML = "<input type='text' style='width:100px;' value='" + (parseInt(data[i].realAmount) - parseInt(data[i].balanceNumber) + parseInt(data[i].amountDifference)) + "' disabled='disabled'/>";
 		td6.align = "center";
-	}
-}
-
-/**
- * 检验日期是否正确
- */
-var checkCheckDate = function()
-{
-	var date = document.getElementById("checkDate");// 盘点日期
-	// 盘点日期为空
-	if (date.value == "")
-	{
-		alert("盘点日期不能为空！");
-		// 获取系统时间
-		getSystemTime();
-	}
-};
-
-/**
- * 请求系统当前时间
- */
-var getSystemTime = function()
-{
-	var data = "";
-	var url = "/FuneralManageSystem/getSystemTime.action";
-	sendRequest("post", url, data, getSystemTimeBack);
-};
-
-/**
- * 获取系统当前时间
- */
-var getSystemTimeBack = function(result)
-{
-	var checkDate = document.getElementById("checkDate");// 盘点日期
-	var time = eval("(" + eval("(" + result + ")") + ")");
-	// 截止到日期
-	checkDate.value = time.startTime;
-};
-
-/**
- * 检验数量是否正确
- * @param obj
- */
-function checkAmount(obj)
-{
-	var normalAmount = obj.parentNode.parentNode.cells[3];// 理论数量
-	var amountDifference = obj.parentNode.parentNode.cells[5];// 盈亏数量
-	var reg = /^[1-9]+\d*$/;// 大于0的自然数正则表达式
-	// 如果数量格式不正确
-	if (!reg.test(obj.value) && obj.value != "")
-	{
-		alert("数量格式不正确，请填写大于0的正整数！");
-		obj.value = "";
-		amountDifference.getElementsByTagName("input")[0].value = "";
-	}
-	else
-	{
-		// 如果实际数量为空
-		if (obj.value == "") amountDifference.getElementsByTagName("input")[0].value = "";
-		// 否则，盈亏数量为实际数量减去理论数量
-		else amountDifference.getElementsByTagName("input")[0].value = parseInt(obj.value) - parseInt(normalAmount.getElementsByTagName("input")[0].value);
 	}
 }
 
@@ -248,18 +187,18 @@ function getGoods()
 }
 
 /**
- * 保存盘点信息
+ * 删除盘点单
  */
-function saveWarehouseCheckInfo()
+function deleteWarehouseCheck()
 {
 	var data = "";
 	var url = "";
 	var warehouseCheckNumber = document.getElementById("warehouseCheckNumber");// 盘点单号
-	if (confirm("确定提交吗？"))
+	if (confirm("确定删除吗？"))
 	{
 		data = "goods=" + getGoods() + "&warehouseCheckNumber=" + warehouseCheckNumber.value;
-		url = "/FuneralManageSystem/updateWarehouseCheck!updateWarehouseCheck";
-		sendRequest("post", url, data, saveWarehouseCheckInfoBack);
+		url = "/FuneralManageSystem/deleteWarehouseCheck!deleteWarehouseCheck";
+		sendRequest("post", url, data, deleteWarehouseCheckBack);
 	}
 	return false;
 }
@@ -268,14 +207,14 @@ function saveWarehouseCheckInfo()
  * 获取保存结果
  * @param result
  */
-function saveWarehouseCheckInfoBack(result)
+function deleteWarehouseCheckBack(result)
 {
 	var saveButton = document.getElementById("saveButton");// 提交按钮
 	var data = eval("(" + result + ")");
 	if (data == "true") 
 	{
-		alert("提交成功！");
+		alert("删除成功！");
 		saveButton.disabled = "disabled";
 	}
-	else alert("提交失败，请检查盘点信息是否正确！");
+	else alert("删除失败，请检查盘点信息是否正确！");
 }

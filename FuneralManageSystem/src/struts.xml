@@ -780,6 +780,19 @@
 		    <param name="root">returnString</param>
 		  </result>
 		</action>
+		
+		<!-- 删除盘点单action -->
+		<action name="deleteWarehouseCheck" class="com.FuneralManage.Action.DeleteWarehouseCheckAction">
+		  <result type="json" name="getWarehouseCheck">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getWarehouseCheckDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getDeleteResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
 
 		
 		<!--—____________________________________12月份 蒋帅新增 ______开始____________________________________ -->

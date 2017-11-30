@@ -64,6 +64,21 @@ public class WarehouseBalanceDAO extends BaseDAO {
 		if (result > 0) return true;
 		return false;
 	}
+
+	/**
+	 * 还原库存信息
+	 * @param warehouseCheckNumber 盘点单号
+	 * @return 更新结果，true代表更新成功，false为失败
+	 */
+	public boolean resetWarehouseBalanceTran(String warehouseCheckNumber) {
+		// TODO Auto-generated method stub
+		String sql = "update warehouseBalance wb,warehouseCheck wc set wb.balanceNumber=wb.balanceNumber"
+				+ "-wc.amountDifference where wb.warehouseName=wc.warehouseName and wb.goodsName=wc.goodsName "
+				+ "and wc.warehouseCheckNumber=?";
+		int result = this.saveOrUpdateOrDeleteTran(sql, warehouseCheckNumber);
+		if (result > 0) return true;
+		return false;
+	}
 	
 	
 
