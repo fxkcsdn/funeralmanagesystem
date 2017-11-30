@@ -1,9 +1,7 @@
 package com.FuneralManage.Service;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -329,7 +327,8 @@ public class CremationToExcelService extends BaseService{
         				        	 
         				         }
         				                 
-        				                 }   
+        				                 }
+        			
         				             }
                                                    		            								
 
@@ -400,6 +399,7 @@ public class CremationToExcelService extends BaseService{
 
 			} finally {
 				rwb.close();
+				is.close();
 				rs1.close();
 				rs2.close();
 				rs3.close();
