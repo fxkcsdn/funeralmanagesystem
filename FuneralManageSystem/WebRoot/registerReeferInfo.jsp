@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            </tr>
            <tr>
               <td colspan="2">接运编号（<font color="#dd0000">本馆接运需填写</font>）：</td>
-              <td colspan="2"><input type="text" id="carryNumber" name="carryNumber" style="width:90%;"/></td>
+              <td><input type="text" id="carryNumber" name="carryNumber" style="width:90%;"/></td>
            </tr>
            <tr>
               <td colspan="2">逝者身份证号（<font color="#dd0000">可不填</font>）：</td>
