@@ -851,4 +851,5 @@
 		</action>
 		
 	</package>
+	<include file="conf/fxk-struts.xml"></include>
 </struts>
