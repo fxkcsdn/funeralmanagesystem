@@ -380,7 +380,7 @@ function changeGoodBeCost1(obj) {
 	var goodsBeCostInput = goodsBeCost.getElementsByTagName("input");
 	var goodsBeCost1 = goodsBeCostInput[0].value;
 	if (checkNumber(goodsBeCost1)) {
-		var goodsBeCostHidden = tr.cells[4];
+		var goodsBeCostHidden = tr.cells[5];
 		var goodsBeCostHiddenInput = goodsBeCostHidden
 				.getElementsByTagName("input");
 		var goodsBeCostHidden1 = goodsBeCostHiddenInput[1].value;
@@ -405,11 +405,11 @@ function changeGoodBeCost1(obj) {
 function changeGoodBeCost2(obj) {
 	var tr = obj.parentNode.parentNode;// 得到按钮[obj]的父元素[td]的父元素[tr]
 
-	var goodsBeCost = tr.cells[8];
+	var goodsBeCost = tr.cells[9];
 	var goodsBeCostInput = goodsBeCost.getElementsByTagName("input");
 	var goodsBeCost1 = goodsBeCostInput[0].value;
 	if (checkNumber(goodsBeCost1)) {
-		var goodsBeCostHidden = tr.cells[6];
+		var goodsBeCostHidden = tr.cells[7];
 		var goodsBeCostHiddenInput = goodsBeCostHidden
 				.getElementsByTagName("input");
 		var goodsBeCostHidden1 = goodsBeCostHiddenInput[1].value;
@@ -474,7 +474,7 @@ function changeGoodsCost1(obj) {
 	var tr = obj.parentNode.parentNode;// 得到按钮[obj]的父元素[td]的父元素[tr]
 	var goodsBeCost1 = tr.cells[1].innerText;
 	var goodsRealCost = tr.cells[2];
-	var hideTd1 = tr.cells[4];
+	var hideTd1 = tr.cells[5];
 	var goodsRealCostInput = goodsRealCost.getElementsByTagName("input");
 	var goodsRealCost1 = goodsRealCostInput[0].value;
 	if (checkNumber(goodsRealCost1)) {
@@ -495,8 +495,8 @@ function changeGoodsCost1(obj) {
 
 function changeGoodsCost2(obj) {
 	var tr = obj.parentNode.parentNode;// 得到按钮[obj]的父元素[td]的父元素[tr]
-	var goodsRealCost = tr.cells[9];
-	var hideTd2 = tr.cells[6];
+	var goodsRealCost = tr.cells[10];
+	var hideTd2 = tr.cells[7];
 	var goodsRealCostInput = goodsRealCost.getElementsByTagName("input");
 	var goodsRealCost2 = goodsRealCostInput[0].value;
 	if (checkNumber(goodsRealCost2)) {
@@ -518,11 +518,11 @@ function changeGoodsCost2(obj) {
 function chooseFuneralGoods2(obj) {
 	var tr = obj.parentNode.parentNode;// 得到按钮[obj]的父元素[td]的父元素[tr]
 	// var goodsBeCost2=tr.cells[8].innerText;
-	var goodsBeCost = tr.cells[8];
+	var goodsBeCost = tr.cells[9];
 	var goodsBeCostInput = goodsBeCost.getElementsByTagName("input");
 	var goodsBeCost2 = goodsBeCostInput[0].value;
 
-	var goodsRealCost = tr.cells[9];
+	var goodsRealCost = tr.cells[10];
 	var goodsRealCostInput = goodsRealCost.getElementsByTagName("input");
 	var goodsRealCost2 = goodsRealCostInput[0].value;
 	if (obj.checked == true) {
@@ -3342,7 +3342,7 @@ function sumCost(){
 	var tableName = document.getElementById("allFuneralGoods"); // 获取table中丧葬物品对象
 	var len = tableName.rows.length;
 	for (var i = 2; i < len; i++) {
-		var goodsCheckBoxInput1 = tableName.rows[i].cells[3].getElementsByTagName("input");
+		var goodsCheckBoxInput1 = tableName.rows[i].cells[4].getElementsByTagName("input");
 		if (goodsCheckBoxInput1[0].checked) {
 			var goodsBeCostCell = tableName.rows[i].cells[1];
 			var goodsBeCostInput = goodsBeCostCell.getElementsByTagName("input");
@@ -3352,14 +3352,14 @@ function sumCost(){
 			sumBeCost=sumBeCost+Number(goodsBeCost);
 			sumRealCost=sumRealCost+Number(goodsRealCost);
 		}
-			var goodsCheckBoxInput2 = tableName.rows[i].cells[10].getElementsByTagName("input");
+			var goodsCheckBoxInput2 = tableName.rows[i].cells[12].getElementsByTagName("input");
 		if (goodsCheckBoxInput2[0] != null) {
 			if (goodsCheckBoxInput2[0].checked) {
 		// alert("文本框被选中！");				
-				var goodsBeCostCell = tableName.rows[i].cells[8];
+				var goodsBeCostCell = tableName.rows[i].cells[9];
 				var goodsBeCostInput = goodsBeCostCell.getElementsByTagName("input");
 				var goodsBeCost = goodsBeCostInput[0].value;
-				var goodsRealCostInput = tableName.rows[i].cells[9].getElementsByTagName("input");
+				var goodsRealCostInput = tableName.rows[i].cells[10].getElementsByTagName("input");
 				var goodsRealCost = goodsRealCostInput[0].value;
 				sumBeCost=sumBeCost+Number(goodsBeCost);
 				sumRealCost=sumRealCost+Number(goodsRealCost);

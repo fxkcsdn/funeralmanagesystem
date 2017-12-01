@@ -303,7 +303,7 @@ public class AddServiceService extends BaseService{
 				ps.setInt(4, deadFuneralGoods.getFuneralGoodsRealCost());
 				ps1.setString(1,deadFuneralGoods.getFuneralGoodsName());				
 				row = ps.executeUpdate();
-				ps1.execute();
+				ps1.executeUpdate();
 				conn.commit();
 				if (row > 0) 
 				{

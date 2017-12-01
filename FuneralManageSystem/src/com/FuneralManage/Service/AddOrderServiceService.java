@@ -291,15 +291,21 @@ public class AddOrderServiceService extends BaseService
 		Connection conn=DBDao.openDateBase("dongtai");
 		int row=0;
 		if(conn!=null){
-			System.out.println(deadId);
 			String sql="insert into deadfuneralgoods(deadID,goodsName,goodsBeCost,goodsRealCost)values(?,?,?,?)";
+			String sql1="update warehousebalance set balanceNumber=balanceNumber-1 where warehouseName='总库' and goodsName=?";
+
 			try{
+				conn.setAutoCommit(false);
 				PreparedStatement ps = conn.prepareStatement(sql);
+				PreparedStatement ps1 = conn.prepareStatement(sql1);
 				ps.setString(1, deadId);
 				ps.setString(2, deadFuneralGoods.getFuneralGoodsName());
 				ps.setInt(3, deadFuneralGoods.getFuneralGoodsBeCost());
 				ps.setInt(4, deadFuneralGoods.getFuneralGoodsRealCost());
+				ps1.setString(1, deadFuneralGoods.getFuneralGoodsName());
 				row = ps.executeUpdate();
+				ps1.executeUpdate();
+				conn.commit();
 				if (row > 0) 
 				{
 					returnString="成功加入了" + row + "项丧葬物品！";

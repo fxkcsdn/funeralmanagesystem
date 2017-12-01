@@ -137,8 +137,6 @@ public class AddOrderServiceAction extends ActionSupport
 				for(int i=0;i<jsonArrayGoodsArray.size();i++){
 					JSONObject funeralGoods = jsonArrayGoodsArray.getJSONObject(i);  // 遍历 jsonarray 数组，把每一个对象转成 json 对象
 					deadFuneralGoods.setFuneralGoodsName(funeralGoods.getString("goodsName"));  // 得到 每个对象中的属性值
-					System.out.println(funeralGoods.getString("goodsBeCost"));
-					System.out.println(funeralGoods.getString("goodsRealCost"));
 					deadFuneralGoods.setFuneralGoodsBeCost(Integer.parseInt(funeralGoods.getString("goodsBeCost")));
 					deadFuneralGoods.setFuneralGoodsRealCost(Integer.parseInt(funeralGoods.getString("goodsRealCost")));
 					returnString=addServiceDao.insertIntoGoods(deadId, deadFuneralGoods)+"0"+i;

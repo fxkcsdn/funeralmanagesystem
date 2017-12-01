@@ -547,7 +547,7 @@ body,td,th {
             <div id="funeralGoodsPart">
               <table border="1" width="95%" id="allFuneralGoods" align="center">
               	<tr>
-              		<td align="center" colspan="11">
+              		<td align="center" colspan="13">
               			<label for="funeralGoods"><b>丧葬物品及其他小商品选择</b></label>
               		</td>
               	</tr>
@@ -555,6 +555,7 @@ body,td,th {
               		<td><b>丧葬物品名称</b></td>
               		<td><b>应收金额</b></td>
               		<td><b>备注</b></td>
+              		<td><b>库存</b></td>
               		<td><b>添加</b></td>
               		<td><b></b></td>
               		<td><b>&nbsp;</b></td>
@@ -562,6 +563,7 @@ body,td,th {
               		<td><b>丧葬物品名称</b></td>
               		<td><b>应收金额</b></td>
               		<td><b>备注</b></td>
+              		<td><b>库存</b></td>
               		<td><b>添加</b></td>
               	</tr>
               </table>
