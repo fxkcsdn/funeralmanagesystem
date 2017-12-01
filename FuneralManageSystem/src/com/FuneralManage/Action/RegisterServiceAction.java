@@ -39,13 +39,11 @@ public class RegisterServiceAction extends ActionSupport{
 	
 	public String showDeadInfo(){
 		returnString=registerServiceDao.showDeadInfoDao(deadId);
-		System.out.println("%%"+returnString);
 		return "showDeadInfo";
 	}
 	
 	public String showOrderDeadInfo(){
 		returnString=registerServiceDao.showOrderDeadInfoDao(deadId);
-		System.out.println(returnString);
 		return "showOrderDeadInfo";
 	}
 	

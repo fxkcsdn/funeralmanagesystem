@@ -281,7 +281,9 @@ function showAllFuneralGoodsCallBack() {
 				var funeralGoodsCell1 = row.insertCell();
 				var goodsBeCost1 = row.insertCell();
 				var goodsRealCost1 = row.insertCell();
+				var balanceNumber1=row.insertCell();
 				var addGoodsButton1 = row.insertCell();
+				
 				var hideInput1 = row.insertCell();
 
 				var gap = row.insertCell();
@@ -290,13 +292,17 @@ function showAllFuneralGoodsCallBack() {
 				var funeralGoodsCell2 = row.insertCell();
 				var goodsBeCost2 = row.insertCell();
 				var goodsRealCost2 = row.insertCell();
+				var balanceNumber2=row.insertCell();
 				var addGoodsButton2 = row.insertCell();
+
 
 				funeralGoodsCell1.innerText = json[i].goodsName;
 				// goodsBeCost1.innerText=json[i].goodsBeCost;
 				goodsBeCost1.innerHTML = "<input type='text' style='width: 80px;' onkeyup='changeGoodBeCost1(this)' value='"
 						+ json[i].goodsBeCost + "' disabled='true'>";
 				goodsRealCost1.innerHTML = "<input type='text' style='width: 80px;' value='0' onchange='changeGoodsCost1(this)' disabled='true'>";
+				balanceNumber1.innerHTML="<input type='text' style='width: 80px;' value='"
+						+ json[i].balanceNumber + "' disabled='true'>";
 				addGoodsButton1.innerHTML = "<input align='center' type='checkbox' onchange='chooseFuneralGoods1(this)'>";
 				hideInput1.innerHTML = "<input type='hidden' value='0'><input type='hidden' value='"
 						+ json[i].goodsBeCost + "'>";
@@ -308,6 +314,8 @@ function showAllFuneralGoodsCallBack() {
 					goodsBeCost2.innerHTML = "<input type='text' style='width: 80px;'  onkeyup='changeGoodBeCost2(this)' value='"
 							+ json[i].goodsBeCost + "' disabled='true'>";
 					goodsRealCost2.innerHTML = "<input type='text' style='width: 80px;' value='0' onchange='changeGoodsCost2(this)' disabled='disabled'>";
+					balanceNumber2.innerHTML="<input type='text' style='width: 80px;' value='"
+						+ json[i].balanceNumber + "' disabled='true'>";
 					addGoodsButton2.innerHTML = "<input align='center' type='checkbox' onchange='chooseFuneralGoods2(this)'>";
 					hideInput2.innerHTML = "<input type='hidden' value='0'><input type='hidden' value='"
 							+ json[i].goodsBeCost + "'>";
@@ -1071,7 +1079,7 @@ function decideYourChoose() {
 	var jsonLeaveRoom = "";
 	var jsonCremation = "";
 	for (var i = 2; i < len; i++) {
-		var goodsCheckBoxInput1 = tableName.rows[i].cells[3]
+		var goodsCheckBoxInput1 = tableName.rows[i].cells[4]
 				.getElementsByTagName("input");
 		if (goodsCheckBoxInput1[0].checked) {
 			var goodsName = tableName.rows[i].cells[0].innerText;
@@ -1097,19 +1105,19 @@ function decideYourChoose() {
 			// arrFuneralGoods[numbers]={"goodsName":goodsName,"goodsBeCost":goodsBeCost,"goodsRealCost":goodsRealCost};
 			numbers++;
 		}
-		var goodsCheckBoxInput2 = tableName.rows[i].cells[10]
+		var goodsCheckBoxInput2 = tableName.rows[i].cells[12]
 				.getElementsByTagName("input");
 		if (goodsCheckBoxInput2[0] != null) {
 			if (goodsCheckBoxInput2[0].checked) {
 				// alert("文本框被选中！");
-				var goodsName = tableName.rows[i].cells[7].innerText;
+				var goodsName = tableName.rows[i].cells[8].innerText;
 				// var goodsBeCost=tableName.rows[i].cells[8].innerText;
-				var goodsBeCostCell = tableName.rows[i].cells[8];
+				var goodsBeCostCell = tableName.rows[i].cells[9];
 				var goodsBeCostInput = goodsBeCostCell
 						.getElementsByTagName("input");
 				var goodsBeCost = goodsBeCostInput[0].value;
 
-				var goodsRealCostInput = tableName.rows[i].cells[9]
+				var goodsRealCostInput = tableName.rows[i].cells[10]
 						.getElementsByTagName("input");
 				var goodsChangeCost = goodsRealCostInput[0].value;
 				var goodsRealCost = goodsBeCost - goodsChangeCost + "";
@@ -1221,6 +1229,7 @@ function decideYourChoose() {
 	var leaveRoom = jsonLeaveRoom + "";
 	var cremation = jsonCremation + "";
 	var funeralGoods = arrFuneralGoods + "";
+	alert(funeralGoods);
 	url = "deadId=" + document.form3.deadId.value + "&";
 	url = url + "funeralGoods=" + funeralGoods + "&";
 	url = url + "urn=" + urn + "&";
@@ -2416,9 +2425,9 @@ function outPutServiceList() {
 	var rows1 = allGoods.rows.length;
 	if (rows > 2) {
 		for (var i = 2; i < rows; i++) {
-			var goodsCheckBoxInput1 = tableName.rows[i].cells[3]
+			var goodsCheckBoxInput1 = tableName.rows[i].cells[4]
 					.getElementsByTagName("input");
-			var goodsCheckBoxInput2 = tableName.rows[i].cells[10]
+			var goodsCheckBoxInput2 = tableName.rows[i].cells[12]
 					.getElementsByTagName("input");
 			if (goodsCheckBoxInput1[0].checked) {
 				var goodsName = allFuneralGoods.rows[i].cells[0].innerText;
@@ -2470,12 +2479,12 @@ function outPutServiceList() {
 			}
 			if (goodsCheckBoxInput2[0] != null) {
 				if (goodsCheckBoxInput2[0].checked) {
-					var goodsName = allFuneralGoods.rows[i].cells[7].innerText;
+					var goodsName = allFuneralGoods.rows[i].cells[8].innerText;
 
-					var goodsBeCost = allFuneralGoods.rows[i].cells[8]
+					var goodsBeCost = allFuneralGoods.rows[i].cells[9]
 							.getElementsByTagName("input")[0].value;
 
-					var goodsRealCostInput = allFuneralGoods.rows[i].cells[9]
+					var goodsRealCostInput = allFuneralGoods.rows[i].cells[10]
 							.getElementsByTagName("input");
 					var goodsRealCost = goodsRealCostInput[0].value;
 					for (var n = 3; n < rows1; n++) {
