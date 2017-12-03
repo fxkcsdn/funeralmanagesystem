@@ -37,6 +37,7 @@ function showAllFuneralGoodsCallBack() {
 				var funeralGoodsCell1 = row.insertCell();
 				var goodsBeCost1 = row.insertCell();
 				var goodsRealCost1 = row.insertCell();
+				var balanceNumber1=row.insertCell();
 				var addGoodsButton1 = row.insertCell();
 				var hideInput1 = row.insertCell();
 
@@ -46,12 +47,15 @@ function showAllFuneralGoodsCallBack() {
 				var funeralGoodsCell2 = row.insertCell();
 				var goodsBeCost2 = row.insertCell();
 				var goodsRealCost2 = row.insertCell();
+				var balanceNumber2=row.insertCell();
 				var addGoodsButton2 = row.insertCell();
 
 				funeralGoodsCell1.innerText = json[i].goodsName;
 				goodsBeCost1.innerHTML = "<input type='text' style='width: 80px;' onchange='changeGoodBeCost1(this)' value='"
 						+ json[i].goodsBeCost + "' disabled='true'>";
 				goodsRealCost1.innerHTML = "<input type='text' style='width: 80px;' value='0' onchange='changeGoodsCost1(this)' disabled='true'>";
+				balanceNumber1.innerHTML="<input type='text' style='width: 80px;' value='"
+					+ json[i].balanceNumber + "' disabled='true'>";
 				addGoodsButton1.innerHTML = "<input align='center' type='checkbox' onchange='chooseFuneralGoods1(this)'>";
 				hideInput1.innerHTML = "<input type='hidden' value='0'><input type='hidden' value='"
 						+ json[i].goodsBeCost + "'>";
@@ -62,6 +66,8 @@ function showAllFuneralGoodsCallBack() {
 					goodsBeCost2.innerHTML = "<input type='text' style='width: 80px;'  onchange='changeGoodBeCost2(this)' value='"
 							+ json[i].goodsBeCost + "' disabled='true'>";
 					goodsRealCost2.innerHTML = "<input type='text' style='width: 80px;' value='0' onchange='changeGoodsCost2(this)' disabled='disabled'>";
+					balanceNumber2.innerHTML="<input type='text' style='width: 80px;' value='"
+						+ json[i].balanceNumber + "' disabled='true'>";
 					addGoodsButton2.innerHTML = "<input align='center' type='checkbox' onchange='chooseFuneralGoods2(this)'>";
 					hideInput2.innerHTML = "<input type='hidden' value='0'><input type='hidden' value='"
 							+ json[i].goodsBeCost + "'>";
@@ -1230,11 +1236,11 @@ function changeGoodsCallBack() {
 
 				for(var j=2;j<rows;j++){
 					var goodName1=tb.rows[j].cells[0].innerText;
-					var goodsName2=tb.rows[j].cells[7].innerText;
+					var goodsName2=tb.rows[j].cells[8].innerText;
 					
 					if(goodsName==goodName1){
 											
-						var goodsCheckBoxInput1=tb.rows[j].cells[3].getElementsByTagName("input");
+						var goodsCheckBoxInput1=tb.rows[j].cells[4].getElementsByTagName("input");
 						goodsCheckBoxInput1[0].checked=true;
 						var goosBeCost1 =tb.rows[j].cells[1].getElementsByTagName("input");
 						goosBeCost1[0].value=goodsBeCost;
@@ -1246,14 +1252,14 @@ function changeGoodsCallBack() {
 					}
 					if(goodsName==goodsName2){
 //						(goodsBeCost);
-						var goosBeCost2 =tb.rows[j].cells[8].getElementsByTagName("input");
+						var goosBeCost2 =tb.rows[j].cells[9].getElementsByTagName("input");
 						goosBeCost2[0].value=goodsBeCost;
 						
-						var goodsCheckBoxInput2=tb.rows[j].cells[10].getElementsByTagName("input");
+						var goodsCheckBoxInput2=tb.rows[j].cells[12].getElementsByTagName("input");
 						goodsCheckBoxInput2[0].checked=true;
 						chooseFuneralGoods2(goodsCheckBoxInput2[0]);
 						
-						var reduce1=tb.rows[j].cells[9].getElementsByTagName("input");
+						var reduce1=tb.rows[j].cells[10].getElementsByTagName("input");
 						reduce1[0].value=Number(goodsBeCost)-Number(goodsRealCost);
 						
 					}
@@ -1308,7 +1314,7 @@ function changeGoodBeCost1(obj){
 	var goodsBeCost1=goodsBeCostInput[0].value;
 	
 	if(checkNumber(goodsBeCost1)){
-		var goodsBeCostHidden=tr.cells[4];
+		var goodsBeCostHidden=tr.cells[5];
 		var goodsBeCostHiddenInput=goodsBeCostHidden.getElementsByTagName("input");
 		var goodsBeCostHidden1=goodsBeCostHiddenInput[1].value;
 		
@@ -1328,12 +1334,41 @@ function changeGoodBeCost1(obj){
 		goodsBeCostInput[0].focus();
 	}
 }
+function changeGoodBeCost2(obj) {
+	var tr = obj.parentNode.parentNode;// 得到按钮[obj]的父元素[td]的父元素[tr]
+
+	var goodsBeCost = tr.cells[9];
+	var goodsBeCostInput = goodsBeCost.getElementsByTagName("input");
+	var goodsBeCost1 = goodsBeCostInput[0].value;
+	if (checkNumber(goodsBeCost1)) {
+		var goodsBeCostHidden = tr.cells[7];
+		var goodsBeCostHiddenInput = goodsBeCostHidden
+				.getElementsByTagName("input");
+		var goodsBeCostHidden1 = goodsBeCostHiddenInput[1].value;
+
+		var allServiceBeCost = document.form1.allBeCost;
+		allServiceBeCost.value = parseInt(allServiceBeCost.value)
+				+ parseInt(goodsBeCost1) - parseInt(goodsBeCostHidden1);
+		var theWholeCost = document.form1.theWholeCost;
+		theWholeCost.value = parseInt(theWholeCost.value)
+				+ parseInt(goodsBeCost1) - parseInt(goodsBeCostHidden1);
+		// document.form3.lastWholeCost.value=theWholeCost.value;
+		// //kahsdkahsdkuhaskdhaksjdkjasbdkjakdj
+		// alert(document.form3.lastWholeCost.value);
+		goodsBeCostHiddenInput[1].value = goodsBeCost
+				.getElementsByTagName("input")[0].value;
+		// alert(goodsBeCostHiddenInput[1].value);
+	} else {
+		alert("输入金额错误，请检查后重新输入");
+		goodsBeCostInput[0].focus();
+	}
+}
 function changeGoodsCost1(obj){
 	
 	var tr=obj.parentNode.parentNode;//得到按钮[obj]的父元素[td]的父元素[tr]
 	var goodsBeCost1=tr.cells[1].innerText;
 	var goodsRealCost=tr.cells[2];
-	var hideTd1=tr.cells[4];
+	var hideTd1=tr.cells[5];
 	var goodsRealCostInput=goodsRealCost.getElementsByTagName("input");
 	var goodsRealCost1=goodsRealCostInput[0].value;
 	
@@ -1355,8 +1390,8 @@ function changeGoodsCost1(obj){
 }
 function changeGoodsCost2(obj){
 	var tr=obj.parentNode.parentNode;//得到按钮[obj]的父元素[td]的父元素[tr]
-	var goodsRealCost=tr.cells[9];
-	var hideTd2=tr.cells[6];
+	var goodsRealCost=tr.cells[10];
+	var hideTd2=tr.cells[7];
 	var goodsRealCostInput=goodsRealCost.getElementsByTagName("input");
 	var goodsRealCost2=goodsRealCostInput[0].value;
 	if(checkNumber(goodsRealCost2)){
@@ -1377,11 +1412,11 @@ function changeGoodsCost2(obj){
 function chooseFuneralGoods2(obj){
 	var tr=obj.parentNode.parentNode;//得到按钮[obj]的父元素[td]的父元素[tr]
 //	var goodsBeCost2=tr.cells[8].innerText;
-	var goodsBeCost=tr.cells[8];
+	var goodsBeCost=tr.cells[9];
 	var goodsBeCostInput=goodsBeCost.getElementsByTagName("input");
 	var goodsBeCost2=goodsBeCostInput[0].value;
 	
-	var goodsRealCost=tr.cells[9];
+	var goodsRealCost=tr.cells[10];
 	var goodsRealCostInput=goodsRealCost.getElementsByTagName("input");
 	var goodsRealCost2=goodsRealCostInput[0].value;
 	if(obj.checked==true){
@@ -1666,8 +1701,8 @@ function outPutServiceList(){
 		
 		for(var i=2;i<rows;i++)
 		{
-			var goodsCheckBoxInput1=tableName.rows[i].cells[3].getElementsByTagName("input");
-			var goodsCheckBoxInput2=tableName.rows[i].cells[10].getElementsByTagName("input");
+			var goodsCheckBoxInput1=tableName.rows[i].cells[4].getElementsByTagName("input");
+			var goodsCheckBoxInput2=tableName.rows[i].cells[12].getElementsByTagName("input");
 			if(goodsCheckBoxInput1[0].checked){
 				var goodsName=showallFuneralGoods.rows[i].cells[0].innerText;
 				
@@ -1718,11 +1753,11 @@ function outPutServiceList(){
 			}
 			if(goodsCheckBoxInput2[0]!=null){
 				if(goodsCheckBoxInput2[0].checked){
-					var goodsName=showallFuneralGoods.rows[i].cells[7].innerText;
+					var goodsName=showallFuneralGoods.rows[i].cells[8].innerText;
 					
-					var goodsBeCost=showallFuneralGoods.rows[i].cells[8].getElementsByTagName("input")[0].value;
+					var goodsBeCost=showallFuneralGoods.rows[i].cells[9].getElementsByTagName("input")[0].value;
 					
-					var goodsRealCostInput=showallFuneralGoods.rows[i].cells[9].getElementsByTagName("input");
+					var goodsRealCostInput=showallFuneralGoods.rows[i].cells[10].getElementsByTagName("input");
 					var goodsRealCost=goodsRealCostInput[0].value;
 					for(var n=4;n<rows1;n++)			
 					{	

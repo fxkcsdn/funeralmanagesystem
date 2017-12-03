@@ -1,8 +1,10 @@
 package com.FuneralManage.Service;
 
+import java.security.interfaces.RSAKey;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 import net.sf.json.JSONArray;
@@ -171,6 +173,44 @@ public class ChangeServiceService extends BaseService{
 		}
 		return returnString;
 	}
+	public void  getFuneralgoods(String deadId) throws SQLException {
+		
+		Connection conn = DBDao.openDateBase("dongtai");
+		if (conn!=null) {
+			String sql1 = "select * from deadfuneralgoods where deadId=?";
+			String sql2 = "update warehousebalance set balanceNumber=balanceNumber+1 where warehouseName='总库' and goodsName=?";
+
+			PreparedStatement ps1 = conn.prepareStatement(sql1);
+			PreparedStatement ps2 = conn.prepareStatement(sql2);
+			try {
+				
+			
+			ps1.setString(1, deadId);
+			ResultSet rs=ps1.executeQuery();			  
+
+             while (rs.next()) {  
+            	 
+                     String value = rs.getString("goodsName");
+                     ps2.setString(1, value);
+                     ps2.executeUpdate();
+                      
+                 }
+			}
+             catch (Exception e) {
+ 				// TODO: handle exception
+            	 e.printStackTrace();
+             
+             }finally{
+            	 ps1.close();
+            	 ps2.close();
+            	 conn.close();
+             }
+			
+		}
+            					
+		}
+	
+	
 	public String insertIntoGoods(String deadId, String funeralGoods) throws SQLException {  //插入丧葬品
 		// TODO Auto-generated method stub
 		Connection conn=DBDao.openDateBase("dongtai");
@@ -178,15 +218,18 @@ public class ChangeServiceService extends BaseService{
 		if(conn!=null){
 			PreparedStatement ps1 = null;
 			PreparedStatement ps2 = null;
+			PreparedStatement ps3 = null;
+
 			
 			try{
 				conn.setAutoCommit(false); 
 			    
 				String sql1="delete from deadfuneralgoods where deadId=?";
 				String sql2="insert into deadfuneralgoods(deadID,goodsName,goodsBeCost,goodsRealCost)values(?,?,?,?)";
-			    
+				String sql3="update warehousebalance set balanceNumber=balanceNumber-1 where warehouseName='总库' and goodsName=?";
 				ps1 =conn.prepareStatement(sql1);
 				ps1.setString(1,deadId);
+				
 				ps1.executeUpdate();
 								
 				
@@ -207,6 +250,9 @@ public class ChangeServiceService extends BaseService{
 							ps2.setInt(3, deadFuneralGoods.getFuneralGoodsBeCost());
 							ps2.setInt(4, deadFuneralGoods.getFuneralGoodsRealCost());
 							row = ps2.executeUpdate();
+							ps3=conn.prepareStatement(sql3);
+							ps3.setString(1, deadFuneralGoods.getFuneralGoodsName());
+							ps3.executeUpdate();
 						}
 					
 				

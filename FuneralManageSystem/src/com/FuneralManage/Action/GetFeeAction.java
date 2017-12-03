@@ -38,12 +38,8 @@ public class GetFeeAction extends ActionSupport{
 		fee1=fee1.substring(1, fee1.length()-1);
 		returnString=returnString.substring(1, returnString.length());
 						
-		System.out.println(fee);
-		System.out.println(fee1);		
-		System.out.println(returnString);
 		
 		returnString=fee+","+fee1+","+returnString+"]";
-		System.out.println(returnString);
 		
 	
 

@@ -30,7 +30,6 @@ public class QueryChosenGoodsAction extends ActionSupport {
 		returnString=QCGD.QueryChosenGoods(deadId);
 		
 		
-		System.out.println(returnString);
 		
 		return "queryChosenGoods";
 		

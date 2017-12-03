@@ -118,7 +118,8 @@ public class ChangeServiceAction extends ActionSupport{
 		}
 		
 		try {
-		returnString=ChangeServiceDao.insertIntoGoods(deadId, funeralGoods);
+			ChangeServiceDao.getFuneralgoods(deadId);
+			returnString=ChangeServiceDao.insertIntoGoods(deadId, funeralGoods);
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

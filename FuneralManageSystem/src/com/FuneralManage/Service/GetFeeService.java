@@ -50,7 +50,6 @@ public class GetFeeService extends BaseService{
     				if(coffinRentRealcost==""){
     					coffinRentRealcost="0";
     				}
- //   				System.out.println(coffinRentRealcost);
     				String coffinCarBeCost=rs.getString("carBeCost");
     				if(coffinCarBeCost==""){
     					coffinCarBeCost="0";

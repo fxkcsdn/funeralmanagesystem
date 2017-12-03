@@ -11,7 +11,7 @@ function changeService(){
 	var jsonLeaveRoom="";
 	var jsonCremation="";
 	for(var i=2; i<len; i++){
-		var goodsCheckBoxInput1=tableName.rows[i].cells[3].getElementsByTagName("input");
+		var goodsCheckBoxInput1=tableName.rows[i].cells[4].getElementsByTagName("input");
 		if(goodsCheckBoxInput1[0].checked){
 			var goodsName=tableName.rows[i].cells[0].innerText;
 			
@@ -27,17 +27,17 @@ function changeService(){
 
 			numbers++;
 		}
-		var goodsCheckBoxInput2=tableName.rows[i].cells[10].getElementsByTagName("input");
+		var goodsCheckBoxInput2=tableName.rows[i].cells[12].getElementsByTagName("input");
 		if(goodsCheckBoxInput2[0]!=null){
 			if(goodsCheckBoxInput2[0].checked){
 			
-				var goodsName=tableName.rows[i].cells[7].innerText;
+				var goodsName=tableName.rows[i].cells[8].innerText;
 
-				var goodsBeCostCell=tableName.rows[i].cells[8];
+				var goodsBeCostCell=tableName.rows[i].cells[9];
 				var goodsBeCostInput=goodsBeCostCell.getElementsByTagName("input");
 				var goodsBeCost=goodsBeCostInput[0].value;
 				
-				var goodsRealCostInput=tableName.rows[i].cells[9].getElementsByTagName("input");
+				var goodsRealCostInput=tableName.rows[i].cells[10].getElementsByTagName("input");
 				var goodsChangeCost=goodsRealCostInput[0].value;
 				var goodsRealCost=goodsBeCost-goodsChangeCost+"";
 				arrFuneralGoods[numbers]="{goodsName:'"+goodsName+"',goodsBeCost:'"+goodsBeCost+"',goodsRealCost:'"+goodsRealCost+"'}";
@@ -565,16 +565,16 @@ function getCremationServicefCallBack() {
 			
 			for(var k=2;k<rows;k++){
 				var reduceMoney=table2.rows[k].cells[2].getElementsByTagName("input");
-				var reduceMoney1=table2.rows[k].cells[9].getElementsByTagName("input");
+				var reduceMoney1=table2.rows[k].cells[10].getElementsByTagName("input");
 				
-				var hideMoney=table2.rows[k].cells[4];
+				var hideMoney=table2.rows[k].cells[5];
 				var hideValue=hideMoney.getElementsByTagName("input");
 				    hideValue[0].value=reduceMoney[0].value;
 				    
 				
 				
 				
-				var hideMoney1=table2.rows[k].cells[6];
+				var hideMoney1=table2.rows[k].cells[7];
 				var hideValue1=hideMoney1.getElementsByTagName("input");
 					hideValue1[0].value=reduceMoney1[0].value;
 								
