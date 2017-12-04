@@ -810,6 +810,7 @@
 			</result>
 			<result type="json" name="getRemoteUpdateResult">
 			  	<param name="root">returnString</param>
+			  	<param name="callbackParameter">callback</param>
 			</result>
 			<result type="json" name="getResetLocalResult">
 			  	<param name="root">returnString</param>
