@@ -147,7 +147,7 @@ public class AuditReceiptAction extends ActionSupport {
 				// 增加库存量
 				warehouseBalanceService.increaseBalanceNumber(conn, warehouseName, goodsType, goodsName, unit, Integer.parseInt(amountIn));
 				// 更新销售价
-				warehouseBalanceService.updateSellPrice(conn, goodsName);
+				warehouseBalanceService.updateSellPrice(conn, warehouseName, goodsName);
 			}
 			// 遍历已到货商品信息
 			for (int j = 0; j < receiptGoods.size(); j++)

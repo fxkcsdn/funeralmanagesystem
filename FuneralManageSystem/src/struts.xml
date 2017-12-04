@@ -793,6 +793,28 @@
 		    <param name="root">returnString</param>
 		  </result>
 		</action>
+		
+		<!-- 新增调拨单action -->
+		<action name="addWarehouseMove" class="com.FuneralManage.Action.AddWarehouseMoveAction">
+		    <result type="json" name="getGoodsTypes">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getGoodsNames">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getUnitAndNum">
+				<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getAddResult">
+			  	<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getRemoteUpdateResult">
+			  	<param name="root">returnString</param>
+			</result>
+			<result type="json" name="getResetLocalResult">
+			  	<param name="root">returnString</param>
+			</result>
+		</action>
 
 		
 		<!--—____________________________________12月份 蒋帅新增 ______开始____________________________________ -->

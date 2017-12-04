@@ -329,15 +329,18 @@ public class WarehouseBalanceService extends BaseService {
 	/**
 	 * 更新销售价
 	 * @param conn 数据库连接对象
+	 * @param warehouseName 仓库
 	 * @param goodsName 品名
 	 * @return true代表更新成功，false代表失败
 	 */
-	public boolean updateSellPrice(Connection conn, String goodsName) {
+	public boolean updateSellPrice(Connection conn, String warehouseName, String goodsName) {
 		// TODO Auto-generated method stub
 		if (conn != null)
 		{
-			String sql = "update warehouseBalance wb,goods g set wb.sellPrice=g.sellPrice where wb.goodsName=g.goodsName ";
+			String sql = "update warehouseBalance wb,goods g set wb.sellPrice=g.sellPrice where wb.goodsName=g.goodsName and wb.warehouseName=? and wb.goodsName=?";
 			try (PreparedStatement ps = conn.prepareStatement(sql)) {
+				ps.setString(1, warehouseName);
+				ps.setString(2, goodsName);
 				int result = ps.executeUpdate();
 				if (result > 0) return true;
 			} catch (SQLException e) {
@@ -386,6 +389,78 @@ public class WarehouseBalanceService extends BaseService {
 		// TODO Auto-generated method stub
 		// 获取该仓库里的商品信息
 		return warehouseBalanceDao.getGoodsInWarehouse(warehouseName);
+	}
+
+	/**
+	 * 获取该仓库商品种类信息
+	 * @param warehouseName 仓库名称
+	 * @return 商品种类信息
+	 */
+	public String getGoodsTypesInWarehouseForJson(String warehouseName) {
+		// TODO Auto-generated method stub
+		// 获取该仓库商品种类信息
+		return warehouseBalanceDao.getGoodsTypesInWarehouse(warehouseName);
+	}
+
+	/**
+	 * 获取该仓库品名信息
+	 * @param warehouseName 仓库名称
+	 * @param goodsType 商品种类
+	 * @return 品名信息
+	 */
+	public String getGoodsNamesInWarehouseForJson(String warehouseName, String goodsType) {
+		// TODO Auto-generated method stub
+		// 获取该仓库品名信息
+		return warehouseBalanceDao.getGoodsNamesInWarehouse(warehouseName, goodsType);
+	}
+
+	/**
+	 * 获取该仓库商品单位和库存数量
+	 * @param warehouseName 仓库名称
+	 * @param goodsType 商品种类
+	 * @param goodsName 品名
+	 * @return 单位和库存数量
+	 */
+	public String getUnitAndNum(String warehouseName, String goodsType,
+			String goodsName) {
+		// TODO Auto-generated method stub
+		// 获取该仓库商品单位和库存数量
+		return warehouseBalanceDao.getUnitAndNum(warehouseName, goodsType, goodsName);
+	}
+
+	/**
+	 * 远程修改仓库信息
+	 * @param goodsList 商品信息
+	 * @return 远程修改结果，true为修改成功，false为失败
+	 */
+	public boolean remoteUpdateWarehouseBalance(
+			List<Map<String, String>> goodsList) {
+		// TODO Auto-generated method stub
+		try {
+			transactionManager.start();
+			// 遍历商品信息
+			for (Map<String, String> map : goodsList)
+			{
+				String inWarehouse = map.get("inWarehouse");// 调出仓库
+				String goodsType = map.get("goodsType");// 商品种类
+				String goodsName = map.get("goodsName");// 品名
+				String unit = map.get("unit");// 单位
+				int moveAmount = Integer.parseInt(map.get("moveAmount"));// 调拨数量
+				// 增加库存量
+				warehouseBalanceDao.increaseWarehouseBalanceTran(inWarehouse, goodsType, goodsName, unit, moveAmount);
+				// 更新销售价
+				warehouseBalanceDao.updateSellPriceTran(inWarehouse, goodsName);
+			}
+			transactionManager.commit();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			transactionManager.rollback();
+			return false;
+		} finally {
+			transactionManager.close();
+		}
+		return true;
 	}
 
 }

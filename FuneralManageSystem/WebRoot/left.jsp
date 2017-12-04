@@ -101,7 +101,7 @@
 		
 		<tr height="8%">
 			<td width="100%" align="center">
-				<a href="" target="right" style="font-size:20px">²Ö¿âµ÷²¦</a>
+				<a href="warehouseMoveManage.jsp" target="right" style="font-size:20px">²Ö¿âµ÷²¦</a>
 			</td>
 		</tr>
 		

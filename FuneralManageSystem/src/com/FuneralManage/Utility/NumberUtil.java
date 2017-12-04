@@ -413,6 +413,64 @@ public class NumberUtil {
 		}
 		return currentNumber;	
 	}
+
+	/**
+	 * 生成新的调拨单号
+	 * @param moveDate 调拨单号
+	 * @return 最新的调拨单号
+	 */
+	public static String createWarehouseMoveNumber(String moveDate) {
+		// TODO Auto-generated method stub
+		String currentNumber = "";
+		// 连接数据库
+		Connection conn = DBDao.openDateBase("dongtai");
+		if (conn != null)
+		{
+			PreparedStatement ps = null;
+			ResultSet rs = null;
+			try {
+				String maxNumber = "";// 最大调拨单号
+				// 获取盘点日期的年月字符串
+				String yearAndMonth = DateUtil.getYearAndMonth(moveDate);
+				String sql = "select max(warehouseMoveNumber) as maxNumber from warehouseMove where warehouseMoveNumber like ?";
+				ps = conn.prepareStatement(sql);
+				ps.setString(1, yearAndMonth + "%");
+				// 执行sql语句
+				rs = ps.executeQuery();	
+				// 遍历记录
+				while (rs.next())
+				{
+					// 获取本月最大调拨单编号
+					maxNumber = rs.getString("maxNumber");
+					// 如果本月没有调拨单
+					if (maxNumber == null || maxNumber.equals(""))
+					{
+						currentNumber = yearAndMonth + "01";
+					}
+					else
+					{
+						// 得到当前流水号
+						int serialNumber = Integer.parseInt(maxNumber.substring(6));
+						String currentSerialNumber = serialNumber + 1 < 10 ? "0" + (serialNumber + 1) : "" + (serialNumber + 1);
+						currentNumber = yearAndMonth + currentSerialNumber;
+					}
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					// 关闭资源
+					if (rs != null) rs.close();
+					if (ps != null) ps.close();
+					if (conn != null) conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return currentNumber;	
+	}
 }
 
 
