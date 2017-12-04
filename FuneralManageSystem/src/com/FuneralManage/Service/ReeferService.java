@@ -9,12 +9,16 @@ public class ReeferService extends BaseService
 {
     private String returnString;
 	
+    /**
+     * 获取冰柜列表
+     * @return
+     */
 	public String getReefer()
 	{
 		Connection conn=DBDao.openDateBase("dongtai");
 		if (conn != null)
 		{
-			String sql = "select * from reefer where bAvailable=1";
+			String sql = "select * from reefer ";
 			ResultSet rs=null;
 			try
 			{

@@ -2,12 +2,28 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
 	"http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
-	<package name="fxk" extends="json-default" namespace="/">		
+	<package name="fxk" extends="json-default" namespace="/">	
+	 	<global-results>  
+	 	  <result name="myexception1" type="chain">
+              <param name="actionName">errorProcessor</param>
+          </result>
+      	</global-results>  	
+	 	<global-exception-mappings>  
+          <exception-mapping result="myexception1"  
+               exception="com.FuneralManage.Exception.MyException">             
+          </exception-mapping>  
+    	</global-exception-mappings>  
+    	<action name="errorProcessor" class="com.FuneralManage.Exception.ErrorProcessor">
+              <result type="json">
+              	<param name="root">error</param>
+              </result>
+        </action>
 		<action name="RemainsReeferAction" class="com.FuneralManage.Action.RemainsReeferAction" >
-			<result type="json" name="queryRemainsCarry">
+			<result type="json">
 				<param name="root">returnString</param>
 			</result>
 		</action>
+		
 		
 	</package>
 </struts>

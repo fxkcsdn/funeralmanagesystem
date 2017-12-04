@@ -125,12 +125,19 @@ var showNumberOfReefer = function(dataOfReefer)
 	for (var i = 0; i < dataLength; i++) 
 	{
 		var image = document.createElement("img");
+		
 		image.setAttribute("id", dataOfReefer[i].reeferNo);
-	    image.setAttribute("src", "Images/green.png");
 		image.setAttribute("width", "35px");
 		image.setAttribute("height", "20px");
-		// 为每个图像的onclick事件绑定事件处理函数
-		image.setAttribute("onclick", "chooseNumberOfReefer(" + dataOfReefer[i].reeferNo + ")");
+		if(dataOfReefer[i].bAvailable==1){
+			image.setAttribute("src", "Images/green.png");
+			// 为每个图像的onclick事件绑定事件处理函数
+			image.setAttribute("onclick", "chooseNumberOfReefer(" + dataOfReefer[i].reeferNo + ")");
+		}else{
+			image.setAttribute("src", "Images/red.png");
+			// 为每个图像的onclick事件绑定事件处理函数
+			image.setAttribute("onclick", "alert('该冰柜正在使用中');");
+		}
 		p.appendChild(image);
 		p.innerHTML += "<strong><font size='5'>"
 				+ (parseInt(dataOfReefer[i].reeferNo) > 9 ? dataOfReefer[i].reeferNo

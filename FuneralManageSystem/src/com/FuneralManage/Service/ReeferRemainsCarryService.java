@@ -3,8 +3,13 @@ package com.FuneralManage.Service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Date;
 
-public class ReeferRemainsCarryService {
+import com.FuneralManage.Dao.ReeferRemainsCarryDAO;
+import com.FuneralManage.Utility.DateUtil;
+
+public class ReeferRemainsCarryService extends BaseService{
+	private ReeferRemainsCarryDAO reeferRemainsCarryDAO=new ReeferRemainsCarryDAO(dataSource);
 	private String returnString;// 返回的字符串数据
 
 	/**
@@ -56,6 +61,24 @@ public class ReeferRemainsCarryService {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * 获取该日期当天的冷藏遗体接运列表
+	 * @param date
+	 * @return
+	 */
+	public String getReeferRemainsCarryInfo(Date date){
+		return reeferRemainsCarryDAO.getReeferRemainsCarryInfo(date);
+	}
+	
+	/**
+	 * 获取该日期当天的遗体冷藏列表
+	 * @param date
+	 * @return
+	 */
+	public String getReeferRemainsReefer(Date date){
+		return reeferRemainsCarryDAO.getReeferRemainsReefer(date);
 	}
 	
 	

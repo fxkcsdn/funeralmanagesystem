@@ -38,12 +38,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <OBJECT id=CVR_IDCard height=0 width=0 classid=clsid:10946843-7507-44FE-ACE8-2B3483D179B7 name=CVR_IDCard></OBJECT>
     <form id="form1" name="form1" method="post" action="" onsubmit="return saveInformationOfRefrigerationInfo();">
        <table>
-           <tr>
-              <td>可用冰柜号：</td>
-              <td><input type="text" id="reeferNo" name="reeferNo" readonly="readonly" disabled="true" style="width:80%;"/></td>           
+        	<tr>
+              <td id="reefer" colspan="4"></td>
            </tr>
            <tr>
-              <td id="reefer" colspan="4"></td>
+              <td>冰柜号：</td>
+              <td><input type="text" id="reeferNo" name="reeferNo" readonly="readonly" disabled="true" style="width:80%;"/></td>           
            </tr>
            <tr>
               <td colspan="2">接运编号（<font color="#dd0000">本馆接运需填写</font>）：</td>

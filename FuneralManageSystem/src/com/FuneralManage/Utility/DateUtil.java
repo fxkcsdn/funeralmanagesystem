@@ -147,4 +147,17 @@ public class DateUtil {
 		}
 		return yearAndMonthAndDay;
 	}
+	
+	public static Date addDateOneDay(Date date) {
+		if (null == date) {
+			return date;
+		}
+		Calendar c = Calendar.getInstance();
+        c.setTime(date);   //设置当前日期
+        c.add(Calendar.DATE, 1); //日期加1天
+//     c.add(Calendar.DATE, -1); //日期减1天
+        date = c.getTime();
+        return date;
+	}
+
 }

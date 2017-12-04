@@ -8,7 +8,13 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.FuneralManage.Dao.ReeferDAO;
+import com.FuneralManage.Dao.RemainsReeferDAO;
+import com.FuneralManage.Exception.MyException;
+
 public class RemainsReeferService extends BaseService{
+	private RemainsReeferDAO remainsReeferDAO=new RemainsReeferDAO(dataSource);
+	private ReeferDAO reeferDAO=new ReeferDAO(dataSource);
 	private String returnString;
 	
 	public String getReeferNumber()
@@ -58,13 +64,7 @@ public class RemainsReeferService extends BaseService{
 
 	public String saveRemainsReefer(String reeferNumber, String carryNumber, String deadId, String contactMobile, String contactName, String reeferNo, String startTime, String deadSource, String staffName, String belongings, String memo) throws UnsupportedEncodingException
 	{
-		Connection conn=DBDao.openDateBase("dongtai");
-		contactName = new String(contactName.getBytes("ISO-8859-1"), "GB2312");
-		deadSource = new String(deadSource.getBytes("ISO-8859-1"), "GB2312");
-		staffName = new String(staffName.getBytes("ISO-8859-1"), "GB2312");
-		belongings = new String(belongings.getBytes("ISO-8859-1"), "GB2312");
-		memo = new String(memo.getBytes("ISO-8859-1"), "GB2312");
-		
+		Connection conn=DBDao.openDateBase("dongtai");		
 		int row=0;
 		if(conn!=null)
 		{
@@ -251,8 +251,6 @@ public class RemainsReeferService extends BaseService{
 		Connection conn=DBDao.openDateBase("dongtai");
 		int row=0;
 		
-		belongings = new String(belongings.getBytes("ISO-8859-1"), "GB2312");
-		memo = new String(memo.getBytes("ISO-8859-1"), "GB2312");
 		
 		if(conn!=null)
 		{
@@ -356,5 +354,21 @@ public class RemainsReeferService extends BaseService{
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * 根据冰柜号获取冷藏编号
+	 * @param reeferNo
+	 * @return
+	 * @throws Exception 
+	 */
+	public String getReeferNumberByReeferNo(String reeferNo) throws Exception{
+		//首先判断该水晶棺是否在使用中,如果已经使用了，则获取对应的冷藏编号
+		if(reeferNo==null)
+			throw new MyException("冷藏柜不能为空！");	
+		boolean state=reeferDAO.getReeferState(reeferNo);
+		if(state)
+			throw new MyException("该冷藏柜还未使用!");
+		return remainsReeferDAO.getReeferNumberByReeferNo(reeferNo);
 	}
 }
