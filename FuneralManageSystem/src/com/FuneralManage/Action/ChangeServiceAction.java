@@ -90,45 +90,21 @@ public class ChangeServiceAction extends ActionSupport{
 		
 		
 		try {
-			returnString=ChangeServiceDao.insertIntoService(deadId,makeBeauty)+"02";
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-		try {
-			returnString=ChangeServiceDao.insertIntoService1(deadId,leaveRoom)+"03";
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		
-		try {
-			returnString=ChangeServiceDao.insertIntoService2(deadId,cremation)+"04";
-	
-		} catch (Exception e) {
-	// TODO: handle exception
-		}
-		
-		try {
-			returnString=ChangeServiceDao.insertIntoUrn(deadId,urn)+"01";
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		try {
-			ChangeServiceDao.getFuneralgoods(deadId);
+			returnString=ChangeServiceDao.insertIntoService(deadId,makeBeauty)+"02";							
+			returnString=ChangeServiceDao.insertIntoService1(deadId,leaveRoom)+"03";							
+			returnString=ChangeServiceDao.insertIntoService2(deadId,cremation)+"04";					
+			returnString=ChangeServiceDao.insertIntoUrn(deadId,urn)+"01";						
+//			ChangeServiceDao.getFuneralgoods(deadId);
 			returnString=ChangeServiceDao.insertIntoGoods(deadId, funeralGoods);
+
 	} catch (SQLException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
 
 		
-
+//		returnString="确定服务成功";
 		
-
 		
 		return "changeService";
 		

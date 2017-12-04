@@ -227,7 +227,7 @@ function changeService(){
 function changeServiceCallBack(){
 	if(http_request.readyState==4){
 		if(http_request.status==200){
-			
+			alert(http_request.responseText);
 			
 		}
 	}

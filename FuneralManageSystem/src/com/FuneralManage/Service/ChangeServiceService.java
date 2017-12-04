@@ -215,10 +215,13 @@ public class ChangeServiceService extends BaseService{
 		// TODO Auto-generated method stub
 		Connection conn=DBDao.openDateBase("dongtai");
 		int row=0;
+		int count=0;
 		if(conn!=null){
 			PreparedStatement ps1 = null;
 			PreparedStatement ps2 = null;
 			PreparedStatement ps3 = null;
+			PreparedStatement ps4 = null;
+			PreparedStatement ps5 = null;
 
 			
 			try{
@@ -227,17 +230,32 @@ public class ChangeServiceService extends BaseService{
 				String sql1="delete from deadfuneralgoods where deadId=?";
 				String sql2="insert into deadfuneralgoods(deadID,goodsName,goodsBeCost,goodsRealCost)values(?,?,?,?)";
 				String sql3="update warehousebalance set balanceNumber=balanceNumber-1 where warehouseName='总库' and goodsName=?";
+				String sql4 = "select * from deadfuneralgoods where deadId=?";
+				String sql5 = "update warehousebalance set balanceNumber=balanceNumber+1 where warehouseName='总库' and goodsName=?";
+				ps4=conn.prepareStatement(sql4);
+				ps5=conn.prepareStatement(sql5);
+				ps4.setString(1, deadId);
+				ResultSet rs=ps4.executeQuery();
+				while (rs.next()) {  
+	            	 
+                    String value = rs.getString("goodsName");
+                    ps5.setString(1, value);
+                    ps5.executeUpdate();
+                     
+                }
+				rs.close();
+				
 				ps1 =conn.prepareStatement(sql1);
 				ps1.setString(1,deadId);
 				
 				ps1.executeUpdate();
 								
-				
 				if(funeralGoods.length()>1){
 					String funeralGoodsStr="["+funeralGoods+"]";
 					JSONArray jsonArrayGoodsArray=JSONArray.fromObject(funeralGoodsStr);
 					DeadFuneralGoods deadFuneralGoods=new DeadFuneralGoods();
-					
+					count=jsonArrayGoodsArray.size();
+
 					if(jsonArrayGoodsArray.size()>0){
 						for(int i=0;i<jsonArrayGoodsArray.size();i++){
 							JSONObject JSONfuneralGoods = jsonArrayGoodsArray.getJSONObject(i);  // 遍历 jsonarray 数组，把每一个对象转成 json 对象
@@ -250,6 +268,7 @@ public class ChangeServiceService extends BaseService{
 							ps2.setInt(3, deadFuneralGoods.getFuneralGoodsBeCost());
 							ps2.setInt(4, deadFuneralGoods.getFuneralGoodsRealCost());
 							row = ps2.executeUpdate();
+							
 							ps3=conn.prepareStatement(sql3);
 							ps3.setString(1, deadFuneralGoods.getFuneralGoodsName());
 							ps3.executeUpdate();
@@ -264,7 +283,7 @@ public class ChangeServiceService extends BaseService{
 					
 				{
 					
-					returnString="成功加入了" + row + "项丧葬物品！";
+					returnString="成功加入了" + count + "项丧葬物品！";
 				}
 				else
 				{
@@ -280,8 +299,13 @@ public class ChangeServiceService extends BaseService{
 				e.printStackTrace();
 				return returnString;
 			}finally{
+				
 				ps1.close();
 				ps2.close();
+				ps3.close();
+				ps4.close();
+				ps5.close();
+				
 				conn.close();
 			}
 		}
