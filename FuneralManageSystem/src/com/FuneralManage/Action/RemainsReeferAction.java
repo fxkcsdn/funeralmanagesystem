@@ -5,8 +5,11 @@ import java.util.Date;
 
 import com.FuneralManage.Exception.MyException;
 import com.FuneralManage.Service.ReeferRemainsCarryService;
+import com.FuneralManage.Service.ReeferRemainsSendService;
 import com.FuneralManage.Service.ReeferServiceConsumeInfoService;
 import com.FuneralManage.Service.RemainsReeferService;
+import com.FuneralManage.Utility.NumberUtil;
+import com.FuneralManage.entity.ReeferRemainsSend;
 import com.FuneralManage.entity.ReeferServiceConsumeInfo;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -14,9 +17,18 @@ public class RemainsReeferAction extends ActionSupport{
 	private ReeferServiceConsumeInfo reeferGood;
 	private ReeferServiceConsumeInfo reeferService;
 	private ReeferServiceConsumeInfo reeferMeal;
+	private ReeferRemainsSend reeferRemainsSend;
 	private Date queryDate;
 	private String returnString;// 返回的字符串
 	private String reeferNo;
+	public ReeferRemainsSend getReeferRemainsSend() {
+		return reeferRemainsSend;
+	}
+
+	public void setReeferRemainsSend(ReeferRemainsSend reeferRemainsSend) {
+		this.reeferRemainsSend = reeferRemainsSend;
+	}
+	
 	public ReeferServiceConsumeInfo getReeferService() {
 		return reeferService;
 	}
@@ -32,7 +44,6 @@ public class RemainsReeferAction extends ActionSupport{
 	public void setReeferMeal(ReeferServiceConsumeInfo reeferMeal) {
 		this.reeferMeal = reeferMeal;
 	}
-
 	
 	public String getReeferNo() {
 		return reeferNo;
@@ -97,13 +108,11 @@ public class RemainsReeferAction extends ActionSupport{
 	 * @throws Exception 
 	 */
 	public String addReeferServiceConsume() throws Exception{	
-		if(reeferNo==null){
+		if(reeferNo==null)
 			throw new MyException("冷藏柜不能为空！");
-		}
 		String reeferNumber=new RemainsReeferService().getReeferNumberByReeferNo(reeferNo);
-		if(reeferNumber==null||reeferNumber.equals("")){
+		if(reeferNumber==null||reeferNumber.equals(""))
 			throw new MyException("该冷藏柜没有对应的冷藏信息！");
-		}
 		if(reeferGood!=null){
 			reeferGood.setReeferNumber(reeferNumber);
 			reeferGood.setType("0");//0-物品；1-服务；2-用餐
@@ -118,6 +127,43 @@ public class RemainsReeferAction extends ActionSupport{
 		}
 		boolean result=new ReeferServiceConsumeInfoService().addReeferServiceConsumeInfo(reeferGood,reeferService,reeferMeal);
 		returnString=result?"{result:\"success\"}":"{result:\"failure\"}";
+		return SUCCESS;
+	}
+	
+	/**
+	 * 获取最新接运编号
+	 * @return 接运编号，JSON格式字符串
+	 */
+	public String getReeferRemainsSendNumber() throws Exception{
+		// 获取接运编号
+		if(reeferRemainsSend==null)
+			throw new MyException("冷藏遗体送运时间为空！");
+		String carryNumber=new ReeferRemainsSendService().createReeferSendNumber(reeferRemainsSend.getSendTime());
+		returnString = "{carryNumber:\"" +carryNumber  + "\"}";
+	    return SUCCESS;
+	}
+	/**
+	 * 新增冷藏遗体送运
+	 * @return
+	 * @throws Exception
+	 */
+	public String addReeferRemainsSend()throws Exception{
+		if(reeferRemainsSend==null)
+			throw new MyException("冷藏遗体送运信息为空！");
+		if(reeferNo==null)
+			throw new MyException("冷藏柜不能为空！");
+		//获取冷藏编号
+		String reeferNumber=new RemainsReeferService().getReeferNumberByReeferNo(reeferNo);
+		if(reeferNumber==null||reeferNumber.equals(""))
+			throw new MyException("该冷藏柜没有对应的冷藏信息！");
+		//获取送运编号
+		String carryNumber=new ReeferRemainsSendService().createReeferSendNumber(reeferRemainsSend.getSendTime());
+		if(carryNumber==null||carryNumber.equals(""))
+			throw new MyException("生成送运编号错误！");
+		reeferRemainsSend.setReeferNumber(reeferNumber);
+		reeferRemainsSend.setCarryNumber(carryNumber);
+		boolean result=new ReeferRemainsSendService().addReeferRemainsSend(reeferRemainsSend);
+		returnString=result?"success":"failure";
 		return SUCCESS;
 	}
 	

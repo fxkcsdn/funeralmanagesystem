@@ -52,6 +52,8 @@ body, td, th {
 				onclick="window.frames.registerReeferInfo.location.reload(); ">登记冷藏信息</li>
 			<li class="TabbedPanelsTab" tabindex="3">冷藏信息查询</li>
 			<li class="TabbedPanelsTab" tabindex="3">登记冷藏服务信息</li>
+			<li class="TabbedPanelsTab" tabindex="0"
+				onclick="window.frames.registerReeferRemainsSend.location.reload(); ">登记冷藏遗体送运信息</li>
 			<li class="TabbedPanelsTab" tabindex="4"
 				onclick="window.frames.reeferBill.location.reload(); ">冷藏结算</li>
 		</ul>
@@ -182,7 +184,10 @@ body, td, th {
 					</table>
 				</form>
 			</div>
-
+			<div class="TabbedPanelsContent">
+				<iframe name="registerReeferRemainsSend"
+					src="registerReeferRemainsSend.jsp" width="100%" height="90%"></iframe>
+			</div>
 			<div class="TabbedPanelsContent">
 				<iframe name="reeferBill" src="reeferBill.jsp" width="100%"
 					height="90%"></iframe>

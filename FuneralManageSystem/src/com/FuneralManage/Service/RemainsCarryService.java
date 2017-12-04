@@ -13,7 +13,6 @@ public class RemainsCarryService extends BaseService{
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
 		String date = df.format(new Date());
 		
-		carryType = new String(carryType.getBytes("ISO-8859-1"), "GB2312");
 		
 		Connection conn=DBDao.openDateBase("dongtai");
 		if (conn != null)
@@ -193,13 +192,7 @@ public class RemainsCarryService extends BaseService{
 			String carryNumber, String deadId, String carryType, String carNumber, String carCost, String bInternalCar, String rentNumber, String carRealCost) throws UnsupportedEncodingException
 	{
 		Connection conn=DBDao.openDateBase("dongtai");
-		int row=0;		
-		contactName = new String(contactName.getBytes("ISO-8859-1"), "GB2312");
-		address = new String(address.getBytes("ISO-8859-1"), "GB2312");
-		carNumber = new String(carNumber.getBytes("ISO-8859-1"), "GB2312");
-		carryType = new String(carryType.getBytes("ISO-8859-1"), "GB2312");			
-		
-		
+		int row=0;				
 		if(conn!=null)
 		{			
 			String sql = "insert into remainsCarry(contactName,contactMobile,startTime,address, carryNumber, deadId, carryType, carNumber, carBeCost, bInternalCar, rentCoffinNumber, carRealCost)values(?,?,?,?,?,?,?,?,?,?,?,?)";

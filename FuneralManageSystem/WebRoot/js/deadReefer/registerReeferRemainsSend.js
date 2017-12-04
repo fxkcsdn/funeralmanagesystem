@@ -1,53 +1,6 @@
 /**
- * 登记遗体冷藏接运信息界面对应的脚本文件
+ * 登记遗体冷藏送运信息界面对应的脚本文件
  */
-
-/**
- * 创建XMLHttpRequest对象
- */
-var createXMLHttpRequest = function() {
-	var XMLHttpReq = false;
-	// 如果浏览器有XMLHttpRequest对象，则直接创建
-	if (window.XMLHttpRequest) {
-		XMLHttpReq = new XMLHttpRequest();
-	}
-	// 如果是ie浏览器
-	else if (window.ActiveXObject) {
-		try {
-			XMLHttpReq = new ActiveXObject("Msxml2.XMLHTTP");
-		} catch (e) {
-			XMLHttpReq = new ActiveObject("Microsoft.XMLHTTP");
-		}
-	}
-	return XMLHttpReq;
-};
-
-/**
- * ajax提交请求
- */
-var sendRequest = function(method, url, data, getResult) {
-	var result = "";
-	// 创建XMLHttpRequest对象
-	var XMLHttpReq = createXMLHttpRequest();
-	if (method == "post") {
-		// 打开连接
-		XMLHttpReq.open("post", url, false);
-		XMLHttpReq.setRequestHeader("content-type",
-				"application/x-www-form-urlencoded");
-		// 回调函数
-		XMLHttpReq.onreadystatechange = function() {
-			if (XMLHttpReq.readyState == 4) {
-				//返回成功；
-				if (XMLHttpReq.status == 200) {
-					result = XMLHttpReq.responseText;
-					getResult(result);
-				}
-			}
-		}
-		// 发送数据
-		XMLHttpReq.send(data.toString());
-	}
-};
 
 /**
  * 页面加载时触发该事件
@@ -57,6 +10,8 @@ window.onload = function() {
 	getSystemTime();
 	// 获取车牌号下拉列表
 	getCarNumber();
+	//获取冰柜信息
+	getReefer();
 };
 
 /**
@@ -97,59 +52,12 @@ var getCarNumberBack = function(result) {
 	showCarNumber(dataOfCarNumber);
 };
 
-/**
- * 请求接运编号
- */
-var getCarryNumber = function(carryTime) {
-	var data = "carryTime=" + carryTime;
-	var url = "/FuneralManageSystem/addReeferRemainsCarry!getReeferRemainsCarryNumber";
-	sendRequest("post", url, data, getCarryNumberBack);
-};
-
-/**
- * 获取接运编号
- */
-var getCarryNumberBack = function(result) {
-	var dataOfCarryNumber = eval("(" + result + ")");
-	dataOfCarryNumber = eval("(" + dataOfCarryNumber + ")");
-	document.getElementById("carryNumber").value = dataOfCarryNumber.carryNumber;
-};
-
-/**
- * 保存接运信息
- */
-var addRemainsCarry = function(carryNumber, carryTime, address, contactMobile,
-		contactName, carNumber, carBeCost, bInternalCar) {
-	var data = "contactName=" + contactName + "&contactMobile=" + contactMobile
-			+ "&address=" + address + "&carryNumber=" + carryNumber
-			+ "&carryTime=" + carryTime + "&carNumber=" + carNumber
-			+ "&carBeCost=" + carBeCost + "&bInternalCar=" + bInternalCar;
-	var url = "/FuneralManageSystem/addReeferRemainsCarry!addReeferRemainsCarry";
-	sendRequest("post", url, data, addRemainsCarryBack);
-};
-
-/**
- * 获取保存结果
- */
-var addRemainsCarryBack = function(result) {
-	var dataOfCoffin = eval("(" + result + ")");
-	if (dataOfCoffin == "true") {
-		alert("保存成功!");
-		// 保存按钮不可用，打印按钮可用
-		document.getElementById("save").disabled = "disabled";
-		document.getElementById("btnPrint").disabled = "";
-	} else {
-		alert("保存失败!");
-		// 清空接运编号文本框
-		document.getElementById("carryNumber").value = "";
-	}
-};
 
 /**
  * 在页面上显示当前系统时间
  */
 var showTimeOfSystem = function(dataOfSystemTime) {
-	document.getElementById("carryTime").value = dataOfSystemTime.startTime;
+	document.getElementById("sendTime").value = dataOfSystemTime.startTime;
 };
 
 /**
@@ -195,8 +103,8 @@ var driverDetailInfo = function() {
 /**
  * 保存接运信息
  */
-var saveInformationOfRemainsCarry = function() {
-	var carryTime = document.getElementById("carryTime").value;// 接运时间
+var saveInformationOfRemainsSend = function() {
+	var sendTime = document.getElementById("sendTime").value;// 接运时间
 	var address = document.getElementById("address").value;// 接运地址
 	var contactMobile = document.getElementById("contactMobile").value;// 联系人手机
 	var contactName = document.getElementById("contactName").value;// 联系人姓名
@@ -205,7 +113,11 @@ var saveInformationOfRemainsCarry = function() {
 	var bInternalCar = document.getElementById("bInternalCar").value;// 是否本馆车辆，0为本馆车辆，1为非本馆车辆 
 	var carNumber = "";
 	var reg;// 正则表达式
-
+	var reeferNo =document.getElementById("reeferNo").value;
+	if(reeferNo==null||reeferNo==""){
+		alert("水晶棺号不能为空！");
+		return false;
+	}
 	// 联系人手机不符合格式
 	if (!((reg = /^1[3|4|5|8][0-9]\d{4,8}$/).test(contactMobile))) {
 		alert("联系人手机输入有误，请重新输入!");
@@ -218,13 +130,11 @@ var saveInformationOfRemainsCarry = function() {
 		document.getElementById("carBeCost").value = "";
 		return false;
 	}
+	
 	var r = confirm("是否确认保存?");
 	if (r == false) {
 		return false;
 	}
-	// 获取接运编号
-	getCarryNumber(carryTime);
-	var carryNumber = document.getElementById("carryNumber").value;
 	if (driverInfo != "") {
 		driverInfo = JSON.stringify(driverInfo);
 		driverInfo = eval("(" + eval("(" + driverInfo + ")") + ")");
@@ -232,9 +142,106 @@ var saveInformationOfRemainsCarry = function() {
 		carNumber = driverInfo.carNumber;
 	}
 	// 保存接运信息
-	addRemainsCarry(carryNumber, carryTime, address, contactMobile,
+	addRemainsCarry(reeferNo, sendTime, address, contactMobile,
 			contactName, carNumber, carBeCost, bInternalCar);
 	return false;
+};
+
+/**
+ * 保存接运信息
+ */
+var addRemainsCarry = function(reeferNo, sendTime, address, contactMobile,
+		contactName, carNumber, carBeCost, bInternalCar) {
+	var data = "reeferNo="+reeferNo+"&reeferRemainsSend.contactName=" + contactName + "&reeferRemainsSend.contactMobile=" + contactMobile
+			+ "&reeferRemainsSend.address=" + address + "&reeferRemainsSend.sendTime=" + sendTime + "&reeferRemainsSend.carNumber=" + carNumber
+			+ "&reeferRemainsSend.carBeCost=" + carBeCost + "&reeferRemainsSend.bInternalCar=" + bInternalCar;
+	var url = "RemainsReeferAction!addReeferRemainsSend";
+	sendRequest("post", url, data, addRemainsCarryBack);
+};
+
+/**
+ * 获取保存结果
+ */
+var addRemainsCarryBack = function(result) {
+	var dataOfCoffin = eval("(" + result + ")");
+	if (dataOfCoffin == "success") {
+		alert("保存成功!");
+		// 保存按钮不可用，打印按钮可用
+		document.getElementById("save").disabled = "disabled";
+		document.getElementById("btnPrint").disabled = "";
+	} else {
+		alert("保存失败!");
+		// 清空接运编号文本框
+		document.getElementById("carryNumber").value = "";
+	}
+};
+
+/**
+ * 请求服务器可用冰柜号
+ */
+var getReefer = function() 
+{
+	var data = "";
+	var url = "/FuneralManageSystem/addRemainsReefer!getReefer";
+	sendRequest("post", url, data, getReeferBack);
+};
+
+/**
+ * 获取可用冰柜号
+ */
+var getReeferBack = function(result) 
+{
+	var dataOfReefer = eval("(" + result + ")");
+	dataOfReefer = eval("(" + dataOfReefer + ")");
+	// 显示冰柜，图像表示
+	showNumberOfReefer(dataOfReefer);
+};
+
+/**
+ * 显示冰柜信息，图像表示
+ * @param dataOfReefer 冰柜信息
+ */
+var showNumberOfReefer = function(dataOfReefer) 
+{
+	var dataLength = dataOfReefer.length;
+	var p = document.getElementById("reefer");// 冰柜显示区域
+	// 遍历每个冰柜
+	for (var i = 0; i < dataLength; i++) 
+	{
+		var image = document.createElement("img");
+		image.setAttribute("id", dataOfReefer[i].reeferNo);
+
+		image.setAttribute("width", "35px");
+		image.setAttribute("height", "20px");
+		if(dataOfReefer[i].bAvailable==1){
+			image.setAttribute("src", "Images/green.png");
+			// 为每个图像的onclick事件绑定事件处理函数
+			image.setAttribute("onclick", "alert('该冰柜还未使用!');");
+		}else{
+			image.setAttribute("src", "Images/red.png");
+			// 为每个图像的onclick事件绑定事件处理函数
+			image.setAttribute("onclick", "chooseNumberOfReefer(" + dataOfReefer[i].reeferNo + ")");
+		}	
+		p.appendChild(image);
+		p.innerHTML += "<strong><font size='5'>"
+				+ (parseInt(dataOfReefer[i].reeferNo) > 9 ? dataOfReefer[i].reeferNo
+						: "0" + dataOfReefer[i].reeferNo) + "</font></strong>";
+		p.innerHTML += "&nbsp;&nbsp;";
+		// 每5个图像换行
+		if ((i + 1) % 4 == 0) 
+		{
+			p.innerHTML += "<br>";
+		}
+	}
+};
+
+/**
+ * 单击图像，获取冰柜号
+ * @param reeferN0
+ */
+var chooseNumberOfReefer = function(reeferNo) 
+{
+	document.getElementById("reeferNo").value = reeferNo;
 };
 
 /**
