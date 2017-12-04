@@ -3,7 +3,7 @@
  */
 var goodsNameCopy = null;// 全局变量，用以保存品名
 var localAddr = "http://localhost:8080";// 本地ip地址
-var remoteAddr = "http://172.18.23.14:8080";// 远程ip地址
+var remoteAddr = "http://172.18.23.92:8080";// 远程ip地址
 
 /**
  * 创建XMLHttpRequest对象
@@ -337,7 +337,7 @@ function getWarehouseMoves()
 	// 遍历调拨信息
 	for (var i = 1; i < table.rows.length; i++)
 	{
-		Object obj = new Object();
+		var obj = new Object();
 		obj.staffName = staffName.value;
 		obj.moveDate = moveDate.value;
 		obj.outWarehouse = outWarehouse.value;
@@ -414,7 +414,7 @@ function addWarehouseMoveBack(result)
  * @param result
  */
 function remoteUpdateBack(result)
-{
+{	
 	var localData = "";
 	var url = "";
 	var saveButton = document.getElementById("saveButton");// 提交按钮
