@@ -3,11 +3,16 @@ package com.FuneralManage.Action;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.ServletActionContext;
+
 import net.sf.json.JSONObject;
 
 import com.FuneralManage.Service.WarehouseBalanceService;
 import com.FuneralManage.Service.WarehouseMoveService;
 import com.FuneralManage.Utility.NumberUtil;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class AddWarehouseMoveAction extends ActionSupport {
@@ -119,6 +124,9 @@ public class AddWarehouseMoveAction extends ActionSupport {
 	 */
 	public String remoteUpdateWarehouseBalance()
 	{
+		HttpServletResponse response = ServletActionContext.getResponse();
+		// 允许跨域访问
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		WarehouseBalanceService warehouseBalanceService = new WarehouseBalanceService();
 		JSONObject jsonObject=JSONObject.fromObject(warehouseMoves);
 		// 获取商品信息
