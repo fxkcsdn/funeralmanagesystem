@@ -221,9 +221,7 @@ public class BaseDAO {
                             if ("int".equals(rTypes[i])  
                                     || "Integer".equals(rTypes[i])) {  
                                 m.invoke(t, rs.getInt(colName));  
-                            } else if ("Date".equals(rTypes[i])) {  
-                                m.invoke(t, rs.getDate(colName));  
-                            } else if ("Timestamp".equals(rTypes[i])) {  
+                            }  else if ("Timestamp".equals(rTypes[i])) {  
                                 m.invoke(t, rs.getTimestamp(colName));  
                             } else {  
                                 m.invoke(t, rs.getObject(colName));  

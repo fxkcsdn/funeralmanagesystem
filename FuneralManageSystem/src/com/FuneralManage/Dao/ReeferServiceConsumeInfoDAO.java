@@ -28,5 +28,19 @@ public class ReeferServiceConsumeInfoDAO extends BaseDAO{
 		return result>0?true:false;
 	}
 	
+	/**
+	 * 获取该冷藏编号对应的服务消费用总和
+	 * @param reeferNumber
+	 * @return
+	 */
+	public String getBeCostSumOfReeferService(String reeferNumber){
+		String sql="SELECT SUM(beCost) AS BeCostSum FROM ReeferServiceConsumeInfo WHERE reeferNumber=?";
+		String result=this.getOneColumn(sql, reeferNumber);
+		if(result==null||result.equals(""))
+			return "0";
+		else
+			return result;
+	}
+	
 
 }

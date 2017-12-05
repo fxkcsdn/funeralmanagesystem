@@ -2,6 +2,7 @@ package com.FuneralManage.Dao;
 
 import javax.sql.DataSource;
 
+import com.FuneralManage.entity.ReeferRemainsCarry;
 import com.FuneralManage.entity.ReeferRemainsSend;
 
 public class ReeferRemainsSendDAO extends BaseDAO{
@@ -40,6 +41,16 @@ public class ReeferRemainsSendDAO extends BaseDAO{
 		String sendTimeTemp=carryTime+"%";
 		String sql = "select max(carryNumber) as maxNumber from reeferRemainsSend where carryNumber like ?";
 		return this.getOneColumn(sql, sendTimeTemp);
+	}
+	
+	/**
+	 * 获取一个冷藏送运实例
+	 * @param carryNumber
+	 * @return reeferRemainsSend or null
+	 */
+	public ReeferRemainsSend getBeCostOfRemainSend(String reeferNumber){
+		String sql="select * from ReeferRemainsSend where reeferNumber=?";
+		return this.getForEntity(sql, ReeferRemainsSend.class, reeferNumber);
 	}
 
 }

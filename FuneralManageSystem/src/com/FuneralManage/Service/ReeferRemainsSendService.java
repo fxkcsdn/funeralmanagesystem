@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 import com.FuneralManage.Dao.ReeferRemainsSendDAO;
 import com.FuneralManage.Exception.MyException;
@@ -29,8 +30,9 @@ public class ReeferRemainsSendService extends BaseService{
 	 * @return
 	 * @throws Exception
 	 */
-	public String createReeferSendNumber(String carryTime) throws Exception{
+	public String createReeferSendNumber(Date carryTime) throws Exception{
 		String currentNumber="";
+		System.out.println(carryTime);
 		if(carryTime==null||"".equals(carryTime))
 			throw new MyException("接运时间不能为空");
 		String yearAndMonthAndDay = DateUtil.getYearAndMonthAndDay(carryTime);

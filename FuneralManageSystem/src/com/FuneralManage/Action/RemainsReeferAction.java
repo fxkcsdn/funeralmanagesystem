@@ -11,6 +11,7 @@ import com.FuneralManage.Service.RemainsReeferService;
 import com.FuneralManage.Utility.NumberUtil;
 import com.FuneralManage.entity.ReeferRemainsSend;
 import com.FuneralManage.entity.ReeferServiceConsumeInfo;
+import com.FuneralManage.entity.RemainsReefer;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class RemainsReeferAction extends ActionSupport{
@@ -18,9 +19,19 @@ public class RemainsReeferAction extends ActionSupport{
 	private ReeferServiceConsumeInfo reeferService;
 	private ReeferServiceConsumeInfo reeferMeal;
 	private ReeferRemainsSend reeferRemainsSend;
+	private RemainsReefer remainsReefer;
 	private Date queryDate;
 	private String returnString;// 返回的字符串
 	private String reeferNo;
+	
+	public RemainsReefer getRemainsReefer() {
+		return remainsReefer;
+	}
+
+	public void setRemainsReefer(RemainsReefer remainsReefer) {
+		this.remainsReefer = remainsReefer;
+	}
+
 	public ReeferRemainsSend getReeferRemainsSend() {
 		return reeferRemainsSend;
 	}
@@ -157,6 +168,7 @@ public class RemainsReeferAction extends ActionSupport{
 		if(reeferNumber==null||reeferNumber.equals(""))
 			throw new MyException("该冷藏柜没有对应的冷藏信息！");
 		//获取送运编号
+		System.out.println("time="+reeferRemainsSend.getSendTime());
 		String carryNumber=new ReeferRemainsSendService().createReeferSendNumber(reeferRemainsSend.getSendTime());
 		if(carryNumber==null||carryNumber.equals(""))
 			throw new MyException("生成送运编号错误！");
@@ -167,4 +179,32 @@ public class RemainsReeferAction extends ActionSupport{
 		return SUCCESS;
 	}
 	
+	/**
+	 * 根据冰柜号获取相关的应收费用
+	 * @param reeferNo
+	 * @return
+	 * @throws Exception
+	 */
+	public String getAllBeCostOfReeferRemains() throws Exception{
+		if(reeferNo==null)
+			throw new MyException("冷藏柜不能为空！");
+		returnString=new RemainsReeferService().getAllBeCostOfReeferRemains(reeferNo);
+		return SUCCESS;
+	}
+	
+	
+	public String reeferBillOfRemains() throws Exception{
+		if(remainsReefer==null)
+			throw new MyException("遗体冷藏信息不能为空！");
+		if(reeferNo==null)
+			throw new MyException("冷藏柜不能为空！");
+		//获取冷藏编号
+		String reeferNumber=new RemainsReeferService().getReeferNumberByReeferNo(reeferNo);
+		if(reeferNumber==null||reeferNumber.equals(""))
+			throw new MyException("该冷藏柜没有对应的冷藏信息！");
+		remainsReefer.setReeferNumber(reeferNumber);
+		boolean result=new RemainsReeferService().reeferfillOfRemains(remainsReefer,reeferNo);
+		returnString=result?"success":"failure";
+		return SUCCESS;
+	}
 }

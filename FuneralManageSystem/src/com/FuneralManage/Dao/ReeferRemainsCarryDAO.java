@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.sql.DataSource;
 
 import com.FuneralManage.Utility.DateUtil;
+import com.FuneralManage.entity.ReeferRemainsCarry;
 
 public class ReeferRemainsCarryDAO extends BaseDAO{
 
@@ -31,6 +32,16 @@ public class ReeferRemainsCarryDAO extends BaseDAO{
 	public String getReeferRemainsReefer(Date date){
 		String sql="select * from remainsreefer where arrivalTime>=? and arrivalTime<?";
 		return this.getForJson(sql, date,DateUtil.addDateOneDay(date));
+	}
+	
+	/**
+	 * 获取一个冷藏接运实例
+	 * @param carryNumber
+	 * @return reeferRemainsCarry or null
+	 */
+	public ReeferRemainsCarry getBeCostOfRemainCarry(String carryNumber){
+		String sql="select * from ReeferRemainsCarry where carryNumber=?";
+		return this.getForEntity(sql, ReeferRemainsCarry.class, carryNumber);
 	}
 
 }

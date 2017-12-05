@@ -148,6 +148,32 @@ public class DateUtil {
 		return yearAndMonthAndDay;
 	}
 	
+	public static String getYearAndMonthAndDay(Date date) {
+		String yearAndMonthAndDay = "";
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		int year = calendar.get(Calendar.YEAR);// 年
+		int month = calendar.get(Calendar.MONTH) + 1;// 月
+		int day = calendar.get(Calendar.DAY_OF_MONTH);// 日
+		// 如果月份小于10
+		if (month < 10) {
+			if (day < 10) {
+				yearAndMonthAndDay = "" + year + "0" + month + "0" + day;
+			} else {
+				yearAndMonthAndDay = "" + year + "0" + month + day;
+			}
+		}
+		// 月份大于10
+		else {
+			if (day < 10) {
+				yearAndMonthAndDay = "" + year + month + "0" + day;
+			} else {
+				yearAndMonthAndDay = "" + year + month + day;
+			}
+		}
+		return yearAndMonthAndDay;
+	}
+	
 	public static Date addDateOneDay(Date date) {
 		if (null == date) {
 			return date;

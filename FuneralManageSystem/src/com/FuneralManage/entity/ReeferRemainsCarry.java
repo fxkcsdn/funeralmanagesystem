@@ -12,7 +12,7 @@ public class ReeferRemainsCarry {
 	    private String  address;			   //接运地址
 	    private String  carNumber;  		   //接运车牌号
 	    private boolean bInternalCar;		   //是否是本馆车辆
-	    private int     carBeCost;             //接运用车应收费用金额
+	    private Float     carBeCost;             //接运用车应收费用金额
 		public String getCarryNumber() {
 			return carryNumber;
 		}
@@ -55,10 +55,10 @@ public class ReeferRemainsCarry {
 		public void setbInternalCar(boolean bInternalCar) {
 			this.bInternalCar = bInternalCar;
 		}
-		public int getCarBeCost() {
+		public Float getCarBeCost() {
 			return carBeCost;
 		}
-		public void setCarBeCost(int carBeCost) {
+		public void setCarBeCost(Float carBeCost) {
 			this.carBeCost = carBeCost;
 		}
 

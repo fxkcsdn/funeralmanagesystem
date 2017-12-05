@@ -1,14 +1,18 @@
 package com.FuneralManage.entity;
 
+import java.util.Date;
+
+
 public class ReeferRemainsSend {
 	private String reeferNumber;
 	private String carryNumber;
 	private String contactName;
 	private String contactMobile;
-	private String sendTime;
+	private Date sendTime;
 	private String address;
 	private String carNumber;
-	private Integer bInternalCar;
+	private boolean bInternalCar;
+	private Float carBeCost;
 	public String getReeferNumber() {
 		return reeferNumber;
 	}
@@ -33,10 +37,10 @@ public class ReeferRemainsSend {
 	public void setContactMobile(String contactMobile) {
 		this.contactMobile = contactMobile;
 	}
-	public String getSendTime() {
+	public Date getSendTime() {
 		return sendTime;
 	}
-	public void setSendTime(String sendTime) {
+	public void setSendTime(Date sendTime) {
 		this.sendTime = sendTime;
 	}
 	public String getAddress() {
@@ -51,18 +55,18 @@ public class ReeferRemainsSend {
 	public void setCarNumber(String carNumber) {
 		this.carNumber = carNumber;
 	}
-	public Integer getBInternalCar() {
+	public boolean getBInternalCar() {
 		return bInternalCar;
 	}
-	public void setBInternalCar(Integer bInternalCar) {
+	public void setBInternalCar(boolean bInternalCar) {
 		this.bInternalCar = bInternalCar;
 	}
-	public Integer getCarBeCost() {
+	public Float getCarBeCost() {
 		return carBeCost;
 	}
-	public void setCarBeCost(Integer carBeCost) {
+	public void setCarBeCost(Float carBeCost) {
 		this.carBeCost = carBeCost;
 	}
-	private Integer carBeCost;
+
 
 }

@@ -9,11 +9,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.FuneralManage.Dao.ReeferDAO;
+import com.FuneralManage.Dao.ReeferRemainsCarryDAO;
+import com.FuneralManage.Dao.ReeferRemainsSendDAO;
+import com.FuneralManage.Dao.ReeferServiceConsumeInfoDAO;
 import com.FuneralManage.Dao.RemainsReeferDAO;
 import com.FuneralManage.Exception.MyException;
+import com.FuneralManage.entity.ReeferRemainsCarry;
+import com.FuneralManage.entity.ReeferRemainsSend;
+import com.FuneralManage.entity.RemainsReefer;
+import com.FuneralManage.Utility.TransactionManager;
 
 public class RemainsReeferService extends BaseService{
+	private TransactionManager transactionManager=new TransactionManager(dataSource);
 	private RemainsReeferDAO remainsReeferDAO=new RemainsReeferDAO(dataSource);
+	private ReeferRemainsSendDAO reeferRemainsSendDAO=new ReeferRemainsSendDAO(dataSource);
+	private ReeferRemainsCarryDAO reeferRemainsCarryDAO=new ReeferRemainsCarryDAO(dataSource);
+	private ReeferServiceConsumeInfoDAO reeferServiceConsumeInfoDAO=new ReeferServiceConsumeInfoDAO(dataSource);
 	private ReeferDAO reeferDAO=new ReeferDAO(dataSource);
 	private String returnString;
 	
@@ -328,7 +339,9 @@ public class RemainsReeferService extends BaseService{
 		// TODO Auto-generated method stub
 		if (conn != null)
 		{
-			String sql = "insert into remainsReefer values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "insert into remainsReefer(reeferNumber,carryNumber,deadId,contactMobile,"
+					+ "contactName,sendRemainsUnit,arrivalTime,familyName,reeferNo,accidentAddress,deposit,"
+					+ "staffName,familyMobile,memo) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			try (PreparedStatement ps = conn.prepareStatement(sql)) {
 				ps.setString(1, reeferNumber);
 				ps.setString(2, carryNumber);
@@ -370,5 +383,72 @@ public class RemainsReeferService extends BaseService{
 		if(state)
 			throw new MyException("该冷藏柜还未使用!");
 		return remainsReeferDAO.getReeferNumberByReeferNo(reeferNo);
+	}
+	
+	/**
+	 * 根据冰柜号获取相关的应收费用
+	 * @param reeferNo
+	 * @return
+	 * @throws Exception
+	 */
+	public String getAllBeCostOfReeferRemains(String reeferNo) throws Exception{
+		if(reeferNo==null||reeferNo.equals(""))
+			throw new MyException("冷藏柜不能为空！");
+		boolean state=reeferDAO.getReeferState(reeferNo);
+		if(state)
+			throw new MyException("该冷藏柜还未使用!");
+		RemainsReefer remainsReefer=remainsReeferDAO.getRemainsReeferByReeferNo(reeferNo);
+		if(remainsReefer==null)
+			throw new MyException("数据库中尚未有此冰柜对应的遗体冷藏信息！");
+		String reeferNumber=remainsReefer.getReeferNumber();
+		if(reeferNumber==null||reeferNumber.equals(""))
+			throw new MyException("该冷藏信息没有冷藏编号，数据库设计问题！");
+		String carryNumber=remainsReefer.getCarryNumber();
+		//第一步，获取遗体到馆时间
+		String arriveTime="";
+		if(remainsReefer.getArrivalTime()==null){
+			throw new MyException("该冷藏信息没有到馆时间，数据库数据异常！");
+		}
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
+		arriveTime = df.format(remainsReefer.getArrivalTime());		
+		//第二步，获取接运应收
+		String carryBeCost="0";
+		if(carryNumber!=null&&!carryNumber.equals("")){
+			ReeferRemainsCarry reeferRemainsCarry=reeferRemainsCarryDAO.getBeCostOfRemainCarry(carryNumber);
+			if(reeferRemainsCarry!=null&&reeferRemainsCarry.getCarBeCost()!=null)
+				carryBeCost=reeferRemainsCarry.getCarBeCost().toString();
+		}
+		//第三步，获取送运应收
+		String sendBeCost="0";
+		ReeferRemainsSend reeferRemainsSend =reeferRemainsSendDAO.getBeCostOfRemainSend(reeferNumber);
+		if(reeferRemainsSend!=null&&reeferRemainsSend.getCarBeCost()!=null)
+			sendBeCost=reeferRemainsSend.getCarBeCost().toString();
+		//第四步，获取冷藏服务应收
+		String serviceBeCost=reeferServiceConsumeInfoDAO.getBeCostSumOfReeferService(reeferNumber);
+		String result="{\"arriveTime\":\""+arriveTime+"\",\"carryBeCost\":\""+carryBeCost+"\","
+				+ "\"sendBeCost\":\""+sendBeCost+"\",\"serviceBeCost\":\""+serviceBeCost+"\"}";
+		return result;
+	}
+	
+	/**
+	 * 冷藏结算
+	 * @param remainsReefer
+	 * @return
+	 */
+	public boolean reeferfillOfRemains(RemainsReefer remainsReefer,String reeferNo) throws Exception{
+		if(remainsReefer==null)
+			throw new MyException("遗体冷藏信息为空！");
+		try{
+			this.transactionManager.start();
+			remainsReeferDAO.reeferfillOfRemainsTran(remainsReefer);
+			reeferDAO.updateReeferStateTran(true, reeferNo);
+			this.transactionManager.commit();
+			return true;
+		} catch (Exception e) {
+			this.transactionManager.rollback();
+			return false;
+		} finally {
+			this.transactionManager.close();
+		}
 	}
 }
