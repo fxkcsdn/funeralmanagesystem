@@ -323,7 +323,7 @@ public class RegisterServiceService extends BaseService{//登记服务页面显�
 	public String showAllFuneralGoodsDao(){
 		Connection conn=DBDao.openDateBase("dongtai");
 		if(conn!=null){
-			String sql="select * from warehousebalance where goodsType='丧葬用品' and warehouseName='总库' order by id ASC";
+			String sql="SELECT funeralgoods.goodsName,funeralgoods.goodsBeCost,warehousebalance.balanceNumber FROM  funeralgoods LEFT JOIN warehousebalance ON funeralgoods.`goodsName` = warehousebalance.`goodsName` order by funeralgoods.goodsId asc";
 			ResultSet rs=null;
 			try{
 				PreparedStatement ps=conn.prepareStatement(sql);
@@ -332,9 +332,8 @@ public class RegisterServiceService extends BaseService{//登记服务页面显�
 				while (rs.next()) {
 					JSONObject jsonObject=new JSONObject();
 					jsonObject.put("goodsName", rs.getString("goodsName"));
-					jsonObject.put("goodsBeCost", rs.getInt("sellPrice"));
+					jsonObject.put("goodsBeCost", rs.getInt("goodsBeCost"));
 					jsonObject.put("balanceNumber", rs.getInt("balanceNumber"));
-					jsonObject.put("unit", rs.getString("unit"));
 					jsonArray.add(jsonObject);
 				}
 				this.returnString=jsonArray.toString();

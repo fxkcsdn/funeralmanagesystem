@@ -301,8 +301,11 @@ function showAllFuneralGoodsCallBack() {
 				goodsBeCost1.innerHTML = "<input type='text' style='width: 80px;' onkeyup='changeGoodBeCost1(this)' value='"
 						+ json[i].goodsBeCost + "' disabled='true'>";
 				goodsRealCost1.innerHTML = "<input type='text' style='width: 80px;' value='0' onchange='changeGoodsCost1(this)' disabled='true'>";
+				
 				balanceNumber1.innerHTML="<input type='text' style='width: 80px;' value='"
 						+ json[i].balanceNumber + "' disabled='true'>";
+				
+				
 				addGoodsButton1.innerHTML = "<input align='center' type='checkbox' onchange='chooseFuneralGoods1(this)'>";
 				hideInput1.innerHTML = "<input type='hidden' value='0'><input type='hidden' value='"
 						+ json[i].goodsBeCost + "'>";
@@ -314,8 +317,11 @@ function showAllFuneralGoodsCallBack() {
 					goodsBeCost2.innerHTML = "<input type='text' style='width: 80px;'  onkeyup='changeGoodBeCost2(this)' value='"
 							+ json[i].goodsBeCost + "' disabled='true'>";
 					goodsRealCost2.innerHTML = "<input type='text' style='width: 80px;' value='0' onchange='changeGoodsCost2(this)' disabled='disabled'>";
+					
 					balanceNumber2.innerHTML="<input type='text' style='width: 80px;' value='"
-						+ json[i].balanceNumber + "' disabled='true'>";
+							+ json[i].balanceNumber + "' disabled='true'>";
+					
+					
 					addGoodsButton2.innerHTML = "<input align='center' type='checkbox' onchange='chooseFuneralGoods2(this)'>";
 					hideInput2.innerHTML = "<input type='hidden' value='0'><input type='hidden' value='"
 							+ json[i].goodsBeCost + "'>";
@@ -1229,7 +1235,6 @@ function decideYourChoose() {
 	var leaveRoom = jsonLeaveRoom + "";
 	var cremation = jsonCremation + "";
 	var funeralGoods = arrFuneralGoods + "";
-	alert(funeralGoods);
 	url = "deadId=" + document.form3.deadId.value + "&";
 	url = url + "funeralGoods=" + funeralGoods + "&";
 	url = url + "urn=" + urn + "&";
