@@ -816,6 +816,16 @@
 			  	<param name="root">returnString</param>
 			</result>
 		</action>
+		
+		<!-- 查询调拨单action -->
+		<action name="queryWarehouseMove" class="com.FuneralManage.Action.QueryWarehouseMoveAction">
+		  <result type="json" name="getWarehouseMoves">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getPageCount">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
 
 		
 		<!--—____________________________________12月份 蒋帅新增 ______开始____________________________________ -->
