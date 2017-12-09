@@ -134,9 +134,9 @@ function getWarehouseMovesBack(result)
 			td3.innerHTML = data[i].moveDate.substring(0, data[i].moveDate.length - 5);
 			td4.innerHTML = data[i].outWarehouse;
 			td5.innerHTML = data[i].inWarehouse;
-			td6.innerHTML = "<input type='button' value='修改' onclick=''/>";
+			td6.innerHTML = "<input type='button' value='修改' onclick='updateWarehouseMove(this);'/>";
 			td6.align = "center";
-			td7.innerHTML = "<input type='button' value='删除' onclick=''/>";
+			td7.innerHTML = "<input type='button' value='删除' onclick='deleteWarehouseMove(this);'/>";
 			td7.align = "center";
 		}
 	}
@@ -174,4 +174,23 @@ function searchWarehouseMove()
 	var pageNum = 1;
 	// 查询当前页调拨单信息
 	getWarehouseMoves(pageNum);
+}
+
+/**
+ * 修改调拨单
+ * @param obj
+ */
+function updateWarehouseMove(obj)
+{
+	alert("调拨单无法修改！！！\n请先删除调拨单再新增。");
+}
+
+/**
+ * 删除调拨单
+ * @param obj
+ */
+function deleteWarehouseMove(obj)
+{
+	var warehouseMoveNumber = obj.parentNode.parentNode.cells[0].innerHTML;// 调拨单号
+	window.parent.location.reload("warehouseMoveManage.jsp?type=delete&warehouseMoveNumber=" + warehouseMoveNumber);
 }

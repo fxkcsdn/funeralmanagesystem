@@ -119,4 +119,37 @@ public class WarehouseMoveService extends BaseService {
 				inWarehouse, pageSize);
 	}
 
+	/**
+	 * 获取调拨单主信息
+	 * @param warehouseMoveNumber 调拨单号
+	 * @return 调拨单主信息
+	 */
+	public String getWarehouseMove(String warehouseMoveNumber) {
+		// TODO Auto-generated method stub
+		// 获取调拨单主信息
+		return warehouseMoveDAO.getWarehouseMove(warehouseMoveNumber);
+	}
+
+	/**
+	 * 获取调拨单明细信息
+	 * @param warehouseMoveNumber 调拨单号
+	 * @return 调拨单明细信息
+	 */
+	public String getWarehouseMoveDetails(String warehouseMoveNumber) {
+		// TODO Auto-generated method stub
+		// 获取调拨单明细信息
+		return warehouseMoveDAO.getWarehouseMoveDetails(warehouseMoveNumber);
+	}
+
+	/**
+	 * 删除调拨单
+	 * @param warehouseMoveNumber 调拨单号
+	 * @return 删除结果，true为删除成功，false为失败
+	 */
+	public boolean deleteWarehouseMove(String warehouseMoveNumber) {
+		// TODO Auto-generated method stub
+		// 删除调拨单
+		return warehouseMoveDAO.deleteWarehouseMoveTran(warehouseMoveNumber);
+	}
+
 }

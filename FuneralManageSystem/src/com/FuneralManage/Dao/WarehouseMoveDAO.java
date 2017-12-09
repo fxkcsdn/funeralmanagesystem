@@ -146,4 +146,42 @@ public class WarehouseMoveDAO extends BaseDAO {
 		return String.valueOf(count);
 	}
 
+	/**
+	 * 获取调拨单主信息
+	 * @param warehouseMoveNumber 调拨单号
+	 * @return 调拨单主信息
+	 */
+	public String getWarehouseMove(String warehouseMoveNumber) {
+		// TODO Auto-generated method stub
+		String sql = "select distinct staffName,moveDate,outWarehouse,inWarehouse from warehouseMove where warehouseMoveNumber=?";
+		String result = this.getForJson(sql, warehouseMoveNumber);
+		return result;
+	}
+
+	/**
+	 * 获取调拨单明细信息
+	 * @param warehouseMoveNumber 调拨单号
+	 * @return 调拨单明细信息
+	 */
+	public String getWarehouseMoveDetails(String warehouseMoveNumber) {
+		// TODO Auto-generated method stub
+		String sql = "select wb.goodsType,wb.goodsName,wb.unit,wm.moveAmount from warehouseBalance wb,warehouseMove wm where "
+				+ "wb.warehouseName=wm.outWarehouse and wb.goodsName=wm.goodsName and wm.warehouseMoveNumber=?";
+		String result = this.getForJson(sql, warehouseMoveNumber);
+		return result;
+	}
+
+	/**
+	 * 删除调拨单
+	 * @param warehouseMoveNumber 调拨单号
+	 * @return 删除结果，true为成功，false为失败
+	 */
+	public boolean deleteWarehouseMoveTran(String warehouseMoveNumber) {
+		// TODO Auto-generated method stub
+		String sql = "delete from warehouseMove where warehouseMoveNumber=?";
+		int result = this.saveOrUpdateOrDeleteTran(sql, warehouseMoveNumber);
+		if (result > 0) return true;
+		return false;
+	}
+
 }

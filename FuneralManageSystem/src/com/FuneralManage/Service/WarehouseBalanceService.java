@@ -441,7 +441,7 @@ public class WarehouseBalanceService extends BaseService {
 			// 遍历商品信息
 			for (Map<String, String> map : goodsList)
 			{
-				String inWarehouse = map.get("inWarehouse");// 调出仓库
+				String inWarehouse = map.get("inWarehouse");// 调入仓库
 				String goodsType = map.get("goodsType");// 商品种类
 				String goodsName = map.get("goodsName");// 品名
 				String unit = map.get("unit");// 单位
@@ -450,6 +450,96 @@ public class WarehouseBalanceService extends BaseService {
 				warehouseBalanceDao.increaseWarehouseBalanceTran(inWarehouse, goodsType, goodsName, unit, moveAmount);
 				// 更新销售价
 				warehouseBalanceDao.updateSellPriceTran(inWarehouse, goodsName);
+			}
+			transactionManager.commit();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			transactionManager.rollback();
+			return false;
+		} finally {
+			transactionManager.close();
+		}
+		return true;
+	}
+
+	/**
+	 * 还原本地库存量
+	 * @param goodsList 商品信息
+	 * @return 还原结果，true为成功，false为失败
+	 */
+	public boolean resetLocalNumber(List<Map<String, String>> goodsList) {
+		// TODO Auto-generated method stub
+		try {
+			transactionManager.start();
+			// 遍历商品信息
+			for (Map<String, String> map : goodsList)
+			{
+				String outWarehouse = map.get("outWarehouse");// 调出仓库
+				String goodsName = map.get("goodsName");// 品名
+				int moveAmount = Integer.parseInt(map.get("moveAmount"));// 调拨数量
+				// 还原本地库存量
+				warehouseBalanceDao.increaseWarehouseBalanceTran(outWarehouse, "", goodsName, "", moveAmount);
+			}
+			transactionManager.commit();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			transactionManager.rollback();
+			return false;
+		} finally {
+			transactionManager.close();
+		}
+		return true;
+	}
+
+	/**
+	 * 还原远程库存量
+	 * @param goodsList 商品信息
+	 * @return 还原结果，true为成功，false为失败
+	 */
+	public boolean resetRemoteNumber(List<Map<String, String>> goodsList) {
+		// TODO Auto-generated method stub
+		try {
+			transactionManager.start();
+			// 遍历商品信息
+			for (Map<String, String> map : goodsList)
+			{
+				String inWarehouse = map.get("inWarehouse");// 调入仓库
+				String goodsName = map.get("goodsName");// 品名
+				int moveAmount = Integer.parseInt(map.get("moveAmount"));// 调拨数量
+				// 还原远程库存量
+				warehouseBalanceDao.reduceWarehouseBalanceTran(inWarehouse, goodsName, moveAmount);
+			}	
+			transactionManager.commit();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			transactionManager.rollback();
+			return false;
+		} finally {
+			transactionManager.close();
+		}
+		return true;
+	}
+
+	/**
+	 * 远程还原失败后再次还原本地仓库
+	 * @param goodsList 商品信息
+	 * @return 还原结果，true为成功，false为失败
+	 */
+	public boolean resetLocalNumberSec(List<Map<String, String>> goodsList) {
+		// TODO Auto-generated method stub
+		try {
+			transactionManager.start();
+			// 遍历商品信息
+			for (Map<String, String> map : goodsList)
+			{
+				String outWarehouse = map.get("outWarehouse");// 调出仓库
+				String goodsName = map.get("goodsName");// 品名
+				int moveAmount = Integer.parseInt(map.get("moveAmount"));// 调拨数量
+				// 再次还原本地仓库
+				warehouseBalanceDao.reduceWarehouseBalanceTran(outWarehouse, goodsName, moveAmount);
 			}
 			transactionManager.commit();
 		} catch (Exception e) {

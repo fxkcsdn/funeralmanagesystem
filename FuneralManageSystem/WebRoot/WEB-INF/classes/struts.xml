@@ -826,6 +826,28 @@
 		    <param name="root">returnString</param>
 		  </result>
 		</action>
+		
+		<!-- 删除调拨单action -->
+		<action name="deleteWarehouseMove" class="com.FuneralManage.Action.DeleteWarehouseMoveAction">
+		  <result type="json" name="getWarehouseMove">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getWarehouseMoveDetails">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getResetLocalResult">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getResetRemoteResult">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getDeleteResult">
+		    <param name="root">returnString</param>
+		  </result>
+		  <result type="json" name="getResetLocalSecResult">
+		    <param name="root">returnString</param>
+		  </result>
+		</action>
 
 		
 		<!--—____________________________________12月份 蒋帅新增 ______开始____________________________________ -->

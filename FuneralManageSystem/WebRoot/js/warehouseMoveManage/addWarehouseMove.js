@@ -428,7 +428,7 @@ function remoteUpdateBack(result)
 	{
 		localData = "warehouseMoves=" + getWarehouseMoves();
 		url = localAddr + "/FuneralManageSystem/addWarehouseMove!resetLocalWarehouseBalance";
-		sendRequest("post", url, localDate, resetWarehouseBack);
+		sendRequest("post", url, localData, resetWarehouseBack);
 	}
 }
 
@@ -443,5 +443,5 @@ function resetWarehouseBack(result)
 	{
 		alert("提交失败，请重新填写调拨单！");
 	}
-	else alert("提交失败！\n本地重置出现异常，请手动删除调拨单并恢复库存量！");
+	else alert("提交失败！\n本地库存重置出现异常，请手动删除调拨单并恢复库存量，注意数据一致性！");
 }
