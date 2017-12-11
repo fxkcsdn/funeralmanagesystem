@@ -14,17 +14,17 @@ public class VillaService extends BaseService
 		Connection conn=DBDao.openDateBase("dongtai");
 		if (conn != null)
 		{
-			String sql = "select * from villa where bAvailable=?";
+			String sql = "select * from villa";
 			ResultSet rs=null;
 			try
 			{
 				PreparedStatement ps=conn.prepareStatement(sql);		
 				String result = "";
-				ps.setString(1, "1");
 				rs=ps.executeQuery();				
 				while(rs.next())
 				{					 
-					 result = result + "{villaNumber:\""+rs.getString("villaNumber")+"\"},";					 
+					 result = result + "{\"villaNumber\":\""+rs.getString("villaNumber")+"\","
+					 		+ "\"bAvailable\":\""+rs.getString("bAvailable")+"\"},";					 
 				}							
 				result = result.substring(0, result.length()-1);							
 				returnString = "[" + result + "]";				

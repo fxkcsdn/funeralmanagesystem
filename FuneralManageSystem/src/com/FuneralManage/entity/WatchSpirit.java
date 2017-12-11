@@ -1,5 +1,7 @@
 package com.FuneralManage.entity;
 
+import java.util.Date;
+
 public class WatchSpirit      //守灵信息
 {
     private String watchNumber;           //守灵编号
@@ -9,12 +11,17 @@ public class WatchSpirit      //守灵信息
     private String memberName;            //丧属姓名
     private String villaName;             //守灵别墅号
     private String coffinNumber;          //水晶棺编号
-    private String startTime;             //开始时间
-    private String endTime;               //结束时间
-    private String villaBeCost;           //守灵使用别墅应收费用金额
-    private String villaRealCost;         //守灵使用别墅实收费用金额
-    private String coffinBeCost;          //守灵使用水晶棺应收费用金额
-    private String coffinRealCost;        //守灵使用水晶棺实收费用金额
+    private Date startTime;             //开始时间
+    private Date endTime;               //结束时间
+    private Float villaBeCost;           //守灵使用别墅应收费用金额
+    private Float villaRealCost;         //守灵使用别墅实收费用金额
+    private Float coffinBeCost;          //守灵使用水晶棺应收费用金额
+    private Float coffinRealCost;        //守灵使用水晶棺实收费用金额
+    private Float carryRealCost;
+    private Float serviceRealCost;
+    private Float allBeCost;
+    private Float allRealCost;
+    
     
 	public String getWatchNumber() {
 		return watchNumber;
@@ -58,40 +65,66 @@ public class WatchSpirit      //守灵信息
 	public void setCoffinNumber(String coffinNumber) {
 		this.coffinNumber = coffinNumber;
 	}
-	public String getStartTime() {
+	public Date getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(String startTime) {
+	public void setStartTime(Date startTime) {
 		this.startTime = startTime;
 	}
-	public String getEndTime() {
+	public Date getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(String endTime) {
+	public void setEndTime(Date endTime) {
 		this.endTime = endTime;
 	}
-	public String getVillaBeCost() {
+	public Float getVillaBeCost() {
 		return villaBeCost;
 	}
-	public void setVillaBeCost(String villaBeCost) {
+	public void setVillaBeCost(Float villaBeCost) {
 		this.villaBeCost = villaBeCost;
 	}
-	public String getVillaRealCost() {
+	public Float getVillaRealCost() {
 		return villaRealCost;
 	}
-	public void setVillaRealCost(String villaRealCost) {
+	public void setVillaRealCost(Float villaRealCost) {
 		this.villaRealCost = villaRealCost;
 	}
-	public String getCoffinBeCost() {
+	public Float getCoffinBeCost() {
 		return coffinBeCost;
 	}
-	public void setCoffinBeCost(String coffinBeCost) {
+	public void setCoffinBeCost(Float coffinBeCost) {
 		this.coffinBeCost = coffinBeCost;
 	}
-	public String getCoffinRealCost() {
+	public Float getCoffinRealCost() {
 		return coffinRealCost;
 	}
-	public void setCoffinRealCost(String coffinRealCost) {
+	public void setCoffinRealCost(Float coffinRealCost) {
 		this.coffinRealCost = coffinRealCost;
-	}    
+	}
+	public Float getCarryRealCost() {
+		return carryRealCost;
+	}
+	public void setCarryRealCost(Float carryRealCost) {
+		this.carryRealCost = carryRealCost;
+	}
+	public Float getServiceRealCost() {
+		return serviceRealCost;
+	}
+	public void setServiceRealCost(Float serviceRealCost) {
+		this.serviceRealCost = serviceRealCost;
+	}
+	public Float getAllBeCost() {
+		return allBeCost;
+	}
+	public void setAllBeCost(Float allBeCost) {
+		this.allBeCost = allBeCost;
+	}
+	public Float getAllRealCost() {
+		return allRealCost;
+	}
+	public void setAllRealCost(Float allRealCost) {
+		this.allRealCost = allRealCost;
+	}
+    
+	
 }

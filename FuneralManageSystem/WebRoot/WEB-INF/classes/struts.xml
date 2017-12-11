@@ -95,12 +95,6 @@
 				<param name="root">returnString</param>
 			</result>
 		</action>
-		<action name="saveWatchSpirit" class="com.FuneralManage.Action.saveWatchSpiritAction"
-			method="saveWatchSpirit">
-			<result type="json">
-				<param name="root">returnString</param>
-			</result>
-		</action>
 		<action name="getWatchSpirit" class="com.FuneralManage.Action.getWatchSpiritAction"
 			method="getWatchSpirit">
 			<result type="json">

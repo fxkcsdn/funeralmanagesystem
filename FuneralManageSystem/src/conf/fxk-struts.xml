@@ -23,7 +23,11 @@
 				<param name="root">returnString</param>
 			</result>
 		</action>
-		
+		<action name="WatchSpiritAction" class="com.FuneralManage.Action.WatchSpiritAction" >
+			<result type="json">
+				<param name="root">returnString</param>
+			</result>
+		</action>
 		
 	</package>
 </struts>

@@ -40,6 +40,7 @@ body,td,th {
   <ul class="TabbedPanelsTabGroup">
     <li class="TabbedPanelsTab" tabindex="0" onclick="window.frames.registerWatchRemainsCarry.location.reload(); ">登记守灵遗体接运信息</li>
     <li class="TabbedPanelsTab" tabindex="0" onclick="window.frames.registerWatchInfo.location.reload(); ">登记守灵信息</li>
+    <li class="TabbedPanelsTab" tabindex="0" onclick="window.frames.registerWatchServiceInfo.location.reload(); ">登记守灵服务信息</li>
     <li class="TabbedPanelsTab" tabindex="0" onclick="window.frames.watchBill.location.reload(); ">守灵结算</li>
 </ul>
 
@@ -54,6 +55,12 @@ body,td,th {
     <div class="TabbedPanelsContent">
       <form action="" method="post" enctype="multipart/form-data" name="form2">            
           <iframe name="registerWatchInfo" src="registerWatchInfo.jsp" width="100%" height="90%"></iframe> 
+      </form>      
+    </div>
+    
+    <div class="TabbedPanelsContent">
+      <form action="" method="post" enctype="multipart/form-data" name="form2">            
+          <iframe name="registerWatchInfo" src="registerWatchServiceInfo.jsp" width="100%" height="90%"></iframe> 
       </form>      
     </div>
     
