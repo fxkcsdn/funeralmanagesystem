@@ -51,4 +51,137 @@ public class WarehouseMoveDAO extends BaseDAO {
 		return false;
 	}
 
+	/**
+	 * 获取调拨单信息
+	 * @param staffName 业务人员
+	 * @param startTime 开始时间
+	 * @param endTime 结束时间
+	 * @param outWarehouse 调出仓库
+	 * @param inWarehouse 调入仓库
+	 * @param pageNum 当前页数
+	 * @param pageSize 每页记录数
+	 * @return 调拨单信息
+	 */
+	public String getWarehouseMoves(String staffName, String startTime,
+			String endTime, String outWarehouse, String inWarehouse,
+			int pageNum, int pageSize) {
+		// TODO Auto-generated method stub
+		String sql = "select distinct warehouseMoveNumber,staffName,moveDate,outWarehouse,inWarehouse from warehouseMove where ";
+		// 业务人员不为空
+	    if (staffName != null && !"".equals(staffName)) {
+			sql += "and staffName='" + staffName + "' ";
+		}
+		// 开始时间不为空
+		if (startTime != null && !"".equals(startTime)) {
+			sql += "and moveDate>='" + startTime + "' ";
+		}
+		// 结束时间不为空
+		if (endTime != null && !"".equals(endTime)) {
+			sql += "and moveDate<='" + endTime + "' ";
+		}
+		// 调出仓库不为空
+		if (outWarehouse != null && !"".equals(outWarehouse)) {
+			sql += "and outWarehouse='" + outWarehouse + "' ";
+		}
+		// 调入仓库不为空
+		if (inWarehouse != null && !"".equals(inWarehouse)) {
+			sql += "and inWarehouse='" + inWarehouse + "' ";
+		}
+		sql += "order by warehouseMoveNumber desc limit ?,?";
+		// 如果sql语句里含有and，则把第一个and删除
+		if (sql.indexOf("and ") != -1) {
+			sql = sql.replaceFirst("and ", "");
+		} else {
+			sql = sql.replaceFirst("where ", "");
+		}	
+		String result = this.getForJson(sql, (pageNum - 1) * pageSize, pageSize);
+		return result;
+	}
+
+	/**
+	 * 获取分页数
+	 * @param staffName 业务人员
+	 * @param startTime 开始时间
+	 * @param endTime 结束时间
+	 * @param outWarehouse 调出仓库
+	 * @param inWarehouse 调入仓库
+	 * @param pageSize 每页记录数
+	 * @return 分页数
+	 */
+	public String getPageCount(String staffName, String startTime,
+			String endTime, String outWarehouse, String inWarehouse,
+			int pageSize) {
+		// TODO Auto-generated method stub
+		String sql = "select count(distinct warehouseMoveNumber) as count from warehouseMove where ";
+		// 业务人员不为空
+	    if (staffName != null && !"".equals(staffName)) {
+			sql += "and staffName='" + staffName + "' ";
+		}
+		// 开始时间不为空
+		if (startTime != null && !"".equals(startTime)) {
+			sql += "and moveDate>='" + startTime + "' ";
+		}
+		// 结束时间不为空
+		if (endTime != null && !"".equals(endTime)) {
+			sql += "and moveDate<='" + endTime + "' ";
+		}
+		// 调出仓库不为空
+		if (outWarehouse != null && !"".equals(outWarehouse)) {
+			sql += "and outWarehouse='" + outWarehouse + "' ";
+		}
+		// 调入仓库不为空
+		if (inWarehouse != null && !"".equals(inWarehouse)) {
+			sql += "and inWarehouse='" + inWarehouse + "' ";
+		}
+		sql += "order by warehouseMoveNumber desc";
+		// 如果sql语句里含有and，则把第一个and删除
+		if (sql.indexOf("and ") != -1) {
+			sql = sql.replaceFirst("and ", "");
+		} else {
+			sql = sql.replaceFirst("where ", "");
+		}	
+		// 获取总记录数
+		long count = this.getCount(sql);
+		count = ((count % pageSize == 0) ? (count / pageSize) : (count / pageSize + 1));
+		return String.valueOf(count);
+	}
+
+	/**
+	 * 获取调拨单主信息
+	 * @param warehouseMoveNumber 调拨单号
+	 * @return 调拨单主信息
+	 */
+	public String getWarehouseMove(String warehouseMoveNumber) {
+		// TODO Auto-generated method stub
+		String sql = "select distinct staffName,moveDate,outWarehouse,inWarehouse from warehouseMove where warehouseMoveNumber=?";
+		String result = this.getForJson(sql, warehouseMoveNumber);
+		return result;
+	}
+
+	/**
+	 * 获取调拨单明细信息
+	 * @param warehouseMoveNumber 调拨单号
+	 * @return 调拨单明细信息
+	 */
+	public String getWarehouseMoveDetails(String warehouseMoveNumber) {
+		// TODO Auto-generated method stub
+		String sql = "select wb.goodsType,wb.goodsName,wb.unit,wm.moveAmount from warehouseBalance wb,warehouseMove wm where "
+				+ "wb.warehouseName=wm.outWarehouse and wb.goodsName=wm.goodsName and wm.warehouseMoveNumber=?";
+		String result = this.getForJson(sql, warehouseMoveNumber);
+		return result;
+	}
+
+	/**
+	 * 删除调拨单
+	 * @param warehouseMoveNumber 调拨单号
+	 * @return 删除结果，true为成功，false为失败
+	 */
+	public boolean deleteWarehouseMoveTran(String warehouseMoveNumber) {
+		// TODO Auto-generated method stub
+		String sql = "delete from warehouseMove where warehouseMoveNumber=?";
+		int result = this.saveOrUpdateOrDeleteTran(sql, warehouseMoveNumber);
+		if (result > 0) return true;
+		return false;
+	}
+
 }

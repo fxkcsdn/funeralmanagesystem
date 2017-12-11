@@ -80,4 +80,76 @@ public class WarehouseMoveService extends BaseService {
 		return true;
 	}
 
+	/**
+	 * 获取调拨单信息
+	 * @param staffName 业务人员
+	 * @param startTime 开始时间
+	 * @param endTime 结束时间
+	 * @param outWarehouse 调出仓库
+	 * @param inWarehouse 调入仓库
+	 * @param pageNum 当前页数
+	 * @param pageSize 每页记录数
+	 * @return 调拨单信息
+	 */
+	public String getWarehouseMoves(String staffName, String startTime,
+			String endTime, String outWarehouse, String inWarehouse,
+			int pageNum, int pageSize) {
+		// TODO Auto-generated method stub
+		// 获取调拨单信息
+		return warehouseMoveDAO.getWarehouseMoves(staffName, startTime, endTime,
+				outWarehouse, inWarehouse, pageNum, pageSize);
+	}
+
+	/**
+	 * 获取分页数
+	 * @param staffName 业务人员
+	 * @param startTime 开始时间
+	 * @param endTime 结束时间
+	 * @param outWarehouse 调出仓库
+	 * @param inWarehouse 调入仓库
+	 * @param pageSize 每页记录数
+	 * @return 分页数
+	 */
+	public String getPageCount(String staffName, String startTime,
+			String endTime, String outWarehouse, String inWarehouse,
+			int pageSize) {
+		// TODO Auto-generated method stub
+		// 获取分页数
+		return warehouseMoveDAO.getPageCount(staffName, startTime, endTime, outWarehouse,
+				inWarehouse, pageSize);
+	}
+
+	/**
+	 * 获取调拨单主信息
+	 * @param warehouseMoveNumber 调拨单号
+	 * @return 调拨单主信息
+	 */
+	public String getWarehouseMove(String warehouseMoveNumber) {
+		// TODO Auto-generated method stub
+		// 获取调拨单主信息
+		return warehouseMoveDAO.getWarehouseMove(warehouseMoveNumber);
+	}
+
+	/**
+	 * 获取调拨单明细信息
+	 * @param warehouseMoveNumber 调拨单号
+	 * @return 调拨单明细信息
+	 */
+	public String getWarehouseMoveDetails(String warehouseMoveNumber) {
+		// TODO Auto-generated method stub
+		// 获取调拨单明细信息
+		return warehouseMoveDAO.getWarehouseMoveDetails(warehouseMoveNumber);
+	}
+
+	/**
+	 * 删除调拨单
+	 * @param warehouseMoveNumber 调拨单号
+	 * @return 删除结果，true为删除成功，false为失败
+	 */
+	public boolean deleteWarehouseMove(String warehouseMoveNumber) {
+		// TODO Auto-generated method stub
+		// 删除调拨单
+		return warehouseMoveDAO.deleteWarehouseMoveTran(warehouseMoveNumber);
+	}
+
 }
