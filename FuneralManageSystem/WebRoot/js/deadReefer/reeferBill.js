@@ -164,6 +164,24 @@ function calculate() {
 	document.getElementById("allRealCost").value = allMoney;//冷藏总实收
 }
 
+function reCalculate(){
+	var carryRealCost=document.getElementById("carryRealCost").value;
+	var serviceRealCost=document.getElementById("serviceRealCost").value;
+	var reeferRealCost=document.getElementById("reeferRealCost").value;
+	var sendRealCost=document.getElementById("sendRealCost").value;
+	if(carryRealCost==null||carryRealCost.toString().length==0)
+		carryRealCost=0;
+	if(serviceRealCost==null||serviceRealCost.toString().length==0)
+		serviceRealCost=0;
+	if(reeferRealCost==null||reeferRealCost.toString().length==0)
+		reeferRealCost=0;
+	if(sendRealCost==null||sendRealCost.toString().length==0)
+		sendRealCost=0;
+	var allMoney=parseFloat(reeferRealCost)+parseFloat(carryRealCost)+parseFloat(serviceRealCost)+parseFloat(sendRealCost);
+	
+	document.getElementById("allRealCost").value = allMoney;//守灵总实收
+}
+
 /**
  * 保存冷藏结算
  * @returns {Boolean}

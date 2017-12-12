@@ -2,6 +2,7 @@ package com.FuneralManage.Dao;
 
 import javax.sql.DataSource;
 
+import com.FuneralManage.entity.ReeferRemainsCarry;
 import com.FuneralManage.entity.WatchSpiritCarry;
 
 
@@ -41,6 +42,16 @@ public class WatchSpiritCarryDAO extends BaseDAO{
 		String sendTimeTemp=carryTime+"%";
 		String sql = "select max(carryNumber) as maxNumber from watchSpiritCarry where carryNumber like ?";
 		return this.getOneColumn(sql, sendTimeTemp);
+	}
+	
+	/**
+	 * 获取一个守灵接运实例
+	 * @param carryNumber
+	 * @return reeferRemainsCarry or null
+	 */
+	public WatchSpiritCarry getBeCostOfWatchSpiritCarry(String carryNumber){
+		String sql="select * from WatchSpiritCarry where carryNumber=?";
+		return this.getForEntity(sql, WatchSpiritCarry.class, carryNumber);
 	}
 	
 }

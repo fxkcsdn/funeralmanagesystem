@@ -16,7 +16,7 @@ public class getWatchNumberAction extends ActionSupport{
 	public String getWatchNumber()
 	{
 		WatchSpiritService watchSpiritDao = new WatchSpiritService();
-		returnString = watchSpiritDao.getWatchNumber();
+		returnString = watchSpiritDao.createWatchNumber();
 		return SUCCESS;
 	}
 

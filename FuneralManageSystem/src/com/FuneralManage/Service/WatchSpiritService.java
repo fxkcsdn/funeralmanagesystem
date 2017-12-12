@@ -10,14 +10,22 @@ import java.util.Date;
 
 import com.FuneralManage.Dao.CoffinDAO;
 import com.FuneralManage.Dao.VillaDAO;
+import com.FuneralManage.Dao.WatchSpiritCarryDAO;
 import com.FuneralManage.Dao.WatchSpiritDAO;
+import com.FuneralManage.Dao.WatchSpiritServiceConsumeInfoDAO;
 import com.FuneralManage.Exception.MyException;
 import com.FuneralManage.Utility.DateUtil;
 import com.FuneralManage.Utility.TransactionManager;
+import com.FuneralManage.entity.ReeferRemainsCarry;
+import com.FuneralManage.entity.ReeferRemainsSend;
+import com.FuneralManage.entity.RemainsReefer;
 import com.FuneralManage.entity.WatchSpirit;
+import com.FuneralManage.entity.WatchSpiritCarry;
 
 public class WatchSpiritService extends BaseService {
 	private WatchSpiritDAO watchSpiritDAO = new WatchSpiritDAO(dataSource);
+	private WatchSpiritCarryDAO watchSpiritCarryDAO=new WatchSpiritCarryDAO(dataSource);
+	private WatchSpiritServiceConsumeInfoDAO watchSpiritServiceConsumeInfoDAO=new WatchSpiritServiceConsumeInfoDAO(dataSource);
 	private VillaDAO villaDAO = new VillaDAO(dataSource);
 	private CoffinDAO coffinDAO = new CoffinDAO(dataSource);
 	private TransactionManager transactionManager = new TransactionManager(
@@ -47,11 +55,26 @@ public class WatchSpiritService extends BaseService {
 	}
 
 	/**
+	 * 根据别墅号获取守灵编号
+	 * @param villaNumber
+	 * @return
+	 * @throws Exception
+	 */
+	public String getWatchNumberByVillaNumber(String villaNumber) throws Exception{
+		if(villaNumber==null||villaNumber.equals(""))
+			throw new MyException("别墅号不能为空！");
+		WatchSpirit watchSpirit=watchSpiritDAO.getWatchSpiritByVillaName(villaNumber);
+		if(watchSpirit==null)
+			throw new MyException("该别墅号没有相应的守灵信息！");
+		return watchSpirit.getWatchNumber();
+		
+	}
+	/**
 	 * 生成守灵编号
 	 * 
 	 * @return
 	 */
-	public String getWatchNumber() {
+	public String createWatchNumber() {
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMM");// 设置日期格式
 		String date = df.format(new Date());
 		String result = "";
@@ -81,6 +104,47 @@ public class WatchSpiritService extends BaseService {
 				e.printStackTrace();
 			}
 		}
+		return result;
+	}
+	
+	/**
+	 * 根据别墅号获取相关的应收费用
+	 * @param villaNumber
+	 * @return
+	 * @throws Exception
+	 */
+	public String getAllBeCostOfWatchSpirit(String villaNumber) throws Exception{
+		if(villaNumber==null||villaNumber.equals(""))
+			throw new MyException("别墅号不能为空！");
+		boolean state=villaDAO.getVillaState(villaNumber);
+		if(state)
+			throw new MyException("该别墅还未使用!");
+		WatchSpirit watchSpirit=watchSpiritDAO.getWatchSpiritByVillaName(villaNumber);
+		if(watchSpirit==null)
+			throw new MyException("数据库中尚未有此别墅对应的守灵信息！");
+		String watchNumber=watchSpirit.getWatchNumber();
+		if(watchNumber==null||watchNumber.equals(""))
+			throw new MyException("该守灵信息没有守灵编号，数据库设计问题！");
+		String carryNumber=watchSpirit.getCarryNumber();
+		//第一步，获取守灵开始时间
+		String startTime="";
+		if(watchSpirit.getStartTime()==null){
+			throw new MyException("该守灵信息没有开始时间，数据库数据异常！");
+		}
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//设置日期格式
+		startTime = df.format(watchSpirit.getStartTime());		
+		//第二步，获取接运应收
+		String carryBeCost="0";
+		if(carryNumber!=null&&!carryNumber.equals("")){
+			WatchSpiritCarry watchSpiritCarry=watchSpiritCarryDAO.getBeCostOfWatchSpiritCarry(carryNumber);
+			if(watchSpiritCarry!=null&&watchSpiritCarry.getCarBeCost()!=null)
+				carryBeCost=watchSpiritCarry.getCarBeCost().toString();
+		}
+		
+		//第三步，获取守灵服务应收
+		String serviceBeCost=watchSpiritServiceConsumeInfoDAO.getBeCostSumOfWatchSpiritService(watchNumber);
+		String result="{\"startTime\":\""+startTime+"\",\"carryBeCost\":\""+carryBeCost
+				+"\",\"serviceBeCost\":\""+serviceBeCost+"\"}";
 		return result;
 	}
 
@@ -179,6 +243,31 @@ public class WatchSpiritService extends BaseService {
 			returnString = "{result:\"no\"}";
 		}
 		return returnString;
+	}
+	
+	/**
+	 * 守灵结算
+	 * @param watchSpirit
+	 * @param villaNumber
+	 * @return
+	 * @throws Exception
+	 */
+	public boolean watchSpiritBill(WatchSpirit watchSpirit,String villaNumber) throws Exception{
+		if(watchSpirit==null)
+			throw new MyException("守灵信息为空！");
+		try{
+			this.transactionManager.start();
+			watchSpiritDAO.watchSpiritBillTran(watchSpirit);
+			villaDAO.updateVillaStateTran(1, villaNumber);
+			coffinDAO.updateCoffinStateTran(1, watchSpirit.getCoffinNumber());
+			this.transactionManager.commit();
+			return true;
+		} catch (Exception e) {
+			this.transactionManager.rollback();
+			return false;
+		} finally {
+			this.transactionManager.close();
+		}
 	}
 
 }

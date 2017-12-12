@@ -89,7 +89,7 @@ public class WatchSpiritAction extends ActionSupport{
 	public String addWatchSpiritServiceConsume() throws Exception{	
 		if(villaName==null)
 			throw new MyException("守灵别墅不能为空！");
-		String watchSpiritNumber=new WatchSpiritService().getWatchNumber();
+		String watchSpiritNumber=new WatchSpiritService().getWatchNumberByVillaNumber(villaName);
 		if(watchSpiritNumber==null||watchSpiritNumber.equals(""))
 			throw new MyException("该别墅没有对应的守灵信息！");
 		if(watchSpiritGood!=null){
@@ -117,7 +117,7 @@ public class WatchSpiritAction extends ActionSupport{
 	public String saveWatchSpirit()throws Exception{
 		if(watchSpirit==null)
 			throw new MyException("守灵信息为空！");
-		String watchNumber=new WatchSpiritService().getWatchNumber();
+		String watchNumber=new WatchSpiritService().createWatchNumber();
 		if(watchNumber==null||watchNumber.equals(""))
 			throw new MyException("生成守灵编号错误！");
 		watchSpirit.setWatchNumber(watchNumber);
@@ -139,6 +139,38 @@ public class WatchSpiritAction extends ActionSupport{
 			throw new MyException("生成送运编号错误！");
 		watchSpiritCarry.setCarryNumber(carryNumber);
 		boolean result=new WatchSpiritCarryService().addWatchSpiritCarry(watchSpiritCarry);
+		returnString=result?"success":"failure";
+		return SUCCESS;
+	}
+	
+	/**
+	 * 根据别墅号获取相应的守灵应收费用
+	 * @return
+	 * @throws Exception
+	 */
+	public String getAllBeCostOfWatchSpirit() throws Exception{
+		if(villaName==null)
+			throw new MyException("别墅号不能为空！");
+		returnString=new WatchSpiritService().getAllBeCostOfWatchSpirit(villaName);
+		return SUCCESS;
+	}
+	
+	/**
+	 * 守灵结算
+	 * @return
+	 * @throws Exception
+	 */
+	public String watchSpiritBill() throws Exception{
+		if(watchSpirit==null)
+			throw new MyException("守灵信息不能为空！");
+		if(villaName==null)
+			throw new MyException("别墅不能为空！");
+		//获取冷藏编号
+		String watchNumber=new WatchSpiritService().getWatchNumberByVillaNumber(villaName);
+		if(watchNumber==null||watchNumber.equals(""))
+			throw new MyException("该别墅没有对应的守灵信息！");
+		watchSpirit.setWatchNumber(watchNumber);;
+		boolean result=new WatchSpiritService().watchSpiritBill(watchSpirit, villaName);
 		returnString=result?"success":"failure";
 		return SUCCESS;
 	}

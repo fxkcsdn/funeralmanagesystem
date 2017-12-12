@@ -71,7 +71,7 @@ body, td, th {
 				<td><input type="text" id="carryBeCost" name="carryBeCost"
 					readonly="readonly"  style="margin-right:50px;background-color:#DDD;" /></td>
 				<td>冷藏遗体接运实收：</td>
-				<td><input type="text" id="carryRealCost"
+				<td><input type="text" id="carryRealCost" onchange="reCalculate();"
 					name="remainsReefer.carryRealCost" style="margin-right:50px;" /></td>
 			</tr>
 			<tr>
@@ -79,7 +79,7 @@ body, td, th {
 				<td><input type="text" id="reeferBeCost"  name="remainsReefer.reeferBeCost" 
 					readonly="readonly" style="margin-right:50px;background-color:#DDD;" required="required" /></td>
 				<td>冷藏冰柜实收：</td>
-				<td><input type="text" id="reeferRealCost"
+				<td><input type="text" id="reeferRealCost" onchange="reCalculate();"
 					name="remainsReefer.reeferRealCost" style="margin-right:50px;"
 					required="required" /></td>
 			</tr>
@@ -89,11 +89,19 @@ body, td, th {
 					readonly="readonly"  style="margin-right:50px;background-color:#DDD;" />
 				</td>
 				<td>冷藏服务实收：</td>
-				<td><input type="text" id="serviceRealCost"
+				<td><input type="text" id="serviceRealCost" onchange="reCalculate();"
 					name="remainsReefer.serviceRealCost" style="margin-right:50px;" />
 				</td>
 			</tr>
-
+			<tr>
+				<td>冷藏遗体送运应收：</td>
+				<td><input type="text" id="sendBeCost" name="sendBeCost"
+					readonly="readonly"  style="margin-right:50px;background-color:#DDD;" />
+				</td>
+				<td>冷藏遗体送运实收：</td>
+				<td><input type="text" id="sendRealCost" onchange="reCalculate();"
+					name="remainsReefer.sendRealCost" style="margin-right:50px;" /></td>
+			</tr>
 			<tr>
 				<td>总应收：</td>
 				<td><input type="text" id="allBeCost" name="remainsReefer.allBeCost" 
@@ -103,15 +111,7 @@ body, td, th {
 					name="remainsReefer.allRealCost" style="margin-right:50px;"
 					required="required" /></td>
 			</tr>
-			<tr>
-				<td>冷藏遗体送运应收：</td>
-				<td><input type="text" id="sendBeCost" name="sendBeCost"
-					readonly="readonly"  style="margin-right:50px;background-color:#DDD;" />
-				</td>
-				<td>冷藏遗体送运实收：</td>
-				<td><input type="text" id="sendRealCost"
-					name="remainsReefer.sendRealCost" style="margin-right:50px;" /></td>
-			</tr>
+			
 			<tr>
 				<td colspan="2" align="right"><input type="submit" id="save"
 					value="保存"> <input type="button" id="btnPrint"

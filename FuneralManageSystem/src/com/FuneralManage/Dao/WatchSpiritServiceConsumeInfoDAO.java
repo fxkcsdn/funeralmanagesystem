@@ -27,5 +27,19 @@ public class WatchSpiritServiceConsumeInfoDAO extends BaseDAO{
 				watchSpiritServiceConsumeInfo.getConsumeTime());
 		return result>0?true:false;
 	}
+	
+	/**
+	 * 获取该守灵编号对应的服务消费用总和
+	 * @param watchNumber
+	 * @return
+	 */
+	public String getBeCostSumOfWatchSpiritService(String watchNumber){
+		String sql="SELECT SUM(beCost) AS BeCostSum FROM WatchSpiritServiceConsumeInfo WHERE watchNumber=?";
+		String result=this.getOneColumn(sql, watchNumber);
+		if(result==null||result.equals(""))
+			return "0";
+		else
+			return result;
+	}
 
 }
