@@ -3,6 +3,10 @@ package com.FuneralManage.Action;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.ServletActionContext;
+
 import net.sf.json.JSONObject;
 
 import com.FuneralManage.Service.WarehouseBalanceService;
@@ -86,6 +90,9 @@ public class DeleteWarehouseMoveAction extends ActionSupport {
 	 */
 	public String resetRemoteNumber()
 	{
+		HttpServletResponse response = ServletActionContext.getResponse();
+		// 允许跨域访问
+		response.addHeader("Access-Control-Allow-Origin", "*");
 		WarehouseBalanceService warehouseBalanceService = new WarehouseBalanceService();
 		JSONObject jsonObject=JSONObject.fromObject(warehouseMoves);
 		// 获取商品信息
