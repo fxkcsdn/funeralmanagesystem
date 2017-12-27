@@ -3,7 +3,7 @@
  */
 var goodsNameCopy = null;// 全局变量，用以保存品名
 var localAddr = "http://localhost:8080";// 本地ip地址
-var remoteAddr = "http://172.18.23.92:8080";// 远程ip地址
+var remoteAddr = "http://172.18.22.7:8080";// 远程ip地址
 
 /**
  * 创建XMLHttpRequest对象

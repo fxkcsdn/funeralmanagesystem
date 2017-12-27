@@ -2,7 +2,7 @@
  * 删除调拨单界面对应的脚本
  */
 var localAddr = "http://localhost:8080";// 本地ip地址
-var remoteAddr = "http://172.18.23.92:8080";// 远程ip地址
+var remoteAddr = "http://172.18.22.7:8080";// 远程ip地址
 
 /**
  * 创建XMLHttpRequest对象
@@ -171,8 +171,8 @@ function getWarehouseMoves()
 		obj.moveDate = moveDate.value;
 		obj.outWarehouse = outWarehouse.value;
 		obj.inWarehouse = inWarehouse.value;
-		obj.goodsType = table.rows[i].cells[0].getElementsByTagName("select")[0].value;
-		obj.goodsName = table.rows[i].cells[1].getElementsByTagName("select")[0].value;
+		obj.goodsType = table.rows[i].cells[0].getElementsByTagName("input")[0].value;
+		obj.goodsName = table.rows[i].cells[1].getElementsByTagName("input")[0].value;
 		obj.unit = table.rows[i].cells[2].getElementsByTagName("input")[0].value;
 		obj.moveAmount = table.rows[i].cells[3].getElementsByTagName("input")[0].value;
 		json.data.push(obj);
