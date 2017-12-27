@@ -399,8 +399,8 @@
 				<param name="root">returnString</param>
 				</result>
 		</action>
-		<action name="GetFeeAction" class="com.FuneralManage.Action.GetFeeAction">
-			<result type="json" name="getFee1">
+		<action name="UpdateServiceAction" class="com.FuneralManage.Action.UpdateServiceAction">
+			<result type="json" name="updateService">
 				<param name="root">returnString</param>
 				</result>
 		</action>

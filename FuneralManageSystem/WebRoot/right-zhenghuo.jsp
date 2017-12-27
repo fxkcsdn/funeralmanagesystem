@@ -5,7 +5,7 @@
 <!-- saved from url=(0144)file://C:\Documents and Settings\Administrator\Local Settings\Temporary Internet Files\Content.IE5\8PI3C9Y7\D__EBUSIN~1_二代证~1_IDCARD~1[1].HTM -->
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gb18030">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>欢迎使用殡葬智能化系统</title>
 <script type="text/javascript" src="js/right-zhenghuo.js" charset="UTF-8">
 </script>
@@ -269,7 +269,7 @@ body,td,th {
                   <option>非正常</option>
                 </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <label for="deadReason">死亡原因：</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                <select name="deadInfo.deadReason" id="deadReason" onChange="return getPathogenyDetail()">
+                <select name="deadInfo.deadReason" id="deadReason" onchange="return getPathogenyDetail()">
                   <option selected>请选择</option>
                   <option>自然死亡</option>
                   <option>病故</option>
@@ -373,9 +373,9 @@ body,td,th {
             </p>
             <hr>
             <p>
-              <label for="remainsCarryBeCost" >代收车费应收费用：</label>
+              <label for="remainsCarryBeCost" >遗体接运应收费用：</label>
               <input type="input" id="remainsCarryBeCost" value="0" style="width: 87px; " readonly/>元&nbsp;&nbsp;
-              <label for="remainsCarryRealCost" >代收车费实收费用：</label>
+              <label for="remainsCarryRealCost" ><label for="remainsCarryBeCost" >遗体接运实收费用：</label>
               <input type="input" id="remainsCarryRealCost" value="0" style="width:87px;" onchange="return remainsCarryChangeWholeCost();">元
               <input type="hidden" id="lastRemainsCarryRealCost" value="0"><br>
               
@@ -385,23 +385,24 @@ body,td,th {
               <input type="input" id="rentCrystalRealCost" value="0" style="width:87px;" onchange="return rentCrystalChangeWholeCost();">元
               <input type="hidden" id="lastRentCrystalRealCost" value="0"><br>
               
-              <label for="rentCrystalCarBeCost">送棺费应收费用：</label>
+              <label for="rentCrystalCarBeCost">接运冰棺应收费用：</label>
               <input type="input" id="rentCrystalCarBeCost" value="0" style="width: 87px; " readonly/>元&nbsp;&nbsp;
-              <label for="rentCrystalCarRealCost">送棺费实收费用：</label>
+              <label for="rentCrystalCarRealCost"><label for="rentCrystalCarBeCost">接运冰棺实收费用：</label>
               <input type="input" id="rentCrystalCarRealCost" value="0" style="width:87px;" onchange="return rentCrystalCarChangeWholeCost();">元
               <input type="hidden" id="lastRentCrystalCarRealCost" value="0"><br>
-              
+  <!--            
               <label for="watchSpiritVillaBeCost">守灵别墅应收费用：</label>
               <input type="input" id="watchSpiritVillaBeCost" value="0" style="width: 87px; " readonly/>元&nbsp;&nbsp;
               <label for="watchSpiritVillaRealCost">守灵别墅实收费用：</label>
               <input type="input" id="watchSpiritVillaRealCost" value="0" style="width:87px;" onchange="return watchSpiritVillaChangeWholeCost();">元
               <input type="hidden" id="lastWatchSpiritVillaRealCost" value="0"><br>
               
+              
               <label for="watchSpiritCoffinBeCost">别墅用棺应收费用：</label>
               <input type="input" id="watchSpiritCoffinBeCost" value="0" style="width: 87px; " readonly/>元&nbsp;&nbsp;
               <label for="watchSpiritCoffinRealCost">别墅用棺实收费用：</label>
               <input type="input" id="watchSpiritCoffinRealCost" value="0" style="width:87px;" onchange="return watchSpiritCoffinChangeWholeCost();">元
-              <input type="hidden" id="lastWatchSpiritCoffinRealCost" value="0">&nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="hidden" id="lastWatchSpiritCoffinRealCost" value="0">&nbsp;&nbsp;&nbsp;&nbsp;-->
               </p>
 
 
@@ -812,7 +813,7 @@ body,td,th {
 </body>
 <script src="js/paging.js"    type="text/javascript"></script>
 
-
+<script src="js/AjaxJson.js"    type="text/javascript"></script>
 
 
 <script src="js/createHttpRequest.js">

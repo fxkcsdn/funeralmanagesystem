@@ -25,9 +25,9 @@ function clearTable() {
 	var allFuneralGoodsTable = document.getElementById("allFuneralGoods");
 	var rowsLength = allFuneralGoodsTable.rows.length;
 	for (var i = 2; i < rowsLength; i++) {
-		var goodsCheckBoxInput1 = allFuneralGoodsTable.rows[i].cells[3]
+		var goodsCheckBoxInput1 = allFuneralGoodsTable.rows[i].cells[4]
 				.getElementsByTagName("input");
-		var goodsCheckBoxInput2 = allFuneralGoodsTable.rows[i].cells[10]
+		var goodsCheckBoxInput2 = allFuneralGoodsTable.rows[i].cells[12]
 				.getElementsByTagName("input");
 		if (goodsCheckBoxInput1[0].checked == true) {
 			goodsCheckBoxInput1[0].checked = false;
@@ -47,6 +47,7 @@ function showSetGoodsDetailCallBack() {
 	if (http_request.readyState == 4) {
 		if (http_request.status == 200) {
 			clearTable();
+			
 			var json = eval("(" + http_request.responseText + ")");
 			json = eval("(" + json + ")");
 			var jsonLength = json.length;
@@ -68,9 +69,9 @@ function showSetGoodsDetailCallBack() {
 						+ parseInt(goodsBeCost);
 				for (var j = 2; j < rowsLength; j++) {
 					var goodName1 = allFuneralGoodsTable.rows[j].cells[0].innerText;
-					var goodsName2 = allFuneralGoodsTable.rows[j].cells[7].innerText;
+					var goodsName2 = allFuneralGoodsTable.rows[j].cells[8].innerText;
 					if (goodsName == goodName1) {
-						var goodsCheckBoxInput1 = allFuneralGoodsTable.rows[j].cells[3]
+						var goodsCheckBoxInput1 = allFuneralGoodsTable.rows[j].cells[4]
 								.getElementsByTagName("input");
 						var goodsBeCostInput1 = allFuneralGoodsTable.rows[j].cells[1]
 								.getElementsByTagName("input");
@@ -87,11 +88,11 @@ function showSetGoodsDetailCallBack() {
 
 					}
 					if ((goodsName2 != null) && (goodsName == goodsName2)) {
-						var goodsCheckBoxInput2 = allFuneralGoodsTable.rows[j].cells[10]
+						var goodsCheckBoxInput2 = allFuneralGoodsTable.rows[j].cells[12]
 								.getElementsByTagName("input");
-						var goodsBeCostInput2 = allFuneralGoodsTable.rows[j].cells[8]
+						var goodsBeCostInput2 = allFuneralGoodsTable.rows[j].cells[9]
 								.getElementsByTagName("input");
-						var goodsRealCostInput2 = allFuneralGoodsTable.rows[j].cells[9]
+						var goodsRealCostInput2 = allFuneralGoodsTable.rows[j].cells[10]
 								.getElementsByTagName("input");
 						goodsCheckBoxInput2[0].checked = "true";
 						goodsCheckBoxInput2[0].onchange();
@@ -111,6 +112,7 @@ function showSetGoodsDetailCallBack() {
 function showSetServiceDetailCallBack() {
 	if (http_request.readyState == 4) {
 		if (http_request.status == 200) {
+			
 			var json = eval("(" + http_request.responseText + ")");
 			json = eval("(" + json + ")");
 			var cg = document.form3.cremationGrade;// 火化
@@ -268,7 +270,7 @@ function showUrnCallBack() {
 	}
 }
 
-function showAllFuneralGoodsCallBack() {
+function showAllFuneralGoodsCallBack() {   //返回页面的全部丧葬品信息
 	if (http_request.readyState == 4) {
 		if (http_request.status == 200) {
 			var json = eval("(" + http_request.responseText + ")");
@@ -278,11 +280,11 @@ function showAllFuneralGoodsCallBack() {
 			for (var i = 0; i < jsonLength; i++) {
 				var row = testTbl.insertRow();
 
-				var funeralGoodsCell1 = row.insertCell();
-				var goodsBeCost1 = row.insertCell();
-				var goodsRealCost1 = row.insertCell();
-				var balanceNumber1=row.insertCell();
-				var addGoodsButton1 = row.insertCell();
+				var funeralGoodsCell1 = row.insertCell();    //第一列丧葬品名称
+				var goodsBeCost1 = row.insertCell();		 //第一列丧葬品售价
+				var goodsRealCost1 = row.insertCell();		 //第一列丧葬品优惠的钱
+				var balanceNumber1=row.insertCell();		 //第一列丧葬品库存
+				var addGoodsButton1 = row.insertCell();		 //第一列丧葬品添加按钮
 				
 				var hideInput1 = row.insertCell();
 
@@ -1673,14 +1675,376 @@ function familyOutPut() { // 打印家属二维码 var
 }
 // 第三个form显示遗体信息
 function showData() {
-	url="deadId="+form3.deadId.value;
-	http_request=createHttpRequest();
-	http_request.onreadystatechange=showDataCallback;
-	http_request.open('POST',"RegisterServiceAction!showDeadInfo",false);
-	http_request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-	http_request.send(url);
+	var deadId=form3.deadId.value;
+	if(deadId==null||deadId.toString().length==0)
+		return false;
+	var data = "deadId="+deadId;
+	var url = "UpdateServiceAction!UpdateService";
+	sendRequest("post", url, data, showDataBack);
 	return false;//阻止页面刷新
 }
+var showDataBack = function(result) 
+{	
+	
+	var serviceDetail = eval("(" + result + ")");
+	
+	serviceDetail = eval("(" + serviceDetail + ")");
+	
+
+	var urnChooseBox=document.getElementById("urnChooseBox");
+	var makeBeautyBox=document.getElementById("makeBeautyBox");
+	var leaveRoomBox=document.getElementById("leaveRoomBox");
+	var cremationBox=document.getElementById("cremationBox");
+  
+		
+	var service = serviceDetail[0].service;
+	var goods = serviceDetail[0].goods;
+	var remainsCarryFee = serviceDetail[0].remainsCarryFee;
+//	alert(goods[0].goodsName);
+
+	
+	form3.memberMobile.value=service[0].memberMobile;
+	
+	form3.deadName.value=service[0].deadName;
+	form3.deadSex.value=service[0].deadSex;
+	form3.deadAge.value=service[0].deadAge;
+	if(service[0].remainsNumber>0){
+		form3.deadNumber.value=service[0].remainsNumber;
+	}else{
+		form3.deadNumber.value=service[0].remainsOrderNumber;
+
+	}
+	
+	form3.inTime.value=service[0].inTime;
+	form3.dealerId.value=service[0].dealerId;
+	form3.dealerName.value=service[0].dealerName;
+	form3.directorName.value=service[0].directorName;
+	form3.dealerAddress.value=service[0].dealerAddress;
+	
+	if(service[0].deadResidence!=""){
+		for(var i=0;i<document.getElementById("deadResidence").options.length;i++)
+	    {
+	        if(document.getElementById("deadResidence").options[i].value == service[0].deadResidence)
+	        {
+	            document.getElementById("deadResidence").options[i].selected=true;
+	            break;
+	        }
+	    }
+		
+		
+	}
+	if(service[0].operatorRelation!=""){
+		for(var i=0;i<document.getElementById("operatorRelation").options.length;i++)
+	    {
+	        if(document.getElementById("operatorRelation").options[i].value == service[0].operatorRelation)
+	        {
+	            document.getElementById("operatorRelation").options[i].selected=true;
+	            break;
+	        }
+	    }
+		
+		
+	}
+	if(service[0].ashesDisposition!=""){
+		for(var i=0;i<document.getElementById("ashesDisposition").options.length;i++)
+	    {
+	        if(document.getElementById("ashesDisposition").options[i].value == service[0].ashesDisposition)
+	        {
+	            document.getElementById("ashesDisposition").options[i].selected=true;
+	            break;
+	        }
+	    }
+		
+	}
+	
+
+	
+	if(service[0].deadReason!=""){
+		for(var i=0;i<document.getElementById("deadReason").options.length;i++)
+	    {
+	        if(document.getElementById("deadReason").options[i].value == service[0].deadReason)
+	        {
+	            document.getElementById("deadReason").options[i].selected=true;
+	            
+	            break;
+	        }
+	    }
+		
+		form3.deadReason.onchange();
+	}
+	if(service[0].deadType!=""){
+		for(var i=0;i<document.getElementById("deadKind").options.length;i++)
+	    {
+	        if(document.getElementById("deadKind").options[i].value == service[0].deadType)
+	        {
+	            document.getElementById("deadKind").options[i].selected=true;
+	            break;
+	        }
+	    }
+	}
+	if(service[0].pathogeny!=""){
+		
+		for(var i=0;i<document.getElementById("pathogeny").options.length;i++)
+	    {
+	        if(document.getElementById("pathogeny").options[i].value == service[0].pathogeny)
+	        {
+	            document.getElementById("pathogeny").options[i].selected=true;
+	            break;
+	        }
+	    }
+						
+	}else{
+		document.form3.pathogeny.style.display="none";
+	}
+	if(service[0].area!=""){
+		for(var i=0;i<document.getElementById("area").options.length;i++)
+	    {
+	        if(document.getElementById("area").options[i].value == service[0].area)
+	        {
+	            document.getElementById("area").options[i].selected=true;
+	            break;
+	        }
+	    }
+		
+	}
+	
+
+	if(service[0].deadTime=="0001-01-01 00:00:00"){
+		form3.deadTime.value="";
+	}
+	else{
+		
+		form3.deadTime.value = service[0].deadTime.substring(0,11);
+	}
+	form3.deadAddress.value=service[0].address;
+	form3.deadProveUnit.value = service[0].proofUnit;
+	form3.deadExtraInfo.value = service[0].memo;
+	form3.invoiceNo.value = service[0].invoiceNo;
+	form3.subsidyNo.value = service[0].subsidyNo;
+	form3.subsidyMoney.value = service[0].subsidyMoney;
+	if(service[0].benefitTime=="0001-01-01 00:00:00"){
+		form3.benefitTime.value="";
+	}
+	else{
+		
+		form3.benefitTime.value = service[0].benefitTime.substring(0,11);
+	}
+	
+	
+	if(service[0].carBeCost!=""){
+	
+	form3.rentCrystalBeCost.value=service[0].beRentCost;
+	form3.rentCrystalRealCost.value=service[0].realRentCost;
+	form3.lastRentCrystalRealCost.value=service[0].realRentCost;
+	
+	form3.rentCrystalCarBeCost.value=service[0].carBeCost;
+	form3.rentCrystalCarRealCost.value=service[0].carRealCost;
+	form3.lastRentCrystalCarRealCost.value=service[0].carRealCost;
+	}
+
+	//lastWholeCost存放的是除了火化之外的费用总和
+	//theWholeCost存放的是所有实际收费的费用
+	if(remainsCarryFee.length>0){
+				
+		form3.remainsCarryBeCost.value=remainsCarryFee[0].carBeCost;
+		form3.remainsCarryRealCost.value=remainsCarryFee[0].carRealCost;
+		form3.lastRemainsCarryRealCost.value=remainsCarryFee[0].carRealCost;
+		}
+	form3.theWholeCost.value=parseInt(form3.theWholeCost.value)-parseInt(form3.lastWholeCost.value)+parseInt(form3.remainsCarryRealCost.value)+parseInt(form3.rentCrystalRealCost.value)+parseInt(form3.rentCrystalCarRealCost.value);
+	form3.lastWholeCost.value=parseInt(form3.remainsCarryRealCost.value)+parseInt(form3.rentCrystalRealCost.value)+parseInt(form3.rentCrystalCarRealCost.value);
+	
+	form3.allBeCost.value=parseInt(form3.theWholeCost.value)+parseInt(form3.remainsCarryBeCost.value)+parseInt(form3.rentCrystalBeCost.value)+parseInt(form3.rentCrystalCarBeCost.value)-parseInt(form3.remainsCarryRealCost.value)-parseInt(form3.rentCrystalRealCost.value)-parseInt(form3.rentCrystalCarRealCost.value);
+	form3.allRealCost.value=parseInt(form3.allRealCost.value)+parseInt(form3.remainsCarryBeCost.value)+parseInt(form3.rentCrystalBeCost.value)+parseInt(form3.rentCrystalCarBeCost.value)-parseInt(form3.remainsCarryRealCost.value)-parseInt(form3.rentCrystalRealCost.value)-parseInt(form3.rentCrystalCarRealCost.value);
+
+	for(j=0;j<service.length;j++){
+		if(service[j].CremationTypeNo==03){
+			var cg=document.getElementById("cremationGrade");//火化
+			for(i=0; i<cg.options.length; i++)
+			{
+				if (cg.options[i].value ==service[j].itemName) // 动态选择selected默认值
+				{
+					
+					cg.options[i].selected = true;
+		            document.getElementById("cremationBeCost").value=service[j].itemBeCost;
+		            
+		            document.getElementById("cremationRealCost").value=service[j].itemRealCost;
+		            document.getElementById("preCremationBeCost").value = Number(service[i].itemBeCost);					
+					document.getElementById("cremationRealCost").value=document.getElementById("cremationBeCost").value -document.getElementById("cremationRealCost").value;
+					document.getElementById("preCremationRealCost").value = document.getElementById("cremationRealCost").value;
+					break;
+				}
+			}
+			
+		}
+		if(service[j].CremationTypeNo==02){
+			var cg=document.getElementById("leaveRoomGrade");//火化
+			for(i=0; i<cg.options.length; i++)
+			{
+				if (cg.options[i].value ==service[j].itemName) // 动态选择selected默认值
+				{
+					
+					cg.options[i].selected = true;
+		            document.getElementById("leaveRoomBeCost").value=service[j].itemBeCost;
+		            document.getElementById("leaveRoomRealCost").value=service[j].itemRealCost;
+		            document.getElementById("leaveRoomRealCost").value=document.getElementById("leaveRoomBeCost").value-document.getElementById("leaveRoomRealCost").value
+					document.getElementById("preLeaveRoomBeCost").value = Number(service[i].itemBeCost);
+					document.getElementById("preLeaveRoomRealCost").value = document.getElementById("leaveRoomRealCost").value;
+					break;
+				}
+			}
+			
+		}
+		if(service[j].CremationTypeNo==01){
+			var cg=document.getElementById("makeBeautyGrade");//火化
+			for(i=0; i<cg.options.length; i++)
+			{
+				if (cg.options[i].value ==service[j].itemName) // 动态选择selected默认值
+				{
+					
+					cg.options[i].selected = true;
+		            document.getElementById("makeBeautyBeCost").value=service[j].itemBeCost;
+		            document.getElementById("makeBeautyRealCost").value=service[j].itemRealCost;
+					document.getElementById("makeBeautyRealCost").value=document.getElementById("makeBeautyBeCost").value-document.getElementById("makeBeautyRealCost").value;					
+					document.getElementById("preMakeBeautyBeCost").value = Number(service[i].itemBeCost);
+					document.getElementById("preMakeBeautyRealCost").value = document.getElementById("makeBeautyRealCost").value;
+					break;
+				}
+			}
+			
+		}
+		
+	}
+
+//	getCremationBeCost();
+
+//	getMakeBeautyBeCost();
+
+//	getLeaveRoomBeCost();
+
+	if(service[0].urnName!=""){
+		
+		var cg=document.getElementById("urnChoose");//火化
+		
+//		for(i=0; i<cg.options.length; i++)
+		for(i=0; i<7; i++)
+		{
+			
+			if (cg.options[i].text ==service[0].urnName) // 动态选择selected默认值
+			{
+				
+				cg.options[i].selected = true;
+	            document.getElementById("urnBeCost").value=service[0].urnBeCost;
+	            document.getElementById("urnRealCost").value=service[0].urnRealCost;
+				document.getElementById("urnRealCost").value=document.getElementById("urnBeCost").value-document.getElementById("urnRealCost").value;					
+				document.getElementById("preUrnBeCost").value = Number(service[0].urnBeCost);
+				document.getElementById("preUrnRealCost").value = document.getElementById("urnRealCost").value;
+				break;
+			}
+		}
+
+	
+	}
+	 var allBeCost=document.getElementById("allBeCost").value;
+     
+     var allRealCost=document.getElementById("allRealCost").value;
+
+		var cremationBeCost=document.getElementById("cremationBeCost").value;
+		var cremationRealCost=document.getElementById("cremationRealCost").value;
+		var makeBeautyBeCost=document.getElementById("makeBeautyBeCost").value;
+		var makeBeautyRealCost=document.getElementById("makeBeautyRealCost").value;
+		var leaveRoomBeCost=document.getElementById("leaveRoomBeCost").value;
+		var leaveRoomRealCost=document.getElementById("leaveRoomRealCost").value;
+		var urnBeCost=document.getElementById("urnBeCost").value;
+		var urnRealCost=document.getElementById("urnRealCost").value;
+
+		document.getElementById("allBeCost").value=Number(document.getElementById("allBeCost").value)+Number(cremationBeCost)+Number(makeBeautyBeCost)+Number(leaveRoomBeCost)+Number(urnBeCost);
+		document.getElementById("allRealCost").value=Number(document.getElementById("allRealCost").value)+Number(cremationRealCost)+Number(makeBeautyRealCost)+Number(leaveRoomRealCost)+Number(urnRealCost);
+
+
+		var tb=document.getElementById("allFuneralGoods");
+		var rows=tb.rows.length;
+		var cells=tb.rows[1].cells.length;
+		
+		var count = goods.length;
+		
+		for(var i = 0; i <count; i++){
+//			var goods = serviceDetail[0].goods;
+			
+			var goodsName=goods[i].goodsName;
+			
+			var goodsRealCost=goods[i].goodsRealCost;
+			var goodsBeCost=goods[i].goodsBeCost;
+			
+
+			for(var j=2;j<rows;j++){
+				var goodName1=tb.rows[j].cells[0].innerText;
+				var goodsName2=tb.rows[j].cells[8].innerText;
+				
+				if(goodsName==goodName1){
+					var goodsCheckBoxInput1=tb.rows[j].cells[4].getElementsByTagName("input");
+					goodsCheckBoxInput1[0].checked=true;
+					var goosBeCost1 =tb.rows[j].cells[1].getElementsByTagName("input");
+					goosBeCost1[0].value=goodsBeCost;
+					chooseFuneralGoods1(goodsCheckBoxInput1[0]);
+//					changeGoodBeCost1(goosBeCost1[0]);
+					var reduce=tb.rows[j].cells[2].getElementsByTagName("input");
+					reduce[0].value=Number(goodsBeCost)-Number(goodsRealCost);
+//					changeGoodsCost1(reduce[0]);
+					
+											
+				}
+				if(goodsName==goodsName2){
+//					(goodsBeCost);
+					var goosBeCost2 =tb.rows[j].cells[9].getElementsByTagName("input");
+					goosBeCost2[0].value=goodsBeCost;
+					
+					var goodsCheckBoxInput2=tb.rows[j].cells[12].getElementsByTagName("input");
+					goodsCheckBoxInput2[0].checked=true;
+					chooseFuneralGoods2(goodsCheckBoxInput2[0]);
+					
+					var reduce1=tb.rows[j].cells[10].getElementsByTagName("input");
+					reduce1[0].value=Number(goodsBeCost)-Number(goodsRealCost);
+//					changeGoodsCost2(reduce1[0]);
+
+					
+				}
+									
+			}
+	}
+		var table2=document.getElementById("allFuneralGoods");
+		var rows=table2.rows.length;
+		
+		for(var k=2;k<rows;k++){
+			var reduceMoney=table2.rows[k].cells[2].getElementsByTagName("input");
+			var reduceMoney1=table2.rows[k].cells[10].getElementsByTagName("input");
+			
+			var hideMoney=table2.rows[k].cells[5];
+			var hideValue=hideMoney.getElementsByTagName("input");
+			    hideValue[0].value=reduceMoney[0].value;
+			    
+			var hideMoney1=table2.rows[k].cells[7];
+			var hideValue1=hideMoney1.getElementsByTagName("input");
+				hideValue1[0].value=reduceMoney1[0].value;
+			
+			
+			if(reduceMoney[0].value!=0){
+				document.getElementById("allRealCost").value=Number(document.getElementById("allRealCost").value)+Number(reduceMoney[0].value);
+			}
+			if(reduceMoney1[0].value!=0){
+				document.getElementById("allRealCost").value=Number(document.getElementById("allRealCost").value)+Number(reduceMoney1[0].value);
+				
+			}
+			
+		}
+		document.getElementById("theWholeCost").value=Number(document.getElementById("allBeCost").value)-Number(document.getElementById("allRealCost").value);
+		
+		
+		
+}
+	
+	
+
+	
 
 function getPathogenyDetail() {
 	var deadReasonSelect = document.form3.deadReason;
@@ -1749,18 +2113,7 @@ function showDataCallback(){
 					
 				}
 				
-//				var deadResidenceSelect = document.form3.deadResidence;
-//				var deadResidenceIndex = deadResidenceSelect.selectedIndex;				
-//				deadResidenceSelect.options[deadResidenceIndex].text=json.deadResidence;
-//				
-//				var operatorRelationSelect = document.form3.operatorRelation;
-//				var operatorRelationIndex = operatorRelationSelect.selectedIndex;				
-//				operatorRelationSelect.options[operatorRelationIndex].text=json.operatorRelation;
-//				
-//				
-//				var ashesDispositionSelect = document.form3.ashesDisposition;
-//				var ashesDispositionIndex = ashesDispositionSelect.selectedIndex;				
-//				ashesDispositionSelect.options[ashesDispositionIndex].text=json.ashesDisposition;
+
 				
 				if(json.deadReason!=""){
 					for(var i=0;i<document.getElementById("deadReason").options.length;i++)
@@ -1810,12 +2163,7 @@ function showDataCallback(){
 					
 				}
 				
-//				var areaSelect = document.form3.area;
-//				var areaIndex = areaSelect.selectedIndex;				
-//				areaSelect.options[areaIndex].text=json.area;
-//				var deadTime=json.deadTime;
-//				deadTime=deadTime.substring(0,11);				
-//				form3.deadTime.value=deadTime;
+
 				if(json.deadTime=="0001-01-01 00:00:00"){
 					form3.deadTime.value="";
 				}
@@ -3304,13 +3652,13 @@ function sumCost(){
 	var rentCrystalCarRealCost = document.getElementById("rentCrystalCarRealCost").value;
 	var rentCrystalCarCostChange = Number(rentCrystalCarBeCost)-Number(rentCrystalCarRealCost);	
 	
-	var watchSpiritVillaBeCost = document.getElementById("watchSpiritVillaBeCost").value;
-	var watchSpiritVillaRealCost = document.getElementById("watchSpiritVillaRealCost").value;
-	var watchSpiritVillaCostChange = Number(watchSpiritVillaBeCost)-Number(watchSpiritVillaRealCost);	
+//	var watchSpiritVillaBeCost = document.getElementById("watchSpiritVillaBeCost").value;
+//	var watchSpiritVillaRealCost = document.getElementById("watchSpiritVillaRealCost").value;
+//	var watchSpiritVillaCostChange = Number(watchSpiritVillaBeCost)-Number(watchSpiritVillaRealCost);	
 	
-	var watchSpiritCoffinBeCost = document.getElementById("watchSpiritCoffinBeCost").value;
-	var watchSpiritCoffinRealCost = document.getElementById("watchSpiritCoffinRealCost").value;
-	var watchSpiritCoffinCostChange = Number(watchSpiritCoffinBeCost)-Number(watchSpiritCoffinRealCost);
+//	var watchSpiritCoffinBeCost = document.getElementById("watchSpiritCoffinBeCost").value;
+//	var watchSpiritCoffinRealCost = document.getElementById("watchSpiritCoffinRealCost").value;
+//	var watchSpiritCoffinCostChange = Number(watchSpiritCoffinBeCost)-Number(watchSpiritCoffinRealCost);
 	
 	var leaveRoomBox = document.getElementById("leaveRoomBox");
 	var urnChooseBox = document.getElementById("urnChooseBox");
@@ -3342,8 +3690,8 @@ function sumCost(){
 		cremationBeCost="";
 		cremationRealCost="";
 	}
-	var sumBeCost =Number(remainsCarryBeCost)+Number(rentCrystalBeCost)+Number(rentCrystalCarBeCost)+Number(watchSpiritVillaBeCost)+Number(watchSpiritCoffinBeCost)+Number(leaveRoomBeCost)+Number(urnBeCost)+Number(makeBeautyBeCost)+Number(cremationBeCost);
-	var sumRealCost = Number(remainsCarryBeCost)-Number(remainsCarryRealCost)+rentCrystalCostChange+rentCrystalCarCostChange+watchSpiritVillaCostChange+watchSpiritCoffinCostChange+Number(leaveRoomRealCost)+Number(urnRealCost)+Number(makeBeautyRealCost)+Number(cremationRealCost);
+	var sumBeCost =Number(remainsCarryBeCost)+Number(rentCrystalBeCost)+Number(rentCrystalCarBeCost)+Number(leaveRoomBeCost)+Number(urnBeCost)+Number(makeBeautyBeCost)+Number(cremationBeCost);
+	var sumRealCost = Number(remainsCarryBeCost)-Number(remainsCarryRealCost)+rentCrystalCostChange+rentCrystalCarCostChange+Number(leaveRoomRealCost)+Number(urnRealCost)+Number(makeBeautyRealCost)+Number(cremationRealCost);
 	var tableName = document.getElementById("allFuneralGoods"); // 获取table中丧葬物品对象
 	var len = tableName.rows.length;
 	for (var i = 2; i < len; i++) {

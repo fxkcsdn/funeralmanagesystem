@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link href="css/SpryTabbedPanels.css" rel="stylesheet" type="text/css">
 <script src="js/InfoQuery.js"></script>
 <script src="js/changeService.js"></script>
-
+<script src="js/AjaxJson.js"></script>
 <script src="js/json2.js"></script>
 <script src="js/paging.js"></script>
 <script src="js/My97DatePicker/WdatePicker.js"></script>
