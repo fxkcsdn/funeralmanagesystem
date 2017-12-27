@@ -494,7 +494,7 @@ var getCremationServicefBack = function(result)
 			document.getElementById("beauty").value=service[i].itemName;					
 			document.getElementById("makeBeautyBeCost").value = Number(service[i].itemBeCost);
 			document.getElementById("makeBeautyRealCost").value = Number(service[i].itemRealCost);
-			document.getElementById("makeBeautyRealCost").value=document.getElementById("makeBeautyRealCost").value-document.getElementById("makeBeautyBeCost").value;					
+			document.getElementById("makeBeautyRealCost").value=document.getElementById("makeBeautyBeCost").value-document.getElementById("makeBeautyRealCost").value;					
 			document.getElementById("preMakeBeautyBeCost").value = Number(service[i].itemBeCost);
 			document.getElementById("preMakeBeautyRealCost").value = document.getElementById("makeBeautyRealCost").value;
 			document.getElementById("beauty").disabled = "true";
@@ -509,7 +509,7 @@ var getCremationServicefBack = function(result)
 			document.getElementById("beauty").value=service[i].itemName;					
 			document.getElementById("makeBeautyBeCost").value = Number(service[i].itemBeCost);
 			document.getElementById("makeBeautyRealCost").value = Number(service[i].itemRealCost);
-			document.getElementById("makeBeautyRealCost").value=document.getElementById("makeBeautyRealCost").value-document.getElementById("makeBeautyBeCost").value;					
+			document.getElementById("makeBeautyRealCost").value=document.getElementById("makeBeautyBeCost").value-document.getElementById("makeBeautyRealCost").value;					
 			document.getElementById("preMakeBeautyBeCost").value = Number(service[i].itemBeCost);
 			document.getElementById("preMakeBeautyRealCost").value = document.getElementById("makeBeautyRealCost").value;
 			
