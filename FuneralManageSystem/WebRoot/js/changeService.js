@@ -350,8 +350,27 @@ var getCremationServicefBack = function(result)
 		
 	var service = serviceDetail[0].service;
 	var goods = serviceDetail[0].goods;
+	var remainsCarryFee = serviceDetail[0].remainsCarryFee;
 //	alert(goods[0].goodsName);
+	
+	if(service[0].carBeCost!=""){
+		
+		
+		
+		form1.allBeCost.value=parseInt(form1.allBeCost.value)+parseInt(service[0].beRentCost)+parseInt(service[0].carBeCost);
 
+		form1.allRealCost.value=parseInt(form1.allRealCost.value)+parseInt(form1.allBeCost.value)-parseInt(service[0].realRentCost)-parseInt(service[0].carRealCost);
+		
+		form1.theWholeCost.value=parseInt(form1.allBeCost.value)-parseInt(form1.allRealCost.value);
+	}
+	
+	if(remainsCarryFee.length>0){
+				
+		form1.allBeCost.value=parseInt(form1.allBeCost.value)+parseInt(remainsCarryFee[0].carBeCost);
+		form1.allRealCost.value=parseInt(form1.allRealCost.value)+parseInt(remainsCarryFee[0].carBeCost)-parseInt(remainsCarryFee[0].carRealCost);
+		form1.theWholeCost.value=parseInt(form1.allBeCost.value)-parseInt(form1.allRealCost.value);
+
+	}
 	
 	document.getElementById("servicedeadName").value=service[0].deadName;
 	document.getElementById("deadId").value=service[0].deadId;
