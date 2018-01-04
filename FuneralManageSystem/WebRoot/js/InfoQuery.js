@@ -172,6 +172,9 @@ function writePage(pageNumTemp) { // 发送查询火化信息的请求
 	PageNum = pageNumTemp;
 	var startTime = document.form1.startTime.value; // 开始时间
 	var endTime = document.form1.endTime.value; // 结束时间
+	if(startTime>endTime){
+		alert("您选择的开始时间迟于结束时间，请重新选择！");
+	}else{
 	url = "&startTime=" + startTime + "&endTime=" + endTime;
 	url = "pageNum=" + PageNum + url;
 	http_request = createHttpRequest();
@@ -182,6 +185,7 @@ function writePage(pageNumTemp) { // 发送查询火化信息的请求
 	http_request.setRequestHeader("Content-Type",
 			"application/x-www-form-urlencoded");
 	http_request.send(url);
+	}
 	return false;
 }
 
@@ -190,6 +194,9 @@ function writePage1(pageNumTemp) { // 发送查询惠民补助信息的请求
 	PageNum = pageNumTemp;
 	var startTime = document.form2.startTime1.value; // 开始时间
 	var endTime = document.form2.endTime1.value; // 结束时间
+	if(startTime>endTime){
+		alert("您选择的开始时间迟于结束时间，请重新选择！");
+	}else{
 	url = "&startTime=" + startTime + "&endTime=" + endTime;
 	url = "pageNum=" + PageNum + url;
 	http_request = createHttpRequest();
@@ -199,6 +206,7 @@ function writePage1(pageNumTemp) { // 发送查询惠民补助信息的请求
 			"application/x-www-form-urlencoded");
 
 	http_request.send(url);
+	}
 
 	return false;
 }
@@ -209,6 +217,9 @@ function writePage2(pageNumTemp) { // 发送查询惠民补助信息的请求
 	
 	var startTime = document.form1.startTime.value; // 开始时间
 	var endTime = document.form1.endTime.value; // 结束时间
+	if(startTime>endTime){
+		alert("您选择的开始时间迟于结束时间，请重新选择！");
+	}else{
 
 	url = "&startTime=" + startTime + "&endTime=" + endTime;
 	url = "pageNum=" + PageNum + url;
@@ -219,7 +230,7 @@ function writePage2(pageNumTemp) { // 发送查询惠民补助信息的请求
 			"application/x-www-form-urlencoded");
 
 	http_request.send(url);
-
+	}
 	return false;
 }
 function printCremationTable() { // 打印火化信息表格
@@ -2211,7 +2222,11 @@ function writePage3(pageNumTemp) { // 发送查询惠民补助信息的请求
 
 	var startTime = document.form3.startTime2.value; // 开始时间
 	var endTime = document.form3.endTime2.value; // 结束时间
-
+	if(startTime>endTime){
+		alert("您选择的开始时间迟于结束时间，请重新选择！");
+	}else{
+		
+	
 	url = "&startTime=" + startTime + "&endTime=" + endTime;
 
 	url = "pageNum=" + PageNum + url;
@@ -2226,7 +2241,7 @@ function writePage3(pageNumTemp) { // 发送查询惠民补助信息的请求
 			"application/x-www-form-urlencoded");
 
 	http_request.send(url);
-
+	}
 	return false;
 }
 function writePage3CallBack() { // 接收查询得到的火化信息
