@@ -524,7 +524,7 @@ body,td,th {
             
             <hr>
             <!--endprint1-->
-            <input type="button" name="createSetOrder" id="createSetOrder" value="生成套餐单据" disabled="true" onclick="return outPutSetServiceOrder()" style="width: 125px; "><p align="center">
+            <input type="button" name="createSetOrder" id="createSetOrder" value="生成套餐单据" disabled="true" onclick="return getFunneralGoodsCost()" style="width: 125px; "><p align="center">
               <input type="button" name="printServiceList" id="printServiceList" value="生成服务详单" onclick="return outPutServiceList()" style="width: 125px; ">&nbsp;&nbsp;&nbsp;
               <input type="button" name="printServiceList" id="printServiceList" value="打印服务详单" onclick="return outPrintServiceList()" style="width: 125px; ">&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;

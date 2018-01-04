@@ -82,7 +82,7 @@ function showSetGoodsDetailCallBack() {
 				//		goodsCheckBoxInput1[0].disabled = "true";
 						goodsBeCostInput1[0].value = goodsBeCost;
 						goodsBeCostInput1[0].onkeyup();
-						goodsBeCostInput1[0].disabled = "true";
+						goodsBeCostInput1[0].disabled = "";
 						// alert(goodsBeCostInput1[0]);
 				//		goodsRealCostInput1[0].disabled = "true";
 
@@ -99,7 +99,7 @@ function showSetGoodsDetailCallBack() {
 				//		goodsCheckBoxInput2[0].disabled = "true";
 						goodsBeCostInput2[0].value = goodsBeCost;
 						goodsBeCostInput2[0].onkeyup();
-						goodsBeCostInput2[0].disabled = "true";
+						goodsBeCostInput2[0].disabled = "";
 						// alert(goodsBeCostInput2.length);
 				//		goodsRealCostInput2[0].disabled = "true";
 					}
@@ -392,7 +392,8 @@ function changeGoodBeCost1(obj) {
 		var goodsBeCostHiddenInput = goodsBeCostHidden
 				.getElementsByTagName("input");
 		var goodsBeCostHidden1 = goodsBeCostHiddenInput[1].value;
-
+		
+		
 		var allServiceBeCost = document.form3.allBeCost;
 		allServiceBeCost.value = parseInt(allServiceBeCost.value)
 				+ parseInt(goodsBeCost1) - parseInt(goodsBeCostHidden1);
@@ -2384,6 +2385,258 @@ function showDataCallback(){
 //	}
 //}
 
+function getFunneralGoodsCost(){
+	var setNameSelect = document.form3.setService;
+	var setNameIndex = setNameSelect.selectedIndex;
+	var setName = setNameSelect.options[setNameIndex].text;
+	url = "setName=" + setName;
+	
+	http_request = createHttpRequest();
+	http_request.onreadystatechange = getFunneralGoodsCostBack;
+	http_request
+			.open('POST', "RegisterServiceAction!showSetGoodsDetail", false);
+	http_request.setRequestHeader("Content-Type",
+			"application/x-www-form-urlencoded");
+	http_request.send(url);
+	
+}
+function getFunneralGoodsCostBack(){
+	if (http_request.readyState == 4) {
+		if (http_request.status == 200) {
+//			clearTable();
+			var setServiceCheckBox = document.form3.setServiceCheckBox;
+			if (setServiceCheckBox.checked == true) {
+				document.getElementById("setNo").innerHTML = "";
+				document.getElementById("setTaxDate").innerHTML = "";
+				document.getElementById("setName").innerHTML = "";
+				document.getElementById("setSex").innerHTML = "";
+				document.getElementById("setAge").innerHTML = "";
+				document.getElementById("setAddress").innerHTML = "";
+				document.getElementById("setItem1").innerHTML = "";
+				document.getElementById("setItem2").innerHTML = "";
+				document.getElementById("setItem3").innerHTML = "";
+				document.getElementById("setItem4").innerHTML = "";
+				document.getElementById("setItem5").innerHTML = "";
+				document.getElementById("setItem6").innerHTML = "";
+				document.getElementById("setItem7").innerHTML = "";
+				document.getElementById("itemPrice1").innerHTML = "";
+				document.getElementById("itemPrice2").innerHTML = "";
+				document.getElementById("itemPrice3").innerHTML = "";
+				document.getElementById("itemPrice4").innerHTML = "";
+				document.getElementById("itemPrice5").innerHTML = "";
+				document.getElementById("itemPrice6").innerHTML = "";
+				document.getElementById("itemPrice7").innerHTML = "";
+				document.getElementById("setAllCost").innerHTML = "";
+				document.getElementById("setAllCostUp").innerHTML = "";
+				document.getElementById("setServiceDetail").innerHTML = "";
+				document.getElementById("currentDateTh").innerHTML = "";
+				var myDate = new Date();
+				document.getElementById("setName").innerHTML = "<font style='font-weight:bold;'>"
+						+ form3.deadName.value + "</font>";
+				// document.getElementById("setNo").innerHTML="<font
+				// style='font-weight:bold;font-size:22px'>"+form3.deadNumber.value+"</font>";
+				document.getElementById("setTaxDate").innerHTML = "<font style='font-weight:bold;'>"
+						+ myDate.toLocaleDateString()
+						+ " "
+						+ myDate.toLocaleTimeString() + "</font>";
+				document.getElementById("setSex").innerHTML = "<font style='font-weight:bold;'>"
+						+ document.form3.deadSex.value + "</font>";
+				document.getElementById("setAge").innerHTML = "<font style='font-weight:bold;'>"
+						+ document.form3.deadAge.value + "</font>";
+				document.getElementById("setAddress").innerHTML = "<font style='font-weight:bold;'>"
+						+ document.form3.deadAddress.value + "</font>";
+
+				var setServiceSelect = document.form3.setService;
+				var setServiceIndex = setServiceSelect.selectedIndex;
+				var setService = setServiceSelect.options[setServiceIndex].text; // 选择的套餐
+				var setServiceCheckBox = document.form3.setServiceCheckBox;
+				if ((setServiceCheckBox.checked == true) && (setService != "-请选择-")) {
+					document.getElementById("setItem1").innerHTML = "<font style='font-weight:bold;'>"
+							+ setService + "</font>";
+				}
+				document.getElementById("currentDateTh").innerHTML = "<font style='font-weight:bold;'>"
+						+ form3.deadNumber.value + "</font>";
+				document.getElementById("setNo").innerHTML = "<font style='font-weight:bold;'>"
+						+ document.getElementById("invoiceNo").value + "</font>";
+				
+			var json = eval("(" + http_request.responseText + ")");
+			json = eval("(" + json + ")");
+			var jsonLength = json.length;
+			var allFuneralGoodsTable = document
+					.getElementById("allFuneralGoods");
+			var rowsLength = allFuneralGoodsTable.rows.length;
+			var setServiceDetailContent = document.form3.setServiceDetailContent;
+			setServiceDetailContent.value = "";
+			
+			var FunneralGoodsCost =0;
+			for (var i = 0; i < jsonLength; i++) {
+				// var new_opt = new Option(json[i].setName, json[i].setName);
+				// urnSelect.options.add(new_opt);
+				var goodsName = json[i].setGoods;
+				var goodsBeCost = json[i].setGoodsPrice;
+				setServiceDetailContent.value = setServiceDetailContent.value
+						+ goodsName + ":" + goodsBeCost + ";";
+
+				for (var j = 2; j < rowsLength; j++) {
+					var goodName1 = allFuneralGoodsTable.rows[j].cells[0].innerText;
+					var goodsName2 = allFuneralGoodsTable.rows[j].cells[8].innerText;
+					if (goodsName == goodName1) {
+						var goodsCheckBoxInput1 = allFuneralGoodsTable.rows[j].cells[4]
+								.getElementsByTagName("input");
+						var goodsBeCostInput1 = allFuneralGoodsTable.rows[j].cells[1]
+								.getElementsByTagName("input");
+						var goodsRealCostInput1 = allFuneralGoodsTable.rows[j].cells[2]
+								.getElementsByTagName("input");
+						goodsCheckBoxInput1[0].checked = "true";
+//						goodsCheckBoxInput1[0].onchange();
+				//		goodsCheckBoxInput1[0].disabled = "true";
+						
+
+
+						FunneralGoodsCost = parseInt(FunneralGoodsCost)
+						+ parseInt(goodsBeCostInput1[0].value)-parseInt(goodsRealCostInput1[0].value);
+						
+						// alert(goodsBeCostInput1[0]);
+				//		goodsRealCostInput1[0].disabled = "true";
+
+					}
+					if ((goodsName2 != null) && (goodsName == goodsName2)) {
+						var goodsCheckBoxInput2 = allFuneralGoodsTable.rows[j].cells[12]
+								.getElementsByTagName("input");
+						var goodsBeCostInput2 = allFuneralGoodsTable.rows[j].cells[9]
+								.getElementsByTagName("input");
+						var goodsRealCostInput2 = allFuneralGoodsTable.rows[j].cells[10]
+								.getElementsByTagName("input");
+						goodsCheckBoxInput2[0].checked = "true";
+//						goodsCheckBoxInput2[0].onchange();
+				//		goodsCheckBoxInput2[0].disabled = "true";
+						
+						FunneralGoodsCost = parseInt(FunneralGoodsCost)
+						+ parseInt(goodsBeCostInput2[0].value)-parseInt(goodsRealCostInput2[0].value);
+						// alert(goodsBeCostInput2.length);
+				//		goodsRealCostInput2[0].disabled = "true";
+					}
+				}
+			}
+			var leaveRoomBeCost = document.form3.leaveRoomBeCost.value;
+			var cremationBeCost = document.form3.cremationBeCost.value;
+//			var setServiceAllCost = document.form3.setServiceAllCost.value;
+			var setCost = parseInt(FunneralGoodsCost) + parseInt(cremationBeCost)
+					+ parseInt(leaveRoomBeCost);
+			document.getElementById("itemPrice1").innerHTML = "<font style='font-weight:bold;'>"
+					+ setCost + "</font>"; // 套餐价格
+			var number = document.getElementById("theWholeCost").value;
+			document.getElementById("setAllCost").innerHTML = "<font style='font-weight:bold;'>"
+					+ number + "</font>";
+			if (!/^(0|[1-9]\d*)(\.\d{1,2})?$/.test(number)) {
+				return false;
+			}
+			var unit = "仟佰拾亿仟佰拾万仟佰拾元角分", str = "";
+			number += "00";
+			var point = number.indexOf('.');
+			if (point >= 0) {
+				number = number.substring(0, point) + number.substr(point + 1, 2);
+			}
+			unit = unit.substr(unit.length - number.length);
+			for (var i = 0; i < number.length; i++) {
+				str += '零壹贰叁肆伍陆柒捌玖'.charAt(number.charAt(i)) + unit.charAt(i);
+			}
+			// document.getElementById(idCHN).value = str.replace(/零(仟|佰|拾|角)/g,
+			// "零").replace(/(零)+/g, "零").replace(/零(万|亿|元)/g,
+			// "$1").replace(/(亿)万|壹(拾)/g, "$1$2").replace(/^元零?|零分/g,
+			// "").replace(/元$/g, "元整");
+			document.getElementById("setAllCostUp").innerHTML = "<font style='font-weight:bold;'>"
+					+ str.replace(/零(仟|佰|拾|角)/g, "零").replace(/(零)+/g, "零")
+							.replace(/零(万|亿|元)/g, "$1")
+							.replace(/(亿)万|(拾)/g, "$1$2").replace(/^元零?|零分/g, "")
+							.replace(/元$/g, "元整") + "</font>";
+
+			// 显示套餐外服务详情
+			var urnChooseBox = document.form3.urnChooseBox;
+			var urnChooseSelect = document.form3.urnChoose;
+			var urnChooseIndex = urnChooseSelect.selectedIndex;
+			var urnChoose = urnChooseSelect.options[urnChooseIndex].text;
+			var urnBeCost = document.form3.urnBeCost.value;
+			var urnRealCost = document.form3.urnRealCost.value;
+			var urnCost = parseInt(urnBeCost) - parseInt(urnRealCost);
+			if ((urnChooseBox.checked == true) && (urnChoose != "-请选择-")) {
+				document.getElementById("setItem2").innerHTML = "<font style='font-weight:bold;'>"
+						+ urnChoose + "</font>";
+				document.getElementById("itemPrice2").innerHTML = "<font style='font-weight:bold;'>"
+						+ urnCost + "</font>";
+			}
+
+			var remainsCarryBeCost = document.form3.remainsCarryBeCost.value;
+			if (remainsCarryBeCost != "0") {
+				document.getElementById("setItem3").innerHTML = "<font style='font-weight:bold;'>"
+						+ "代收车费" + "</font>";
+				document.getElementById("itemPrice3").innerHTML = "<font style='font-weight:bold;'>"
+						+ remainsCarryBeCost + "</font>";
+			}
+
+			// 将套餐中不包含的附加的丧葬品判断并且打印到套餐单据中
+			var setServiceDetailContent = document.form3.setServiceDetailContent.value;
+			var tableName = document.getElementById("allFuneralGoods");
+			var tableRows = tableName.rows.length;
+			var indexStart = 4;
+			for (var i = 2; i < tableRows; i++) {
+				var goodsCheckBoxInput1 = tableName.rows[i].cells[4]
+						.getElementsByTagName("input");
+				var goodsCheckBoxInput2 = tableName.rows[i].cells[12]
+						.getElementsByTagName("input");
+				if (goodsCheckBoxInput1[0].checked) {
+					var goodsName = tableName.rows[i].cells[0].innerText;
+					var goodsBeCost = tableName.rows[i].cells[1]
+							.getElementsByTagName("input")[0].value;
+					var goodsRealCost = tableName.rows[i].cells[2]
+							.getElementsByTagName("input")[0].value;
+					var goodsCost = goodsBeCost - goodsRealCost;
+//					alert(setServiceDetailContent.indexOf(goodsName));
+					if ((setServiceDetailContent.indexOf(goodsName) < 0)
+							&& (indexStart <= 9)) {
+						var setItemIndex = "setItem" + indexStart;
+						document.getElementById(setItemIndex).innerHTML = "<font style='font-weight:bold;'>"
+								+ goodsName + "</font>";
+						var itemPriceIndex = "itemPrice" + indexStart;
+						document.getElementById(itemPriceIndex).innerHTML = "<font style='font-weight:bold;'>"
+								+ goodsCost + "</font>";
+						indexStart = parseInt(indexStart) + parseInt(1);
+					}
+				}
+				if ((goodsCheckBoxInput2 != null)
+						&& (goodsCheckBoxInput2[0].checked)) {
+					var goodsName = tableName.rows[i].cells[8].innerText;
+					var goodsBeCost = tableName.rows[i].cells[9]
+							.getElementsByTagName("input")[0].value;
+					var goodsRealCost = tableName.rows[i].cells[10]
+							.getElementsByTagName("input")[0].value;
+					var goodsCost = goodsBeCost - goodsRealCost;
+					if ((setServiceDetailContent.indexOf(goodsName) < 0)
+							&& (indexStart <= 9)) {
+						var setItemIndex = "setItem" + indexStart;
+						document.getElementById(setItemIndex).innerHTML = "<font style='font-weight:bold;'>"
+								+ goodsName + "</font>";
+						var itemPriceIndex = "itemPrice" + indexStart;
+						document.getElementById(itemPriceIndex).innerHTML = "<font style='font-weight:bold;'>"
+								+ goodsCost + "</font>";
+						indexStart = parseInt(indexStart) + parseInt(1);
+					}
+				}
+			}
+			if (indexStart > 9) {
+				alert("选择小商品数目过多，无法选择套餐服务，请重新选取");
+				location.reload();
+			}
+		}
+		if (setServiceCheckBox.checked == false) {
+			alert("套餐未选取，无法打印套餐单据");
+		}
+			
+			
+		}
+	}
+	
+}
 function outPutSetServiceOrder() {
 	var setServiceCheckBox = document.form3.setServiceCheckBox;
 	if (setServiceCheckBox.checked == true) {
@@ -2502,9 +2755,9 @@ function outPutSetServiceOrder() {
 		var tableRows = tableName.rows.length;
 		var indexStart = 4;
 		for (var i = 2; i < tableRows; i++) {
-			var goodsCheckBoxInput1 = tableName.rows[i].cells[3]
+			var goodsCheckBoxInput1 = tableName.rows[i].cells[4]
 					.getElementsByTagName("input");
-			var goodsCheckBoxInput2 = tableName.rows[i].cells[10]
+			var goodsCheckBoxInput2 = tableName.rows[i].cells[12]
 					.getElementsByTagName("input");
 			if (goodsCheckBoxInput1[0].checked) {
 				var goodsName = tableName.rows[i].cells[0].innerText;
@@ -2526,10 +2779,10 @@ function outPutSetServiceOrder() {
 			}
 			if ((goodsCheckBoxInput2 != null)
 					&& (goodsCheckBoxInput2[0].checked)) {
-				var goodsName = tableName.rows[i].cells[7].innerText;
-				var goodsBeCost = tableName.rows[i].cells[8]
+				var goodsName = tableName.rows[i].cells[8].innerText;
+				var goodsBeCost = tableName.rows[i].cells[9]
 						.getElementsByTagName("input")[0].value;
-				var goodsRealCost = tableName.rows[i].cells[9]
+				var goodsRealCost = tableName.rows[i].cells[10]
 						.getElementsByTagName("input")[0].value;
 				var goodsCost = goodsBeCost - goodsRealCost;
 				if ((setServiceDetailContent.indexOf(goodsName) < 0)
