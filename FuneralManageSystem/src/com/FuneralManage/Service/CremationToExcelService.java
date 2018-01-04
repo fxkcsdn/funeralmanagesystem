@@ -391,11 +391,11 @@ public class CremationToExcelService extends BaseService{
 	            sheet.addCell(label);
 				wwb.write();
 				wwb.close();
-				memo="成功生成逝者excel";
+				memo="成功生成逝者excel!";
 				
 			} catch (Exception e) {
 				e.printStackTrace();
-				memo="生成逝者excel失败！";
+				memo="生成逝者excel失败!";
 
 			} finally {
 				rwb.close();

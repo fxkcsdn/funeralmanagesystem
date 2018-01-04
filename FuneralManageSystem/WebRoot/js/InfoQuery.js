@@ -2356,6 +2356,11 @@ function ExcelById()
 		
 	}
 	var allDeadId=deadIdArr+"";
+	
+	if(allDeadId==""){
+		alert("尚未勾选要生成Excel的逝者选择框，请勾选!")
+	}else{
+			
 	url = url+"allDeadId=" + allDeadId;
 	
 	http_request = createHttpRequest();
@@ -2364,6 +2369,7 @@ function ExcelById()
 	http_request.setRequestHeader("Content-Type",
 		"application/x-www-form-urlencoded");	
 	http_request.send(url);
+	}
 	return false;// 结束时间
 	
 }

@@ -1880,6 +1880,7 @@ var showDataBack = function(result)
 			var cg=document.getElementById("leaveRoomGrade");//火化
 			for(i=0; i<cg.options.length; i++)
 			{
+				
 				if (cg.options[i].value ==service[j].itemName) // 动态选择selected默认值
 				{
 					

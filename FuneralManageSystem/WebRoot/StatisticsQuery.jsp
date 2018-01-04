@@ -1,11 +1,11 @@
-<%@ page language="java" contentType="text/html;charset=gbk"
-	pageEncoding="GBK"%>
+<%@ page language="java" contentType="text/html;charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=gbK">
-<title>»¶Ó­Ê¹ÓÃéëÔáÖÇÄÜ»¯ÏµÍ³</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>æ¬¢è¿ä½¿ç”¨æ®¡è‘¬æ™ºèƒ½åŒ–ç³»ç»Ÿ</title>
 
 <script src="js/SpryTabbedPanels.js" type="text/javascript"></script>
 <link href="css/SpryTabbedPanels.css" rel="stylesheet" type="text/css">
@@ -22,31 +22,31 @@ td,th{
 <body>
 <div id="TabbedPanels1" class="TabbedPanels">
   <ul class="TabbedPanelsTabGroup">
-    <li class="TabbedPanelsTab" tabindex="0">²éÑ¯ÒÅÌå»ù±¾ĞÅÏ¢</li>
-    <li class="TabbedPanelsTab" tabindex="0">²éÑ¯»İÃñ²¹ÖúĞÅÏ¢</li>
-    <li class="TabbedPanelsTab" tabindex="0">Éú³É»ğ»¯ĞÅÏ¢±í¸ñ</li>
+    <li class="TabbedPanelsTab" tabindex="0">æŸ¥è¯¢é—ä½“åŸºæœ¬ä¿¡æ¯</li>
+    <li class="TabbedPanelsTab" tabindex="0">æŸ¥è¯¢æƒ æ°‘è¡¥åŠ©ä¿¡æ¯</li>
+    <li class="TabbedPanelsTab" tabindex="0">ç”Ÿæˆç«åŒ–ä¿¡æ¯è¡¨æ ¼</li>
     
   </ul>
   <div class="TabbedPanelsContentGroup">
     <div class="TabbedPanelsContent">
             <form name="form1" >
             <p>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="startTime">¿ªÊ¼Ê±¼ä£º</label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="startTime">å¼€å§‹æ—¶é—´ï¼š</label>
               <input type="text" name="startTime" id="startTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,maxDate:'#F{$dp.$D(\'endTime\')}'})" >&nbsp;&nbsp;&nbsp;
               
-              <label for="endTime">½áÊøÊ±¼ä£º</label>
+              <label for="endTime">ç»“æŸæ—¶é—´ï¼š</label>
               <input type="text" name="endTime" id="endTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd '})">
               
             </p>
-<input type="button" value="²éÑ¯"  onclick="return CremationInfoQuery()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<input type="button" name="printServiceList" id="printServiceList" value="´òÓ¡»ğ»¯ĞÅÏ¢±í" onclick="return outPrintServiceList()" style="width: 125px; ">&nbsp;&nbsp;&nbsp;
+<input type="button" value="æŸ¥è¯¢"  onclick="return CremationInfoQuery()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" name="printServiceList" id="printServiceList" value="æ‰“å°ç«åŒ–ä¿¡æ¯è¡¨" onclick="return outPrintServiceList()" style="width: 125px; ">&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<input type="button" value="Áí´æÎª Excel" onclick="CremationToExcel()"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" value="å¦å­˜ä¸º Excel" onclick="CremationToExcel()"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
            
             <hr>
-  <center>ÔÚ´ËÆÚ¼ä¹²ÓĞ<input type="text" id="asd">ÌõÊı¾İ</center>
+  <center>åœ¨æ­¤æœŸé—´å…±æœ‰<input type="text" id="asd">æ¡æ•°æ®</center>
    <br> 
    <div id="tableExcel" style="display:none">
    
@@ -55,22 +55,22 @@ td,th{
    <thead>   
           
             <tr>
-            <th colspan="12" align="center"><b><font style="font-size:24px">¶«Ì¨ÊĞéëÒÇ¹İ»ğ»¯»ù±¾ĞÅÏ¢Í³¼Æ±í</font></b>(¶«Ì¨·Ö¹İ)</th> 
+            <th colspan="12" align="center"><b><font style="font-size:24px">ä¸œå°å¸‚æ®¡ä»ªé¦†ç«åŒ–åŸºæœ¬ä¿¡æ¯ç»Ÿè®¡è¡¨</font></b>(ä¸œå°åˆ†é¦†)</th> 
             </tr>
             <tr>
-            <th>»ğ»¯ÈÕÆÚ</th> 
-            <th>ĞòºÅ</th>
-            <th>ĞÕÃû</th>
-            <th>ĞÔ±ğ</th>
-            <th>ÄêÁä</th>
-            <th>Ãñ×å</th>
-            <th>×¡Ö·</th>
-            <th>Éí·İÖ¤ºÅ</th>
+            <th>ç«åŒ–æ—¥æœŸ</th> 
+            <th>åºå·</th>
+            <th>å§“å</th>
+            <th>æ€§åˆ«</th>
+            <th>å¹´é¾„</th>
+            <th>æ°‘æ—</th>
+            <th>ä½å€</th>
+            <th>èº«ä»½è¯å·</th>
             
-            <th>ËÀÍöÈÕÆÚ</th>
-            <th>ËÀÍöÔ­Òò</th>
-            <th>¼ÒÊôµç»°</th>
-            <th>·¢Æ±ºÅ</th>
+            <th>æ­»äº¡æ—¥æœŸ</th>
+            <th>æ­»äº¡åŸå› </th>
+            <th>å®¶å±ç”µè¯</th>
+            <th>å‘ç¥¨å·</th>
             
             
             </tr>            
@@ -94,20 +94,20 @@ td,th{
     <div class="TabbedPanelsContent">
                   <form name="form2" >
             <p>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="startTime">¿ªÊ¼Ê±¼ä£º</label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="startTime">å¼€å§‹æ—¶é—´ï¼š</label>
               <input type="text" name="startTime1" id="startTime1" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" >&nbsp;&nbsp;&nbsp;
               
-              <label for="endTime">½áÊøÊ±¼ä£º</label>
+              <label for="endTime">ç»“æŸæ—¶é—´ï¼š</label>
               <input type="text" name="endTime1" id="endTime1" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd '})">
               
             </p>
-<input type="button" value="²éÑ¯"  onclick="return BenefitInfoQuery()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<input type="button" name="printServiceList" id="printServiceList" value="´òÓ¡»İÃñ²¹Öú" onclick="return outPrintServiceList()" style="width: 125px; ">&nbsp;&nbsp;&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="Áí´æÎª Excel" onclick="BenefitToExcel()"> 
+<input type="button" value="æŸ¥è¯¢"  onclick="return BenefitInfoQuery()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" name="printServiceList" id="printServiceList" value="æ‰“å°æƒ æ°‘è¡¥åŠ©" onclick="return outPrintServiceList()" style="width: 125px; ">&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="å¦å­˜ä¸º Excel" onclick="BenefitToExcel()"> 
 
            
             <hr>
-    <center>ÔÚ´ËÆÚ¼ä¹²ÓĞ<input type="text" id="qaq">ÌõÊı¾İ</center>
+    <center>åœ¨æ­¤æœŸé—´å…±æœ‰<input type="text" id="qaq">æ¡æ•°æ®</center>
     <br>
    <div id="tableExcel2"  style="display:none">
    
@@ -116,24 +116,24 @@ td,th{
    <thead>   
           
             <tr>
-            <th colspan="14" align="center"><b><font style="font-size:24px">¶«Ì¨ÊĞéëÒÇ¹İ»İÃñ²¹ÖúĞÅÏ¢Í³¼Æ±í</font></b>(¶«Ì¨·Ö¹İ)</th> 
+            <th colspan="14" align="center"><b><font style="font-size:24px">ä¸œå°å¸‚æ®¡ä»ªé¦†æƒ æ°‘è¡¥åŠ©ä¿¡æ¯ç»Ÿè®¡è¡¨</font></b>(ä¸œå°åˆ†é¦†)</th> 
             </tr>
             <tr>
-            <th>»ğ»¯Ê±¼ä</th> 
+            <th>ç«åŒ–æ—¶é—´</th> 
             
-            <th>ËÀÕßĞÕÃû</th>
-            <th>ĞÔ±ğ</th>
-            <th>ÄêÁä</th>
+            <th>æ­»è€…å§“å</th>
+            <th>æ€§åˆ«</th>
+            <th>å¹´é¾„</th>
             
-            <th>×¡Ö·</th>
-            <th>Éí·İÖ¤ºÅ</th>
-            <th>²¹Ìù½ğ¶î</th>
-            <th>ËÀÍöÈÕÆÚ</th>
-            <th>ËÀÍöÔ­Òò</th>
-            <th>¼ÒÊôµç»°</th>
-            <th>·¢Æ±ºÅÂë</th>
-            <th>Æ¾Ö¤ºÅ</th>
-            <th>°ìÀíÊ±¼ä</th>
+            <th>ä½å€</th>
+            <th>èº«ä»½è¯å·</th>
+            <th>è¡¥è´´é‡‘é¢</th>
+            <th>æ­»äº¡æ—¥æœŸ</th>
+            <th>æ­»äº¡åŸå› </th>
+            <th>å®¶å±ç”µè¯</th>
+            <th>å‘ç¥¨å·ç </th>
+            <th>å‡­è¯å·</th>
+            <th>åŠç†æ—¶é—´</th>
             
             
             </tr>            
@@ -158,15 +158,15 @@ td,th{
     <div class="TabbedPanelsContent">
             <form name="form3" >
   <p>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="startTime">¿ªÊ¼Ê±¼ä£º</label>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="startTime">å¼€å§‹æ—¶é—´ï¼š</label>
               <input type="text" name="startTime2" id="startTime2" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd',readOnly:true,maxDate:'#F{$dp.$D(\'endTime\')}'})" >&nbsp;&nbsp;&nbsp;
               
-              <label for="endTime">½áÊøÊ±¼ä£º</label>
+              <label for="endTime">ç»“æŸæ—¶é—´ï¼š</label>
               <input type="text" name="endTime2" id="endTime2" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd '})">
               
             </p>
-       <input type="button" value="²éÑ¯"  onclick="return personalInfoQuery()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       <input type="button" value="µ¼³öÏêµ¥" onclick="ExcelById()">
+       <input type="button" value="æŸ¥è¯¢"  onclick="return personalInfoQuery()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <input type="button" value="å¯¼å‡ºè¯¦å•" onclick="ExcelById()">
        <div id="personalExcel" style="display:none">
    
    <table id="personalInfo" border="1" align="center">
@@ -174,23 +174,23 @@ td,th{
    <thead>   
           
             <tr>
-            <th colspan="12" align="center"><b><font style="font-size:24px">¶«Ì¨ÊĞéëÒÇ¹İ»ğ»¯»ù±¾ĞÅÏ¢Í³¼Æ±í</font></b>(¶«Ì¨·Ö¹İ)</th> 
+            <th colspan="12" align="center"><b><font style="font-size:24px">ä¸œå°å¸‚æ®¡ä»ªé¦†ç«åŒ–åŸºæœ¬ä¿¡æ¯ç»Ÿè®¡è¡¨</font></b>(ä¸œå°åˆ†é¦†)</th> 
             </tr>
             <tr>
-            <th>»ğ»¯ÈÕÆÚ</th> 
-            <th>ĞòºÅ</th>
-            <th>ĞÕÃû</th>
-            <th>ĞÔ±ğ</th>
-            <th>ÄêÁä</th>
+            <th>ç«åŒ–æ—¥æœŸ</th> 
+            <th>åºå·</th>
+            <th>å§“å</th>
+            <th>æ€§åˆ«</th>
+            <th>å¹´é¾„</th>
             
-            <th>×¡Ö·</th>
-            <th>Éí·İÖ¤ºÅ</th>
+            <th>ä½å€</th>
+            <th>èº«ä»½è¯å·</th>
             
-            <th>ËÀÍöÈÕÆÚ</th>
-            <th>ËÀÍöÔ­Òò</th>
-            <th>¼ÒÊôµç»°</th>
-            <th>·¢Æ±ºÅ</th>
-            <th>Ñ¡Ôñ</th>
+            <th>æ­»äº¡æ—¥æœŸ</th>
+            <th>æ­»äº¡åŸå› </th>
+            <th>å®¶å±ç”µè¯</th>
+            <th>å‘ç¥¨å·</th>
+            <th>é€‰æ‹©</th>
             
             
             </tr>            
@@ -201,8 +201,8 @@ td,th{
             
             </tbody>
   </table> 
-   <input type="button" value="È«Ñ¡" onclick="return selectAll()"/>
-   <input type="button" value="È¡Ïû" onclick="return cancelAll()"/>
+   <input type="button" value="å…¨é€‰" onclick="return selectAll()"/>
+   <input type="button" value="å–æ¶ˆ" onclick="return cancelAll()"/>
    </div>
    
    <div id="divNumber2" class="pagination"></div>
@@ -217,14 +217,14 @@ td,th{
 </div>
 <script>
 	window.onload = initialization;
-	function initialization() //Ò³Ãæ¼ÓÔØ
+	function initialization() //é¡µé¢åŠ è½½
 	{
 		var myDate = new Date();
 		var myYear = myDate.getFullYear();
 		var myDay;
 		var myMonth;
 		var TmpMonth = myDate.getMonth()+1;
-		if(TmpMonth<10)    //Ô­ÉúÈÕÀú¿Ø¼şÒªÇóÏÔÊ¾¸ñÊ½Îª"2016-02-04"£¬´Ë´¦¶ÔËùÈ¡µÄÔÂ·İ½øĞĞ¸ñÊ½Æ¥Åä
+		if(TmpMonth<10)    //åŸç”Ÿæ—¥å†æ§ä»¶è¦æ±‚æ˜¾ç¤ºæ ¼å¼ä¸º"2016-02-04"ï¼Œæ­¤å¤„å¯¹æ‰€å–çš„æœˆä»½è¿›è¡Œæ ¼å¼åŒ¹é…
 		{
 			myMonth = "0"+TmpMonth;
 		}
@@ -233,7 +233,7 @@ td,th{
 			myMonth = TmpMonth;
 		}
 		var TmpDay = myDate.getDate();
-		if(TmpDay<10)     //Ô­ÉúÈÕÀú¿Ø¼şÒªÇóÏÔÊ¾¸ñÊ½Îª"2016-02-04"£¬´Ë´¦¶ÔËùÈ¡µÄÈÕÆÚ½øĞĞ¸ñÊ½Æ¥Åä
+		if(TmpDay<10)     //åŸç”Ÿæ—¥å†æ§ä»¶è¦æ±‚æ˜¾ç¤ºæ ¼å¼ä¸º"2016-02-04"ï¼Œæ­¤å¤„å¯¹æ‰€å–çš„æ—¥æœŸè¿›è¡Œæ ¼å¼åŒ¹é…
 		{
 			myDay = "0"+TmpDay;
 		}
@@ -255,11 +255,11 @@ var TabbedPanels1 = new Spry.Widget.TabbedPanels("TabbedPanels1");
 </script>
 
  <script src="js/My97DatePicker/WdatePicker.js">
-	//ÕâÊÇÒ»¸öÊ±¼ä¿Ø¼ş
+	//è¿™æ˜¯ä¸€ä¸ªæ—¶é—´æ§ä»¶
  </script>
  
  <script src="js/createHttpRequest.js">
-	//´´½¨XMLHttpRequest¶ÔÏó
+	//åˆ›å»ºXMLHttpRequestå¯¹è±¡
 </script>
 </body>
 </html>
