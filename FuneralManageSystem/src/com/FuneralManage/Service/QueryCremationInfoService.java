@@ -59,7 +59,6 @@ public class QueryCremationInfoService extends BaseService{
 	                 array.put(jsonObj);   
 	             }  
 	            returnString= array;
-	            System.out.println(array.toString());
 	            	            	            
 			}
 			 catch(SQLException e){

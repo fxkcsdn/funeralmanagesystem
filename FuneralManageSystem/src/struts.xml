@@ -233,6 +233,11 @@
 			<result type="json" name="updateDeadId">
 				<param name="root">returnString</param>
 			</result>
+			<result type="json" name="getDeadNumber">
+				<param name="root">returnString</param>
+			</result>
+			
+			
 			
 		</action>
 

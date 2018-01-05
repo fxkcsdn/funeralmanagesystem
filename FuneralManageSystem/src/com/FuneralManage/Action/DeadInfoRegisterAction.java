@@ -2,6 +2,9 @@ package com.FuneralManage.Action;
 
 import java.sql.SQLException;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import com.FuneralManage.Service.DeadInfoRegisterService;
 import com.FuneralManage.entity.DeadInfo;
 import com.opensymphony.xwork2.ActionSupport;
@@ -74,7 +77,8 @@ public class DeadInfoRegisterAction extends ActionSupport{
 	DeadInfoRegisterService deadInfoRegisterDao=new DeadInfoRegisterService();
 	
 	public String registDeadInfo(){
-		deadInfo.deadNumber=deadInfoRegisterDao.getMaxRemainsNumber(deadInfo);
+//		deadInfo.deadNumber=deadInfoRegisterDao.getMaxRemainsNumber(deadInfo);
+		System.out.println(deadInfo.deadId);
 		returnString=deadInfoRegisterDao.deadInfoRegister(deadInfo);
 		return "registDeadInfo";
 	}
@@ -97,6 +101,14 @@ public class DeadInfoRegisterAction extends ActionSupport{
 			e.printStackTrace();
 		}
 		return "updateDeadId";
+		
+	}
+	public String getDeadNumber() {
+		returnString=deadInfoRegisterDao.getCurrDeadNumber();
+		 
+				 
+		 return "getDeadNumber";
+
 		
 	}
 }

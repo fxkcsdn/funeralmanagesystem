@@ -12,6 +12,9 @@ import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.apache.struts2.ServletActionContext;
 
 public class DeadInfoRegisterService extends BaseService{    										//遗体登记实现
@@ -103,6 +106,7 @@ public class DeadInfoRegisterService extends BaseService{    										//遗体�
 			try
 			{
 				PreparedStatement ps = conn.prepareStatement(sql);
+				System.out.println(deadInfo.deadId);
 				ps.setString(1, deadInfo.deadId);
 				ps.setString(2, deadInfo.deadName);
 				ps.setString(3, deadInfo.deadSex);
@@ -324,6 +328,53 @@ public class DeadInfoRegisterService extends BaseService{    										//遗体�
 			}
 		}
 		
+		return returnString;
+	}
+	public String getCurrDeadNumber()
+	{
+		Date currentTime = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		String dateString = formatter.format(currentTime);
+		
+		String startDate=null;
+		String endDate=null;
+		startDate = dateString+" 00:00:00";
+		endDate = dateString+" 23:59:59";
+		
+//		String time=formater.format(date);
+		Connection conn=DBDao.openDateBase("dongtai");
+		if(conn!=null){
+			String sql="SELECT MAX(remainsNumber) FROM remainsIn WHERE inTime BETWEEN STR_TO_DATE('"+startDate+"','%Y-%m-%d %H:%i:%s')AND STR_TO_DATE('"+endDate+"','%Y-%m-%d %H:%i:%s')";
+			//从数据库表格中选择出与界面上输入的进馆时间相同的一天中已经登记的遗体的编号的最大值
+			ResultSet rs=null;
+			try{
+				JSONArray array = new JSONArray();
+				JSONObject object = new JSONObject();
+				PreparedStatement ps=conn.prepareStatement(sql);
+				rs=ps.executeQuery();
+				rs.last();
+				if(rs.getRow()==1){
+					int deadNumber=rs.getInt(1)+1;
+					
+					object.put("deadNumber", deadNumber);
+					array.add(object);
+					returnString=array.toString();
+					
+				}else{
+					
+					object.put("deadNumber", 1);
+					array.add(object);
+					returnString=array.toString();
+				}
+				rs.close();
+				ps.close();
+				conn.close();
+			}
+			catch(SQLException e){
+				e.printStackTrace();
+				System.out.println("获取最大遗体编号失败");
+			}
+		}
 		return returnString;
 	}
 }

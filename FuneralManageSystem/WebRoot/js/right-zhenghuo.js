@@ -42,7 +42,16 @@ function clearTable() {
 		goodsCheckBoxInput2[0].disabled = "";
 	}
 }
-
+function getDeadNumberCallBack(){
+	if (http_request.readyState == 4) {
+		if (http_request.status == 200) {
+			var json = eval("(" + http_request.responseText + ")");
+			json = eval("(" + json + ")");
+			var tableName = document.getElementById("number");
+			tableName.rows[0].cells[1].innerText=json[0].deadNumber;
+		}
+		}
+}
 function showSetGoodsDetailCallBack() {
 	if (http_request.readyState == 4) {
 		if (http_request.status == 200) {
@@ -1490,8 +1499,11 @@ function validateForm1(form) {
 			form.deadSex.focus();
 			return false;
 		}
+		var tableName = document.getElementById("number");
+		var deadNumber = tableName.rows[0].cells[1].innerText;
 
 		url = "deadInfo.deadId=" + form.deadId.value + "&";  //身份证号码
+		url = url + "deadInfo.deadNumber="+deadNumber+"&";
 		url = url + "deadInfo.deadName=" + form.deadName.value + "&"; //姓名
 		url = url + "deadInfo.deadSex=" + deadSex + "&";  //性别
 		url = url + "deadInfo.memberMobile=" + form.memberMobile.value + "&"; //家属电话

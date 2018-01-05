@@ -93,6 +93,13 @@ body,td,th {
 			http_request.open('POST',"RegisterServiceAction!getSetService",false);
 			http_request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
 			http_request.send(null);
+			
+			http_request=createHttpRequest();
+			http_request.onreadystatechange=getDeadNumberCallBack;
+			http_request.open('POST',"DeadInfoRegisterAction!getDeadNumber",false);
+			http_request.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+			http_request.send(null);
+			
 			return false;
 	    }
     </script>
@@ -114,6 +121,16 @@ body,td,th {
 	  <div class="TabbedPanelsContentGroup">
         <div class="TabbedPanelsContent">
           <form name="form1" id="form1" onsubmit="return validateForm1(this);">
+          
+          <div>
+          <table border="1" id="number">
+          	<tr>
+          		<td>当日序列号</td>
+          		<td></td>
+          	</tr>
+          </table>
+          </div>
+          
             <p>
               <label for="deadId">逝者身份证号码：</label>
               <input type="text" name="deadInfo.deadId" id="deadId">
