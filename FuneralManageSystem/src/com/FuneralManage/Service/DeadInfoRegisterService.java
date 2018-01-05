@@ -310,7 +310,7 @@ public class DeadInfoRegisterService extends BaseService{    										//遗体�
 				ps4.executeUpdate();
 				conn.commit();
 						
-				returnString="修改成功";
+				returnString=latestDeadId;
 			} catch (Exception e) {
 				conn.rollback();
 				returnString="修改失败,请检查输入错误的逝者身份证号是否正确";

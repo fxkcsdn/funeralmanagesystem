@@ -81,7 +81,6 @@ public class DeadInfoRegisterAction extends ActionSupport{
 	
 	public String registOrderDeadInfo(){
 		deadInfo.deadNumber=deadInfoRegisterDao.getMaxOrderRemainsNumber(deadInfo);
-		System.out.println(deadInfo.deadNumber);
 		returnString=deadInfoRegisterDao.orderDeadInfoRegister(deadInfo);
 		return "registOrderDeadInfo";
 	}

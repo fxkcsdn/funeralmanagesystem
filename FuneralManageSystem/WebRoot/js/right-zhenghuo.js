@@ -3882,7 +3882,7 @@ function  updateDeadIdBack(){
 			var result = http_request.responseText;
 
 			var json = eval("(" + result + ")");
-			alert("逝者身份证号已修改为:"+json);
+			alert("逝者身份证号已成功修改为:"+json);
 	
 }
 	}
