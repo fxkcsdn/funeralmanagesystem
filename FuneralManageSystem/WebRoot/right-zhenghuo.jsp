@@ -123,10 +123,10 @@ body,td,th {
           <form name="form1" id="form1" onsubmit="return validateForm1(this);">
           
           <div>
-          <table border="1" id="number">
+          <table border="1" id="number" style="table-layout:fixed;">
           	<tr>
           		<td>当日序列号</td>
-          		<td></td>
+          		<td width="100" align="center"></td>
           	</tr>
           </table>
           </div>
@@ -786,10 +786,11 @@ body,td,th {
               <label for="endTime">结束时间：</label>
               <input type="text" name="endTime" id="endTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd '})">
               <input type="button" value="查询" onclick="return remainsInfo()">
+              当前有<input type="text" id="asd">人已挂号
          </p>
          </div>
          <div>
-         <center>当前有<input type="text" id="asd">人已挂号</center>
+         
          <br>
          <table id="remainsInfo" border="1" align="center" style="display:none">
          <thead>
@@ -812,12 +813,17 @@ body,td,th {
          </div>
          <br>
          <hr>
-         <br>
+         <p>
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<label for="wrongName">逝者姓名:</label>
+         <input type="text" id="wrongName" >
+         </p>
+         <p>
          <label for="wrongDeadId">错误的身份证号:</label>
          <input type="text" id="wrongDeadId" >
          <label for="latestDeadId" style="margin-left:96px">新的身份证号:</label>
          <input type="text" id="latestDeadId">
          <input type="button" value="点击修改" onclick="return updateDeadId()">
+         </p>
          </form>
          
         </div>

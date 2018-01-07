@@ -48,7 +48,8 @@ function getDeadNumberCallBack(){
 			var json = eval("(" + http_request.responseText + ")");
 			json = eval("(" + json + ")");
 			var tableName = document.getElementById("number");
-			tableName.rows[0].cells[1].innerText=json[0].deadNumber;
+			tableName.rows[0].cells[1].innerHTML="<font style='font-weight:bold;'>"
+				+ json[0].deadNumber + "</font>";;
 		}
 		}
 }
@@ -3862,17 +3863,35 @@ function selectDeadId(obj) {
 	
 	var tr = obj.parentNode.parentNode;
 	var wrongDeadId = tr.cells[2].innerText;
+	var wrongName = tr.cells[3].innerText;
 	
 	document.form4.wrongDeadId.value = wrongDeadId;
+	document.form4.wrongName.value = wrongName;
+
+	
     
 }
 function updateDeadId(){
 	var wrongDeadId = document.form4.wrongDeadId.value;
 	var latestDeadId = document.form4.latestDeadId.value;
+	var wrongName = document.form4.wrongName.value;
+	if(wrongDeadId==latestDeadId){
+		alert("输入的新身份证号码和旧身份证号码相同，请重新输入!");
+		document.form4.latestDeadId.value="";
+		document.form4.latestDeadId.focus();
+		return false;
+		
+	}
+	if (!(validateIdCard(latestDeadId))) {
+		alert("输入的新身份证号码格式错误，请检查后重新输入！");
+		document.form4.latestDeadId.value="";
+		document.form4.latestDeadId.focus();
+		return false;
+	}
 	
 	url = "wrongDeadId=" + wrongDeadId +"&";
 	url = url +"latestDeadId=" +latestDeadId;
-	if (confirm("是否确定修改")) {
+	if (confirm("您要修改身份证号的逝者姓名是"+wrongName+"新的身份证号是"+latestDeadId+",是否确定修改")) {
 	http_request = createHttpRequest();
 
 	http_request.onreadystatechange = updateDeadIdBack;
