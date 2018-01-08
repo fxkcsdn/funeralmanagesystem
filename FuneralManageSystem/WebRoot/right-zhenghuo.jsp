@@ -785,8 +785,9 @@ body,td,th {
               
               <label for="endTime">结束时间：</label>
               <input type="text" name="endTime" id="endTime" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd '})">
-              <input type="button" value="查询" onclick="return remainsInfo()">
-              当前有<input type="text" id="asd">人已挂号
+              <input type="button" value="查询" onclick="return remainsInfo()">&nbsp;&nbsp;&nbsp;
+              <label for="asd"> 当前有</label>
+              <input type="text" id="asd">人已挂号
          </p>
          </div>
          <div>

@@ -47,6 +47,7 @@ function getDeadNumberCallBack(){
 		if (http_request.status == 200) {
 			var json = eval("(" + http_request.responseText + ")");
 			json = eval("(" + json + ")");
+			
 			var tableName = document.getElementById("number");
 			tableName.rows[0].cells[1].innerHTML="<font style='font-weight:bold;'>"
 				+ json[0].deadNumber + "</font>";;
