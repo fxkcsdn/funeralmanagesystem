@@ -27,7 +27,7 @@
 </head>
 <body>
 	<table height="100%" width="100%" border="1" background="Images/TitleBackground.jpg">
-		<tr height="10%">
+		<tr height="5%">
 			<td width="100%" bgcolor="grey" align="center">
 				<span style="color:white;font-size:30px"><b>业务选择</b></span>
 			</td>
@@ -120,6 +120,11 @@
 		<tr height="8%">
 			<td width="100%" align="center">
 				<a href="StatisticsQuery.jsp" target="right" style="font-size:20px">统计查询</a>
+			</td>
+		</tr>
+		<tr height="8%">
+			<td width="100%" align="center">
+				<a href="testPhoto.htm" target="right" style="font-size:20px">拍照</a>
 			</td>
 		</tr>
 		<tr height="8%">

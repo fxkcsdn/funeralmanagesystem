@@ -409,6 +409,17 @@
 				<param name="root">returnString</param>
 				</result>
 		</action>
+		<action name="FilePhotoAction" class="com.FuneralManage.Action.FilePhotoAction">
+			<result type="json" name="cremationPhoto">
+				<param name="root">returnString</param>
+				</result>
+			<result type="json" name="taxPhoto">
+				<param name="root">returnString</param>
+				</result>
+			<result type="json" name="benefitPhoto">
+				<param name="root">returnString</param>
+				</result>
+		</action>
 
 		<!-- ********************************************** Made By JiXiang ********************************************************** -->
 		<!-- 登记冷藏遗体接运信息action -->

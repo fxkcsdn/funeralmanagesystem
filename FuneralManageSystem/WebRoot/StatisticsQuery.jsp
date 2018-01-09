@@ -22,13 +22,19 @@ td,th{
 <body>
 <div id="TabbedPanels1" class="TabbedPanels">
   <ul class="TabbedPanelsTabGroup">
+ 	 <li class="TabbedPanelsTab" tabindex="0" onclick="window.frames.filePhoto.location.reload();">拍照</li>
     <li class="TabbedPanelsTab" tabindex="0">查询遗体基本信息</li>
     <li class="TabbedPanelsTab" tabindex="0">查询惠民补助信息</li>
     <li class="TabbedPanelsTab" tabindex="0">生成火化信息表格</li>
-    <li class="TabbedPanelsTab" tabindex="0" onclick="window.frames.filePhoto.location.reload();">拍照</li>
+    
     
   </ul>
   <div class="TabbedPanelsContentGroup">
+      <div class="TabbedPanelsContent">
+    <iframe id="filePhoto" name="filePhoto" src="testPhoto.htm" width="100%" height="90%">
+    
+    </iframe> 
+    </div>
     <div class="TabbedPanelsContent">
             <form name="form1" >
             <p>
@@ -208,17 +214,10 @@ td,th{
    
    <div id="divNumber2" class="pagination"></div>
        
-            
-          
-        
-	
+                     	
 </form>
     </div>
-    <div class="TabbedPanelsContent">
-    <iframe id="filePhoto" name="filePhoto" src="filePhoto.jsp" width="100%" height="90%">
-    
-    </iframe> 
-    </div>
+
   </div>
   
 </div>
