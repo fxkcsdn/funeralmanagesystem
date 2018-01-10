@@ -9,6 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     <meta charset="utf-8">
+    
     <title>My JSP 'rentCoffin.jsp' starting page</title>
     
 	<meta http-equiv="pragma" content="no-cache">

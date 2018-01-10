@@ -3,8 +3,6 @@
 <html>
 <head>
 	<meta charset="utf-8"/>
-	<meta http-equiv="X-UA-Compatible" content="IE=8" ></meta>
-	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE8" ></meta>
 	
 	<title>test page for object photo</title>
 	

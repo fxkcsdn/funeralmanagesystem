@@ -2,8 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="java.text.SimpleDateFormat"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
 <html>
 <head>
+
 <%
 session.setAttribute("form",session.getAttribute("form"));
 %>
