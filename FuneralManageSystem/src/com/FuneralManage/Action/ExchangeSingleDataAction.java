@@ -1,5 +1,7 @@
 package com.FuneralManage.Action;
 
+import java.sql.Timestamp;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -17,13 +19,13 @@ public class ExchangeSingleDataAction {
 		this.deadid = deadid;
 	}
 
-	public String exchangeSingleData(){
+	public String exchangeSingleData(Timestamp time){
 		ExchangeDataService exchangeDataDao =new ExchangeDataService();
 		JSONObject jsonObject = new JSONObject();
 		jsonObject = exchangeDataDao.queryData(deadid);
 		JSONObject innerObject = new JSONObject();
 		JSONArray resultArray = new JSONArray();
-		flag = exchangeDataDao.linkAndUpload(jsonObject);
+		flag = exchangeDataDao.linkAndUpload(jsonObject, time);
 		if(flag){
 			innerObject.put("deadID", deadid);
 			innerObject.put("status", "success");

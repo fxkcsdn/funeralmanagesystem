@@ -5,13 +5,17 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
 import net.sf.json.JSONObject;
+
 import java.util.UUID;
 
 import org.apache.struts2.views.jsp.ElseTag;
@@ -163,11 +167,11 @@ public class ExchangeDataService
 					jsonObject.put("CID_CARD",resultSet.getString("dealerID"));                      //承办人身份证
 					jsonObject.put("CRELATION",relationship);            							 //与逝者关系
 					jsonObject.put("CADDRESS",resultSet.getString("dealerAddress"));                 //承办人住址
-																									 //承办人证件类型(见1.11)
+					jsonObject.put("MOBIL_PHONE",resultSet.getString("memberMobile")); 																				 //承办人证件类型(见1.11)
 																									 //逝者编码(见1.11)
 /**************************************************************1.13表所需的数据***************************************************************/
 					jsonObject.put("APPLY_ID",getApplyID());										 //业务编号
-					jsonObject.put("RECEIVE_PEOPLE","X");                                            //接收人
+					jsonObject.put("RECEIVE_PEOPLE",operator);                                            //接收人
 					jsonObject.put("RECEIVE_TIME",getInTime(deadid).substring(0,19));                //接收时间
 					jsonObject.put("CONTRACT_PEOPLE",operator);                                      //受理人
 					jsonObject.put("CONTRACT_DATE",contactdate);                                     //受理日期
@@ -197,8 +201,8 @@ public class ExchangeDataService
 					jsonObject.put("RECORD_ID2", getUUID()); 										 //火化内码
 					jsonObject.put("START_TIME2", cremation_start_time.substring(0,19)); 			 //火化开始时间
 					jsonObject.put("END_TIME2", cremation_end_time.substring(0,19)); 				 //火化结束时间
-																									 //逝者编码(见1.11)
-																									 //业务编号(见1.12)
+					System.out.println(jsonObject.get("CNAME"));																				 //逝者编码(见1.11)
+					System.out.println(jsonObject.get("MOBIL_PHONE"));																				 //业务编号(见1.12)
 				}		
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -651,7 +655,7 @@ public class ExchangeDataService
 	        cal = null;   
 	        return format.format(date); 
 	}
-	public boolean linkAndUpload(JSONObject jsonObject)									   //逐条上传逝者信息
+	public boolean linkAndUpload(JSONObject jsonObject, Timestamp time)									   //逐条上传逝者信息
 	{
 		boolean result = true;                                                         	   //默认上传成功
 		try {
@@ -661,11 +665,11 @@ public class ExchangeDataService
 				PreparedStatement ps = null;
 				try {
 					conn.setAutoCommit(false);                                               //取消自动提交
-					String sql1_11 = "INSERT INTO FIS_DEAD_INFO(DEAD_ID,NAME,SEX,CARD_TYPE,ID_CARD,BIRTHDAY,DEPT_CODE,MORG_AREA,POPULACE,DEATH_DATE,DEATH_PLACE,DEATH_CAUSE,DEATH_DISEASE,NATION,FOLK,CONTRACT_ORGAN,IF_NAMELESS,AGE,CREMATION_TIME) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-					String sql1_12 = "INSERT INTO FIS_PERSONAL_CUSTOM(DEAD_ID,NAME,CARD_TYPE,ID_CARD,RELATION,MOBIL_PHONE,FIX_PHONE,ADDRESS,POST_CODE,WORK_NAME,CUSTOM_ID) VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-					String sql1_13 = "INSERT INTO FIS_APPLY_INFO(APPLY_ID,APPLY_TYPE,DEAD_ID,DELIVERY_ORGAN,DELIVERY_PEOPLE,RECEIVE_PEOPLE,RECEIVE_TIME,CONTRACT_ORGAN,CONTRACT_ORGAN_NAME,CONTRACT_PEOPLE,CONTRACT_DATE,IF_FINISH,IF_TAKEASHES,TAKEASHES_TIME,FINISH_TIME,ASHES_GO) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-					String sql1_14 = "INSERT INTO FIS_SERVICE_DRIVE(RECORD_ID,APPLY_ID,DEAD_ID,START_TIME,END_TIME)VALUES(?,?,?,?,?)";
-					String sql1_18 = "INSERT INTO FIS_SERVICE_CREMATION(RECORD_ID,APPLY_ID,DEAD_ID,START_TIME,END_TIME)VALUES(?,?,?,?,?)";
+					String sql1_11 = "INSERT INTO FIS_DEAD_INFO(DEAD_ID,NAME,SEX,CARD_TYPE,ID_CARD,BIRTHDAY,DEPT_CODE,MORG_AREA,POPULACE,DEATH_DATE,DEATH_PLACE,DEATH_CAUSE,DEATH_DISEASE,NATION,FOLK,CONTRACT_ORGAN,IF_NAMELESS,AGE,CREMATION_TIME,INSERT_DATE) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					String sql1_12 = "INSERT INTO FIS_PERSONAL_CUSTOM(DEAD_ID,NAME,CARD_TYPE,ID_CARD,RELATION,MOBIL_PHONE,FIX_PHONE,ADDRESS,POST_CODE,WORK_NAME,CUSTOM_ID,INSERT_DATE) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+					String sql1_13 = "INSERT INTO FIS_APPLY_INFO(APPLY_ID,APPLY_TYPE,DEAD_ID,DELIVERY_ORGAN,DELIVERY_PEOPLE,RECEIVE_PEOPLE,RECEIVE_TIME,CONTRACT_ORGAN,CONTRACT_ORGAN_NAME,CONTRACT_PEOPLE,CONTRACT_DATE,IF_FINISH,IF_TAKEASHES,TAKEASHES_TIME,FINISH_TIME,ASHES_GO,INSERT_DATE) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+					String sql1_14 = "INSERT INTO FIS_SERVICE_DRIVE(RECORD_ID,APPLY_ID,DEAD_ID,START_TIME,END_TIME,INSERT_DATE)VALUES(?,?,?,?,?,?)";
+					String sql1_18 = "INSERT INTO FIS_SERVICE_CREMATION(RECORD_ID,APPLY_ID,DEAD_ID,START_TIME,END_TIME,INSERT_DATE)VALUES(?,?,?,?,?,?)";
 					/*插入表1_11*/
 					ps = conn.prepareStatement(sql1_11);
 					ps.setString(1, jsonObject.getString("DEAD_ID"));
@@ -691,6 +695,7 @@ public class ExchangeDataService
 					ps.setString(17, "0");                                       //0,逝者类型,正常
 					ps.setString(18, jsonObject.getString("DEAD_AGE"));          //死者年龄
 					ps.setString(19, jsonObject.getString("START_TIME2"));       //火化时间
+					ps.setTimestamp(20, time);		 //申报时间
 					ps.execute();
 					/*插入表1_12*/
 					ps = conn.prepareStatement(sql1_12);
@@ -699,12 +704,13 @@ public class ExchangeDataService
 					ps.setString(3, "0");										//证件类型，0表示身份证
 					ps.setString(4, jsonObject.getString("CID_CARD"));
 					ps.setString(5, jsonObject.getString("CRELATION"));
-					ps.setString(6, "X");                                        //承办人手机
+					ps.setString(6, jsonObject.getString("MOBIL_PHONE"));                                        //承办人手机
 					ps.setString(7, "X");                                        //承办人电话
 					ps.setString(8, jsonObject.getString("CADDRESS"));
 					ps.setString(9, "X");                                        //承办人邮编
 					ps.setString(10, "X");										 //承办人工作单位CUSTOM_ID
 					ps.setString(11, getUUID());
+					ps.setTimestamp(12, time);		 //申报时间
 					ps.execute();
 					/*插入表1_13*/
 					ps = conn.prepareStatement(sql1_13);
@@ -724,6 +730,7 @@ public class ExchangeDataService
 					ps.setString(14, jsonObject.getString("TAKEASHES_TIME"));     //领灰时间
 					ps.setString(15, jsonObject.getString("FINISH_TIME"));        //完成时间
 					ps.setString(16, jsonObject.getString("ASHES_GO"));           //骨灰去向
+					ps.setTimestamp(17, time);		  //申报时间
 					ps.execute(); 
 					/*插入表1_14*/
 					ps = conn.prepareStatement(sql1_14);
@@ -732,6 +739,7 @@ public class ExchangeDataService
 					ps.setString(3, jsonObject.getString("DEAD_ID"));
 					ps.setString(4, jsonObject.getString("START_TIME"));          //开始时间
 					ps.setString(5, jsonObject.getString("END_TIME"));            //结束时间
+					ps.setTimestamp(6, time);		 //申报时间
 					ps.execute();
 					/*插入表1_18*/
 					ps = conn.prepareStatement(sql1_18);
@@ -740,6 +748,7 @@ public class ExchangeDataService
 					ps.setString(3, jsonObject.getString("DEAD_ID"));
 					ps.setString(4, jsonObject.getString("START_TIME2"));         //开始时间
 					ps.setString(5, jsonObject.getString("END_TIME2"));           //结束时间
+					ps.setTimestamp(6, time);		  //申报时间
 					ps.execute();
 					conn.commit();                                                //提交事务
 				}catch (SQLException e) {
@@ -810,19 +819,19 @@ public class ExchangeDataService
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@10.40.0.210:1521:orcl","orcl_yc","1qaz-pl,");
 			if(conn!=null){
-				String sql_1 = "delete from FIS_DEAD_INFO where DEAD_ID like 'SZ320981-%'";
+				String sql_1 = "delete from FIS_DEAD_INFO where DEAD_ID like 'SZ320981-2018-%'";
 				PreparedStatement pStatement1 = conn.prepareStatement(sql_1);
 				int resultSet1 = pStatement1.executeUpdate();
-				String sql_2 = "delete from FIS_PERSONAL_CUSTOM where DEAD_ID like 'SZ320981-%'";
+				String sql_2 = "delete from FIS_PERSONAL_CUSTOM where DEAD_ID like 'SZ320981-2018-%'";
 				PreparedStatement pStatement2 = conn.prepareStatement(sql_2);
 				int resultSet2 = pStatement2.executeUpdate();
-				String sql_3 = "delete from FIS_APPLY_INFO where DEAD_ID like 'SZ320981-%'";
+				String sql_3 = "delete from FIS_APPLY_INFO where DEAD_ID like 'SZ320981-2018-%'";
 				PreparedStatement pStatement3 = conn.prepareStatement(sql_3);
 				int resultSet3 = pStatement3.executeUpdate();
-				String sql_4 = "delete from FIS_SERVICE_DRIVE where DEAD_ID like 'SZ320981-%'";
+				String sql_4 = "delete from FIS_SERVICE_DRIVE where DEAD_ID like 'SZ320981-2018-%'";
 				PreparedStatement pStatement4 = conn.prepareStatement(sql_4);
 				int resultSet4 = pStatement4.executeUpdate();
-				String sql_5= "delete from FIS_SERVICE_CREMATION where DEAD_ID like 'SZ320981-%'";
+				String sql_5= "delete from FIS_SERVICE_CREMATION where DEAD_ID like 'SZ320981-2018-%'";
 				PreparedStatement pStatement5 = conn.prepareStatement(sql_5);
 				int resultSet5 = pStatement5.executeUpdate();
 				System.out.println(resultSet1);
@@ -855,10 +864,33 @@ public class ExchangeDataService
 					System.out.println(resultSet1.getString("AGE"));
 					System.out.println(resultSet1.getString("DEATH_CAUSE"));
 					System.out.println(resultSet1.getString("DEATH_DISEASE"));
+					System.out.println(resultSet1.getString("INSERT_DATE"));
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	public void testCell() {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@10.40.0.210:1521:orcl","orcl_yc","1qaz-pl,");
+			if(conn!=null){
+				String sql_1 = "select * from FIS_PERSONAL_CUSTOM where DEAD_ID like 'SZ320981-%'";
+				Statement pStatement1 = conn.prepareStatement(sql_1);
+				pStatement1 =  conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+				ResultSet resultSet1 = pStatement1.executeQuery(sql_1);
+				resultSet1.last();
+				
+				System.out.println(resultSet1.getRow());
+
+				while(resultSet1.next()){
+					System.out.println(resultSet1.getString("MOBIL_PHONE"));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
