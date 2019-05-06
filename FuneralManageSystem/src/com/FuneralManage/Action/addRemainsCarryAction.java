@@ -21,6 +21,8 @@ public class addRemainsCarryAction extends ActionSupport{
 	private String carRealCost;
 	private String bInternalCar;
 	private String rentNumber;
+	
+	private String test;
 		
 	
 
